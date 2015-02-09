@@ -4,8 +4,11 @@ import com.github.nscala_time.time.Imports._
 import com.github.nscala_time.time.Implicits._
 
 /**
- * A console progress bar.
- * Training: [=====================>                            ] 40% (1min3s / 1min23s)
+ * A simple console-based progress bar.
+ *
+ * @param task Name of the progress bar
+ * @param max Number of steps when the task is complete.
+ * @param length The length of the progress bar shown in console. Default value is 50 characters.
  * @author Tongfei Chen (ctongfei@gmail.com).
  */
 class ProgressBar(val task: String, val max: Int, val length: Int = 50) {
@@ -36,21 +39,34 @@ class ProgressBar(val task: String, val max: Int, val length: Int = 50) {
       "(Elapsed: " + elapsed.toString + " Remaining: " + eta(elapsed) + ")")
   }
 
+  /**
+   * Starts the progress bar.
+   */
   def start() = {
     startTime = DateTime.now
     show()
   }
 
+  /**
+   * Advances the progress bar by a specific amount.
+   * @param n Steps
+   */
   def stepBy(n: Int) = {
     current += n
     show()
   }
 
+  /**
+   * Advances the progress bar by one step.
+   */
   def step() = {
     current += 1
     show()
   }
 
+  /**
+   * Stops the progress bar.
+   */
   def stop() = {
     show()
     println()
