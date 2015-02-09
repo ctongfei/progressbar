@@ -14,6 +14,8 @@ object ProgressBarTest {
       val x = Array.tabulate(1000, 1000)((i, j) => i + 0.1324 * j)
       pb.step()
     }
+    pb.stop()
+    println("Success!")
   }
 
 }

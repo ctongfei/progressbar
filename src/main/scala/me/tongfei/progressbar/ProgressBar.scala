@@ -51,5 +51,10 @@ class ProgressBar(val task: String, val max: Int, val length: Int = 50) {
     show()
   }
 
+  def stop() = {
+    show()
+    println()
+  }
+
 
 }
