@@ -6,6 +6,15 @@ SBT:
 libraryDependencies += "me.tongfei" % "progressbar_2.11" % "0.1.1"
 ```
 
+Maven:
+```xml
+    <dependency>
+      <groupId>me.tongfei</groupId>
+      <artifactId>progressbar_2.11</artifactId>
+      <version>0.1.1</version>
+    </dependency>
+```
+
 Usage:
 
 ```scala
