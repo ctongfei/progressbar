@@ -1,7 +1,6 @@
 package me.tongfei.progressbar
 
-import com.github.nscala_time.time.Imports._
-import com.github.nscala_time.time.Implicits._
+import java.time._
 
 /**
  * A simple console-based progress bar.
@@ -14,8 +13,8 @@ import com.github.nscala_time.time.Implicits._
 class ProgressBar(val task: String, val max: Int, val length: Int = 50) {
 
   private[this] var current = 0
-  private[this] var startTime: DateTime = null
-  private[this] var started = false
+  private[this] var startTime: LocalDateTime = null
+
 
   private[this] def repeat(x: Char, n: Int): String = {
     new String(Array.fill[Char](n)(x))
@@ -23,27 +22,28 @@ class ProgressBar(val task: String, val max: Int, val length: Int = 50) {
 
   private[this] def progress = math.round(current.toDouble / max * length).toInt
 
+  private[this] def formatDuration(d: Duration): String = {
+    val s = d.getSeconds
+    "%d:%02d:%02d".format(s / 3600, (s % 3600) / 60, s % 60)
+  }
+
   private[this] def eta(elapsed: Duration) = {
     if (progress == 0) "?"
-    else elapsed.dividedBy(progress).multipliedBy(length - progress).toString
+    else formatDuration(elapsed.dividedBy(progress).multipliedBy(length - progress))
   }
 
   private[this] def show() = {
-    if (!started) {
-      println()
-      started = true
-    }
     print('\r')
-    val elapsed = new Duration(startTime, DateTime.now)
+    val elapsed = Duration.between(startTime, LocalDateTime.now)
     print(task + " [" + repeat('=', progress) + repeat(' ', length - progress) + "] " + math.round(current.toDouble / max * 100) + "% " +
-      "(Elapsed: " + elapsed.toString + " Remaining: " + eta(elapsed) + ")")
+      "(Elapsed: " + formatDuration(elapsed) + " Remaining: " + eta(elapsed) + ")                ")
   }
 
   /**
    * Starts the progress bar.
    */
   def start() = {
-    startTime = DateTime.now
+    startTime = LocalDateTime.now
     show()
   }
 

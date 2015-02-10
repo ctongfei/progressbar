@@ -6,11 +6,9 @@ name := "progressbar"
 
 organization := "me.tongfei"
 
-version := "0.1"
+version := "0.1.1"
 
 scalaVersion := "2.11.2"
-
-libraryDependencies += "com.github.nscala-time" %% "nscala-time" % "1.8.0"
 
 publishMavenStyle := true
 

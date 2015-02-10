@@ -12,11 +12,10 @@ some loop {
   pb.stepBy(n) // step by n
   ...
 }
-
 pb.stop() // stops the progress bar
 ```
 
 Output style:
 ```
-Test [==================================================] 100% (Elapsed: PT5.431S Remaining: PT0S)
+Test [===================================               ] 70% (Elapsed: 0:00:14 Remaining: 0:00:06)
 ```

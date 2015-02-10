@@ -8,9 +8,9 @@ import scala.collection.mutable
 object ProgressBarTest {
 
   def main(args: Array[String]) = {
-    val pb = new ProgressBar("Test", 100, 50)
+    val pb = new ProgressBar("Test", 1000, 50)
     pb.start()
-    for (i ← 0 until 100) {
+    for (i ← 0 until 1000) {
       val x = Array.tabulate(1000, 1000)((i, j) => i + 0.1324 * j)
       pb.step()
     }
