@@ -1,9 +1,14 @@
 # progressbar
-A simple console progress bar
+A simple console progress bar.
+
+SBT:
+```scala
+libraryDependencies += "me.tongfei" % "progressbar_2.11" % "0.1.1"
+```
 
 Usage:
 
-```
+```scala
 val pb = new ProgressBar("Test", 100)
 pb.start() // the progress bar starts timing
 some loop {
