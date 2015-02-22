@@ -29,7 +29,7 @@ class ProgressBar(val task: String, val max: Int, val length: Int = 50) {
 
   private[this] def eta(elapsed: Duration) = {
     if (progress == 0) "?"
-    else formatDuration(elapsed.dividedBy(progress).multipliedBy(length - progress))
+    else formatDuration(elapsed.dividedBy(current).multipliedBy(max - current))
   }
 
   private[this] def show() = {
