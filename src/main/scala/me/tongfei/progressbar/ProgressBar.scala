@@ -10,10 +10,11 @@ import java.time._
  * @param length The length of the progress bar shown in console. Default value is 50 characters.
  * @author Tongfei Chen (ctongfei@gmail.com).
  */
-class ProgressBar(val task: String, val max: Int, val length: Int = 50) {
+class ProgressBar(val task: String, val max: Int, val length: Int = 40) {
 
   private[this] var current = 0
   private[this] var startTime: LocalDateTime = null
+  private[this] var lastTime: LocalDateTime = null
 
 
   private[this] def repeat(x: Char, n: Int): String = {
@@ -28,15 +29,23 @@ class ProgressBar(val task: String, val max: Int, val length: Int = 50) {
   }
 
   private[this] def eta(elapsed: Duration) = {
-    if (progress == 0) "?"
+    if (current == 0) "?"
     else formatDuration(elapsed.dividedBy(current).multipliedBy(max - current))
   }
 
-  private[this] def show() = {
+
+  private[this] def forceShow(currentTime: LocalDateTime): Unit = {
     print('\r')
-    val elapsed = Duration.between(startTime, LocalDateTime.now)
+    val elapsed = Duration.between(startTime, currentTime)
+    lastTime = currentTime
     print(task + " [" + repeat('=', progress) + repeat(' ', length - progress) + "] " + math.round(current.toDouble / max * 100) + "% " +
-      "(Elapsed: " + formatDuration(elapsed) + " Remaining: " + eta(elapsed) + ")                ")
+      "(" + formatDuration(elapsed) + " / " + eta(elapsed) + ")    ")
+  }
+
+  private[this] def show(): Unit = {
+    val currentTime = LocalDateTime.now
+    if (Duration.between(lastTime, currentTime).getSeconds < 1) return
+    forceShow(currentTime)
   }
 
   /**
@@ -44,6 +53,7 @@ class ProgressBar(val task: String, val max: Int, val length: Int = 50) {
    */
   def start() = {
     startTime = LocalDateTime.now
+    lastTime = LocalDateTime.now
     show()
   }
 
@@ -68,7 +78,7 @@ class ProgressBar(val task: String, val max: Int, val length: Int = 50) {
    * Stops the progress bar.
    */
   def stop() = {
-    show()
+    forceShow(LocalDateTime.now)
     println()
   }
 

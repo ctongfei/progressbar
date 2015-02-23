@@ -1,9 +1,10 @@
 # progressbar
 A simple console progress bar.
+Does not create too much output: Minimal update time is 1 second.
 
 SBT:
 ```scala
-libraryDependencies += "me.tongfei" % "progressbar_2.11" % "0.1.1"
+libraryDependencies += "me.tongfei" % "progressbar_2.11" % "0.2.0"
 ```
 
 Maven:
@@ -11,7 +12,7 @@ Maven:
     <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar_2.11</artifactId>
-      <version>0.1.1</version>
+      <version>0.2.0</version>
     </dependency>
 ```
 
@@ -31,5 +32,5 @@ pb.stop() // stops the progress bar
 
 Output style:
 ```
-Test [===================================               ] 70% (Elapsed: 0:00:14 Remaining: 0:00:06)
+Test [=========================                         ] 49% (0:00:10 / 0:00:10)
 ```
