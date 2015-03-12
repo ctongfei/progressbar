@@ -6,22 +6,25 @@ import java.time._
  * A simple console-based progress bar.
  *
  * @param task Name of the progress bar
- * @param max Number of steps when the task is complete.
+ * @param initialMax Initial estimation of the number of steps when the task is complete.
  * @param length The length of the progress bar shown in console. Default value is 50 characters.
  * @author Tongfei Chen (ctongfei@gmail.com).
  */
-class ProgressBar(val task: String, val max: Int, val length: Int = 40) {
+class ProgressBar(val task: String, val initialMax: Int, val length: Int = 25) {
 
   private[this] var current = 0
+  private[this] var max: Int = initialMax
   private[this] var startTime: LocalDateTime = null
   private[this] var lastTime: LocalDateTime = null
-
 
   private[this] def repeat(x: Char, n: Int): String = {
     new String(Array.fill[Char](n)(x))
   }
 
-  private[this] def progress = math.round(current.toDouble / max * length).toInt
+  private[this] def progress: Int = {
+    if (max == 0) 0
+    else math.round(current.toDouble / max * length).toInt
+  }
 
   private[this] def formatDuration(d: Duration): String = {
     val s = d.getSeconds
@@ -29,17 +32,27 @@ class ProgressBar(val task: String, val max: Int, val length: Int = 40) {
   }
 
   private[this] def eta(elapsed: Duration) = {
-    if (current == 0) "?"
+    if (max == 0) "?"
+    else if (current == 0) "?"
     else formatDuration(elapsed.dividedBy(current).multipliedBy(max - current))
   }
 
+  private[this] def percentage: String = {
+    if (max == 0) "? %"
+    else math.round(current.toDouble / max * 100).toString + "%"
+  }
 
   private[this] def forceShow(currentTime: LocalDateTime): Unit = {
     print('\r')
     val elapsed = Duration.between(startTime, currentTime)
     lastTime = currentTime
-    print(task + " [" + repeat('=', progress) + repeat(' ', length - progress) + "] " + math.round(current.toDouble / max * 100) + "% " +
-      "(" + formatDuration(elapsed) + " / " + eta(elapsed) + ")    ")
+    print(
+      task
+      + s" $percentage"
+      + " [" + repeat('=', progress) + repeat(' ', length - progress) + "] "
+      + s"$current/$max "
+      + "(" + formatDuration(elapsed) + " / " + eta(elapsed) + ")    "
+    )
   }
 
   private[this] def show(): Unit = {
@@ -59,10 +72,11 @@ class ProgressBar(val task: String, val max: Int, val length: Int = 40) {
 
   /**
    * Advances the progress bar by a specific amount.
-   * @param n Steps
+   * @param n Step size
    */
   def stepBy(n: Int) = {
     current += n
+    if (current > max) max = current
     show()
   }
 
@@ -71,6 +85,16 @@ class ProgressBar(val task: String, val max: Int, val length: Int = 40) {
    */
   def step() = {
     current += 1
+    if (current > max) max = current
+    show()
+  }
+
+  /**
+   * Gives a hint to the maximum value of the progress bar.
+   * @param n Hint to the maximum value
+   */
+  def maxHint(n: Int) = {
+    max = n
     show()
   }
 
