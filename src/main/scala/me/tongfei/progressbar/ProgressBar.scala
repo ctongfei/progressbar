@@ -6,7 +6,7 @@ import java.time._
  * A simple console-based progress bar.
  * @param task Name of the progress bar.
  * @param initialMax Initial estimation of the number of steps when the task is complete.
- * @param length The length of the progress bar shown in console. Default value is 50 characters.
+ * @param length The length of the progress bar shown in console. Default value is 25 characters.
  *
  * @author Tongfei Chen (ctongfei@gmail.com).
  */
@@ -41,7 +41,7 @@ class ProgressBar(val task: String, val initialMax: Int, val length: Int = 25) {
   private[this] def percentage: String = {
     val res = if (max == 0) "? %"
       else math.round(current.toDouble / max * 100).toString + "%"
-    (0 until (4 - res.length)).map(i => " ").mkString("") + res // pad space before percentage
+    repeat(' ', 4 - res.length) + res // pad space before percentage
   }
 
   private[this] def forceShow(currentTime: LocalDateTime): Unit = {
