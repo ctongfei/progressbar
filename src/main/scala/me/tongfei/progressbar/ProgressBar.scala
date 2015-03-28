@@ -4,18 +4,19 @@ import java.time._
 
 /**
  * A simple console-based progress bar.
- *
- * @param task Name of the progress bar
+ * @param task Name of the progress bar.
  * @param initialMax Initial estimation of the number of steps when the task is complete.
  * @param length The length of the progress bar shown in console. Default value is 50 characters.
+ *
  * @author Tongfei Chen (ctongfei@gmail.com).
  */
 class ProgressBar(val task: String, val initialMax: Int, val length: Int = 25) {
 
   private[this] var current = 0
-  private[this] var max: Int = initialMax
+  private[this] var max = initialMax
   private[this] var startTime: LocalDateTime = null
   private[this] var lastTime: LocalDateTime = null
+
 
   private[this] def repeat(x: Char, n: Int): String = {
     new String(Array.fill[Char](n)(x))
@@ -38,8 +39,9 @@ class ProgressBar(val task: String, val initialMax: Int, val length: Int = 25) {
   }
 
   private[this] def percentage: String = {
-    if (max == 0) "? %"
-    else math.round(current.toDouble / max * 100).toString + "%"
+    val res = if (max == 0) "? %"
+      else math.round(current.toDouble / max * 100).toString + "%"
+    (0 until (4 - res.length)).map(i => " ").mkString("") + res // pad space before percentage
   }
 
   private[this] def forceShow(currentTime: LocalDateTime): Unit = {
@@ -67,7 +69,7 @@ class ProgressBar(val task: String, val initialMax: Int, val length: Int = 25) {
   def start() = {
     startTime = LocalDateTime.now
     lastTime = LocalDateTime.now
-    show()
+    forceShow(lastTime)
   }
 
   /**

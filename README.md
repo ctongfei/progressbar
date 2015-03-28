@@ -1,15 +1,15 @@
 # progressbar
 A simple console progress bar.
-Does not create too much output: Minimal update time is 1 second.
+Does not create too much output: Minimal update time is 1 second (virtually no overhead).
 
  - New: Scaladoc at http://ctongfei.github.io/progressbar/api/.
+ - New in 0.3.1: Better display.
  - New in 0.3.0: Added `maxHint` method for progress bars. The maximum value for progress bars can be reset.
 
 SBT:
 ```scala
-libraryDependencies += "me.tongfei" % "progressbar_2.11" % "0.3.0"
+libraryDependencies += "me.tongfei" % "progressbar_2.11" % "0.3.1"
 ```
-
 
 Maven:
 ```xml

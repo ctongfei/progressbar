@@ -1,6 +1,5 @@
 package me.tongfei.progressbar
 
-import scala.collection.mutable
 
 /**
  * @author Tongfei Chen (ctongfei@gmail.com).
