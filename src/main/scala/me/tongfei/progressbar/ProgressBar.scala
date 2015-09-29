@@ -16,6 +16,8 @@ class ProgressBar(val task: String, val initialMax: Int, val length: Int = 25) {
   private[this] var max = initialMax
   private[this] var startTime: LocalDateTime = null
   private[this] var lastTime: LocalDateTime = null
+  private[this] var lastMessageLength: Int = 0
+  private[this] var extraMessage: String = ""
 
 
   private[this] def repeat(x: Char, n: Int): String = {
@@ -48,13 +50,11 @@ class ProgressBar(val task: String, val initialMax: Int, val length: Int = 25) {
     print('\r')
     val elapsed = Duration.between(startTime, currentTime)
     lastTime = currentTime
-    print(
-      task
-      + s" $percentage"
-      + " [" + repeat('=', progress) + repeat(' ', length - progress) + "] "
-      + s"$current/$max "
-      + "(" + formatDuration(elapsed) + " / " + eta(elapsed) + ")    "
-    )
+    val msg = task + s" $percentage" +
+      " [" + repeat('=', progress) + repeat(' ', length - progress) + "] " +
+      s"$current/$max " + "(" + formatDuration(elapsed) + " / " + eta(elapsed) + ") " + extraMessage
+    lastMessageLength = msg.length
+    print(msg.padTo(lastMessageLength, " ").mkString(""))
   }
 
   private[this] def show(): Unit = {
@@ -108,5 +108,6 @@ class ProgressBar(val task: String, val initialMax: Int, val length: Int = 25) {
     println()
   }
 
+  def setExtraMessage(extraMessage: String) = this.extraMessage = extraMessage
 
 }

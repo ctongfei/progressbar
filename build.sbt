@@ -2,9 +2,9 @@ name := "progressbar"
 
 organization := "me.tongfei"
 
-version := "0.3.1"
+version := "0.3.2-SNAPSHOT"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.7"
 
 publishMavenStyle := true
 

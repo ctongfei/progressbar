@@ -16,7 +16,7 @@ Maven:
     <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar_2.11</artifactId>
-      <version>0.3.0</version>
+      <version>0.3.1</version>
     </dependency>
 ```
 
