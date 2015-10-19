@@ -1,4 +1,4 @@
-# progressbar [![Maven Central](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar_2.11)
+# progressbar [![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar_2.11.svg)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar_2.11)
 A simple console progress bar.
 Does not create too much output: Minimal update time is 1 second (virtually no overhead).
 
