@@ -19,6 +19,7 @@ public class ProgressBar {
     private LocalDateTime startTime = null;
     private LocalDateTime lastTime = null;
     private String extraMessage = "";
+    final private Object syncRoot = new Object();
 
     /**
      * Creates a progress bar with the specific task name and initial maximum value.
@@ -119,9 +120,11 @@ public class ProgressBar {
      * @param n Step size
      */
     public void stepBy(int n) {
-        current += n;
-        if (current > max)
-            max = current;
+        synchronized (syncRoot) {
+            current += n;
+            if (current > max)
+                max = current;
+        }
         show();
     }
 
