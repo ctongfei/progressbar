@@ -10,7 +10,7 @@ public class ProgressBarTest {
         pb.start();
         pb.setExtraMessage("xxxx");
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10000; i++) {
             double[][] x = new double[1000][];
             for (int j = 0; j < 1000; j++) {
                 x[j] = new double[1000];
@@ -20,7 +20,10 @@ public class ProgressBarTest {
             pb.step();
             if (i == 300) {
                 pb.setExtraMessage("a");
-                pb.maxHint(1000);
+                pb.maxHint(10000);
+            }
+            if (i == 5000) {
+                pb.stepTo(8000);
             }
         }
         pb.stop();

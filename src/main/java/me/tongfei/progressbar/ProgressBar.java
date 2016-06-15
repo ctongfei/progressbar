@@ -129,6 +129,19 @@ public class ProgressBar {
     }
 
     /**
+     * Advances this progress bar to the specific progress value.
+     * @param n New progress value
+     */
+    public void stepTo(int n) {
+        synchronized (syncRoot) {
+            current = n;
+            if (current > max)
+                max = current;
+        }
+        show();
+    }
+
+    /**
      * Advances this progress bar by one step.
      */
     public void step() {
