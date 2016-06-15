@@ -2,6 +2,7 @@
 A simple console progress bar.
 Does not create too much output: Minimal update time is 1 second (virtually no overhead).
 
+ - New in 0.4.1: Added a `stepTo` method to `ProgressBar`s.
  - New in 0.4.0: Migrated from Scala to Java: less dependencies.
 
 Maven:
@@ -9,7 +10,7 @@ Maven:
     <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar</artifactId>
-      <version>0.4.0</version>
+      <version>0.4.1</version>
     </dependency>
 ```
 
@@ -22,6 +23,8 @@ some loop {
   ...
   pb.step(); // step by 1
   pb.stepBy(n); // step by n
+  ...
+  pb.stepTo(n); // step directly to n
   ...
   pb.maxHint(n);
   // reset the max of this progress bar as n. This may be useful when the program
