@@ -20,7 +20,7 @@ public class ProgressBar {
     private LocalDateTime startTime = null;
     private LocalDateTime lastTime = null;
     private String extraMessage = "";
-    private PrintStream consoleStream = System.out;
+    private PrintStream consoleStream = OutputStream.OUT.stream;
     final private Object syncRoot = new Object();
 
     /**
@@ -178,9 +178,25 @@ public class ProgressBar {
 
     /**
      * Sets the stream to which the progress bar will be printed.
-     * @param stream Output stream
+     * @param outputStream Output stream
      */
-    public void setStream(PrintStream stream) {
-        consoleStream = stream;
+    public void setOutputStream(OutputStream outputStream) {
+        consoleStream = outputStream.stream;
+    }
+
+    /**
+     * Streams the progress bar can be written to.
+     */
+    public enum OutputStream {
+        /** The standard output stream, System.out. */
+        OUT(System.out),
+        /** The standard error stream, System.err. */
+        ERR(System.err);
+
+        private PrintStream stream;
+
+        private OutputStream(PrintStream stream) {
+            this.stream = stream;
+        }
     }
 }
