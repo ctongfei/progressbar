@@ -165,6 +165,7 @@ public class ProgressBar {
     public void stop() {
         forceShow(LocalDateTime.now());
         consoleStream.println();
+        startTime = null;
     }
 
     /**
@@ -181,6 +182,9 @@ public class ProgressBar {
      * @param outputStream Output stream
      */
     public void setOutputStream(OutputStream outputStream) {
+        if (startTime != null) {
+            throw new IllegalStateException("Cannot change output stream for an active progress bar");
+        }
         consoleStream = outputStream.stream;
     }
 

@@ -26,6 +26,10 @@ public class ProgressBarTest {
                 pb.stepTo(8000);
             }
         }
+        try {
+            pb.setOutputStream(ProgressBar.OutputStream.ERR);
+            throw new AssertionError("Setting the output stream didn't throw!");
+        } catch (IllegalStateException ex) {}
         pb.stop();
     }
 
