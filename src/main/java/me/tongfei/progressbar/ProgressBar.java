@@ -1,5 +1,6 @@
 package me.tongfei.progressbar;
 
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class ProgressBar {
     private LocalDateTime startTime = null;
     private LocalDateTime lastTime = null;
     private String extraMessage = "";
-    private PrintStream consoleStream = OutputStream.OUT.stream;
+    private PrintStream consoleStream = System.err;
     final private Object syncRoot = new Object();
 
     /**
@@ -44,6 +45,22 @@ public class ProgressBar {
         this.task = task;
         this.max = initialMax;
         this.updateIntervalMillis = updateIntervalMillis;
+    }
+
+
+    /**
+     * Creates a progress bar with the specific task name, initial maximum value,
+     * customized update interval (default 1000 ms) and the PrintStream to be used.
+     * @param task Task name
+     * @param initialMax Initial maximum value
+     * @param updateIntervalMillis Update interval (default value 1000 ms)
+     * @param os Print stream (default value System.err)
+     */
+    public ProgressBar(String task, int initialMax, int updateIntervalMillis, PrintStream os) {
+        this.task = task;
+        this.max = initialMax;
+        this.updateIntervalMillis = updateIntervalMillis;
+        this.consoleStream = os;
     }
 
     private String repeat(char x, int n) {
@@ -177,30 +194,4 @@ public class ProgressBar {
         extraMessage = newExtraMessage;
     }
 
-    /**
-     * Sets the stream to which the progress bar will be printed.
-     * @param outputStream Output stream
-     */
-    public void setOutputStream(OutputStream outputStream) {
-        if (startTime != null) {
-            throw new IllegalStateException("Cannot change output stream for an active progress bar");
-        }
-        consoleStream = outputStream.stream;
-    }
-
-    /**
-     * Streams the progress bar can be written to.
-     */
-    public enum OutputStream {
-        /** The standard output stream, System.out. */
-        OUT(System.out),
-        /** The standard error stream, System.err. */
-        ERR(System.err);
-
-        private PrintStream stream;
-
-        private OutputStream(PrintStream stream) {
-            this.stream = stream;
-        }
-    }
 }
