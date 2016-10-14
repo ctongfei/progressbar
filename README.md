@@ -2,6 +2,7 @@
 A simple console progress bar.
 Does not create too much output: Minimal update time is 1 second (virtually no overhead).
 
+ - New in 0.4.2: Default output stream is changed to `System.err`; can be customized in constructor.
  - New in 0.4.1: Added a `stepTo` method to `ProgressBar`s.
  - New in 0.4.0: Migrated from Scala to Java: less dependencies.
 
@@ -10,7 +11,7 @@ Maven:
     <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar</artifactId>
-      <version>0.4.1</version>
+      <version>0.4.2</version>
     </dependency>
 ```
 
