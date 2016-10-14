@@ -1,5 +1,6 @@
 package me.tongfei.progressbar;
 
+import java.io.PrintStream;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import jline.TerminalFactory;
@@ -19,6 +20,7 @@ public class ProgressBar {
     private LocalDateTime startTime = null;
     private LocalDateTime lastTime = null;
     private String extraMessage = "";
+    private PrintStream consoleStream = OutputStream.OUT.stream;
     final private Object syncRoot = new Object();
 
     /**
@@ -86,7 +88,7 @@ public class ProgressBar {
     }
 
     private void forceShow(LocalDateTime currentTime) {
-        System.out.print('\r');
+        consoleStream.print('\r');
         Duration elapsed = Duration.between(startTime, currentTime);
         lastTime = currentTime;
 
@@ -97,7 +99,7 @@ public class ProgressBar {
 
         String message = prefix + repeat('=', progress()) + repeat(' ', length - progress()) + suffix;
         int lastMessageLength = message.length();
-        System.out.print(message + repeat(' ', lastMessageLength - message.length()));
+        consoleStream.print(message + repeat(' ', lastMessageLength - message.length()));
     }
 
     private void show() {
@@ -162,7 +164,8 @@ public class ProgressBar {
      */
     public void stop() {
         forceShow(LocalDateTime.now());
-        System.out.println();
+        consoleStream.println();
+        startTime = null;
     }
 
     /**
@@ -172,5 +175,32 @@ public class ProgressBar {
     public void setExtraMessage(String newExtraMessage) {
         length = length + extraMessage.length() - newExtraMessage.length();
         extraMessage = newExtraMessage;
+    }
+
+    /**
+     * Sets the stream to which the progress bar will be printed.
+     * @param outputStream Output stream
+     */
+    public void setOutputStream(OutputStream outputStream) {
+        if (startTime != null) {
+            throw new IllegalStateException("Cannot change output stream for an active progress bar");
+        }
+        consoleStream = outputStream.stream;
+    }
+
+    /**
+     * Streams the progress bar can be written to.
+     */
+    public enum OutputStream {
+        /** The standard output stream, System.out. */
+        OUT(System.out),
+        /** The standard error stream, System.err. */
+        ERR(System.err);
+
+        private PrintStream stream;
+
+        private OutputStream(PrintStream stream) {
+            this.stream = stream;
+        }
     }
 }
