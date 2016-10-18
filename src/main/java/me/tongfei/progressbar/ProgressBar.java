@@ -12,6 +12,8 @@ import jline.TerminalFactory;
  */
 public class ProgressBar {
 
+    private static String symbols = " ▏▎▍▌▋▊▉█";
+
     private String task;
     private final int consoleRightMargin = 4;
     private int length = 0;
@@ -76,6 +78,20 @@ public class ProgressBar {
         else return ((int)Math.round(((double)current) / max * length));
     }
 
+    private int progressIntegralPart() {
+        if (max == 0) return 0;
+        else return ((int)Math.floor(((double)current) / max * length));
+    }
+
+    private int progressFractionalPart() {
+        if (max == 0) return 0;
+        else {
+            double x = (double)current / max * length;
+            return Math.round((int)((x - Math.floor(x)) * 8));
+        }
+    }
+
+
     private String formatDuration(Duration d) {
         long s = d.getSeconds();
         return String.format("%d:%02d:%02d", s / 3600, (s % 3600) / 60, s % 60);
@@ -109,12 +125,12 @@ public class ProgressBar {
         Duration elapsed = Duration.between(startTime, currentTime);
         lastTime = currentTime;
 
-        String prefix = task + " " + percentage() + " [";
-        String suffix = "] " + ratio() + " (" + formatDuration(elapsed) + " / " + eta(elapsed) + ") " + extraMessage;
+        String prefix = task + " " + percentage() + " │";
+        String suffix = "│ " + ratio() + " (" + formatDuration(elapsed) + " / " + eta(elapsed) + ") " + extraMessage;
 
         length = consoleWidth() - consoleRightMargin - prefix.length() - suffix.length();
 
-        String message = prefix + repeat('=', progress()) + repeat(' ', length - progress()) + suffix;
+        String message = prefix + repeat('█', progressIntegralPart()) + symbols.charAt(progressFractionalPart()) + repeat(' ', length - progressIntegralPart() - 1) + suffix;
         int lastMessageLength = message.length();
         consoleStream.print(message + repeat(' ', lastMessageLength - message.length()));
     }

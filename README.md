@@ -33,7 +33,7 @@ pb.stop() // stops the progress bar
 
 Output style:
 ```
-Test 62% [================         ] 621/1000 (0:00:12 / 0:00:07) Reading...
+Reading  44% │█████████████▎                │  4434/10000 (0:00:18 / 0:00:23)
 ```
 
 #### Changelog

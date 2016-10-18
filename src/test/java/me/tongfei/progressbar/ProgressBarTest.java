@@ -6,7 +6,7 @@ package me.tongfei.progressbar;
 public class ProgressBarTest {
 
     static public void main(String[] args) {
-        ProgressBar pb = new ProgressBar("Test", 10);
+        ProgressBar pb = new ProgressBar("Test", 10, 500);
         pb.start();
         pb.setExtraMessage("xxxx");
 
