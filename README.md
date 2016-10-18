@@ -6,7 +6,7 @@ Maven:
     <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar</artifactId>
-      <version>0.4.2</version>
+      <version>0.4.3</version>
     </dependency>
 ```
 
@@ -38,6 +38,7 @@ Reading  44% │█████████████▎                │  4
 
 #### Changelog
 
- - 0.4.2: Default output stream is changed to `System.err`; can be customized in constructor.
- - 0.4.1: Added a `stepTo` method to `ProgressBar`s.
+ - 0.4.3: Changed the symbols to box-drawing characters; more fine-grained display. Thanks @hrj !
+ - 0.4.2: Default output stream is changed to `System.err`; can be customized in constructor. Thanks @AluisioASG !
+ - 0.4.1: Added a `stepTo` method to `ProgressBar`s. Thanks @svenmauer !
  - 0.4.0: Migrated from Scala to Java: less dependencies.
