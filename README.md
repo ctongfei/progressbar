@@ -1,5 +1,8 @@
 # progressbar [![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
 A simple console progress bar.
+```
+Reading  44% │█████████████▎                │  4434/10000 (0:00:18 / 0:00:23)
+```
 
 Maven:
 ```xml
@@ -29,11 +32,6 @@ some loop {
   pb.setExtraMessage("Reading..."); // Set extra message to display at the end of the bar
 }
 pb.stop() // stops the progress bar
-```
-
-Output style:
-```
-Reading  44% │█████████████▎                │  4434/10000 (0:00:18 / 0:00:23)
 ```
 
 #### Changelog
