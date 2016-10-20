@@ -5,18 +5,14 @@ package me.tongfei.progressbar;
  */
 public class ProgressBarTest {
 
-    static public void main(String[] args) {
-        ProgressBar pb = new ProgressBar("Test", 10, 500);
+    static public void main(String[] args) throws Exception {
+        ProgressBar pb = new ProgressBar("Test", 10, 100);
         pb.start();
         pb.setExtraMessage("xxxx");
 
         for (int i = 0; i < 10000; i++) {
             double[][] x = new double[1000][];
-            for (int j = 0; j < 1000; j++) {
-                x[j] = new double[1000];
-                for (int k = 0; k < 1000; k++)
-                    x[j][k] = j + 0.1324 * k;
-            }
+            Thread.sleep(3);
             pb.step();
             if (i == 300) {
                 pb.setExtraMessage("a");
@@ -24,6 +20,7 @@ public class ProgressBarTest {
             }
             if (i == 5000) {
                 pb.stepTo(8000);
+                pb.setExtraMessage("");
             }
         }
         pb.stop();

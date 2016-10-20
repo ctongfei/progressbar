@@ -1,12 +1,20 @@
 # progressbar [![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
-A simple console progress bar.
+A simple console progress bar. Progress bar writing now runs on another thread.
+
+```
+Reading  44% │█████████████▎                │  4434/10000 (0:00:18 / 0:00:23)
+```
+
+Do not use Consolas or Andale Mono for terminal font because the box-drawing glyphs
+in these fonts are not aligned properly. Menlo, Fira Mono, Source Code Pro or SF Mono
+are recommended for optimal visual effects.
 
 Maven:
 ```xml
     <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar</artifactId>
-      <version>0.4.3</version>
+      <version>0.5.0</version>
     </dependency>
 ```
 
@@ -31,13 +39,9 @@ some loop {
 pb.stop() // stops the progress bar
 ```
 
-Output style:
-```
-Reading  44% │█████████████▎                │  4434/10000 (0:00:18 / 0:00:23)
-```
-
 #### Changelog
 
+ - 0.5.0: Separated the progress bar thread from the main thread for better performance. Fixed the character offset issue. Thanks @rualpe !
  - 0.4.3: Changed the symbols to box-drawing characters; more fine-grained display. Thanks @hrj !
  - 0.4.2: Default output stream is changed to `System.err`; can be customized in constructor. Thanks @AluisioASG !
  - 0.4.1: Added a `stepTo` method to `ProgressBar`s. Thanks @svenmauer !
