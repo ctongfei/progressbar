@@ -1,9 +1,7 @@
 # progressbar [![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
 A simple console progress bar. Progress bar writing now runs on another thread.
 
-```
-Reading  44% │█████████████▎                │  4434/10000 (0:00:18 / 0:00:23)
-```
+ <img src="https://i.gyazo.com/1c02d51927e769cf245a108f5a8dfaf5.gif" alt="Reading  44% │█████████████▎                │  4434/10000 (0:00:18 / 0:00:23)" height="20">
 
 Do not use Consolas or Andale Mono for terminal font because the box-drawing glyphs
 in these fonts are not aligned properly. Menlo, Fira Mono, Source Code Pro or SF Mono
