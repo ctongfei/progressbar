@@ -102,6 +102,7 @@ public class ProgressThread implements Runnable {
                 refresh();
                 Thread.sleep(updateInterval);
             }
+            refresh();
             consoleStream.print("\n");
         } catch (InterruptedException ex) { }
     }
