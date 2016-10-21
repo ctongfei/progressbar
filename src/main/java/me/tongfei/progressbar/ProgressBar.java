@@ -108,4 +108,9 @@ public class ProgressBar {
         progress.setExtraMessage(msg);
     }
 
+	/**
+     * @return current progress
+     */
+    public int getCurrent() { return progress.getCurrent(); }
+
 }

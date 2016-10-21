@@ -11,7 +11,6 @@ public class ProgressBarTest {
         pb.setExtraMessage("xxxx");
 
         for (int i = 0; i < 10000; i++) {
-            double[][] x = new double[1000][];
             Thread.sleep(3);
             pb.step();
             if (i == 300) {
@@ -24,6 +23,8 @@ public class ProgressBarTest {
             }
         }
         pb.stop();
+        if(pb.getCurrent() != 12999)
+            throw new Exception("fail!");
     }
 
 }

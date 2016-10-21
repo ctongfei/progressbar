@@ -41,4 +41,8 @@ public class Progress {
         extraMessage = msg;
     }
 
+    synchronized int getCurrent() {
+        return current;
+    }
+
 }
