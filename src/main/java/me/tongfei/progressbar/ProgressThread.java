@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 public class ProgressThread implements Runnable {
 
     volatile boolean running;
-    Progress progress;
+    ProgressBarStyle style;
+    ProgressState progress;
     long updateInterval;
     PrintStream consoleStream;
 
@@ -20,8 +21,9 @@ public class ProgressThread implements Runnable {
 
     int length;
 
-    ProgressThread(Progress progress, long updateInterval, PrintStream consoleStream) {
+    ProgressThread(ProgressState progress, ProgressBarStyle style, long updateInterval, PrintStream consoleStream) {
         this.progress = progress;
+        this.style = style;
         this.updateInterval = updateInterval;
         this.consoleStream = consoleStream;
     }
@@ -39,7 +41,7 @@ public class ProgressThread implements Runnable {
 
     int progressFractionalPart() {
         double p = progress() * length;
-        double fraction = (p - Math.floor(p)) * 8;
+        double fraction = (p - Math.floor(p)) * style.fractionSymbols.length();
         return (int) Math.floor(fraction);
     }
 
@@ -73,16 +75,16 @@ public class ProgressThread implements Runnable {
         LocalDateTime currTime = LocalDateTime.now();
         Duration elapsed = Duration.between(progress.startTime, currTime);
 
-        String prefix = progress.task + " " + percentage() + " │";
-        String suffix = "│ " + ratio() + " (" + Util.formatDuration(elapsed) + " / " + eta(elapsed) + ") " + progress.extraMessage;
+        String prefix = progress.task + " " + percentage() + " " + style.leftBracket;
+        String suffix = style.rightBracket + " " + ratio() + " (" + Util.formatDuration(elapsed) + " / " + eta(elapsed) + ") " + progress.extraMessage;
 
         length = consoleWidth() - consoleRightMargin - prefix.length() - suffix.length();
 
         StringBuilder sb = new StringBuilder();
         sb.append(prefix);
-        sb.append(Util.repeat(Util.block, progressIntegralPart()));
+        sb.append(Util.repeat(style.block, progressIntegralPart()));
         if (progress.current < progress.max) {
-            sb.append(Util.symbols.charAt(progressFractionalPart()));
+            sb.append(style.fractionSymbols.charAt(progressFractionalPart()));
             sb.append(Util.repeat(' ', length - progressIntegralPart() - 1));
         }
         sb.append(suffix);

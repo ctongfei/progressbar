@@ -8,10 +8,6 @@ import java.time.Duration;
  */
 public class Util {
 
-    static char block = '█';
-
-    static String symbols = " ▏▎▍▌▋▊▉█";
-
     static String repeat(char c, int n) {
         if (n <= 0) return "";
         char[] s = new char[n];

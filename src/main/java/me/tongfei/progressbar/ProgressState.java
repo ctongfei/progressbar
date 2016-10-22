@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  * @author Tongfei Chen
  * @since 0.5.0
  */
-public class Progress {
+class ProgressState {
 
     String task;
 
@@ -18,7 +18,7 @@ public class Progress {
 
     String extraMessage = "";
 
-    Progress(String task, int initialMax) {
+    ProgressState(String task, int initialMax) {
         this.task = task;
         this.max = initialMax;
     }
@@ -41,8 +41,20 @@ public class Progress {
         extraMessage = msg;
     }
 
+    String getTask() {
+        return task;
+    }
+
+    synchronized String getExtraMessage() {
+        return extraMessage;
+    }
+
     synchronized int getCurrent() {
         return current;
+    }
+
+    synchronized int getMax() {
+        return max;
     }
 
 }

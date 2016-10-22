@@ -1,17 +1,17 @@
 package me.tongfei.progressbar;
 
 /**
- * @author Tongfei Chen (ctongfei@gmail.com).
+ * @author Tongfei Chen
  */
 public class ProgressBarTest {
 
     static public void main(String[] args) throws Exception {
-        ProgressBar pb = new ProgressBar("Test", 10, 100);
+        ProgressBar pb = new ProgressBar("Test", 100, ProgressBarStyle.UNICODE_BLOCK);
         pb.start();
         pb.setExtraMessage("xxxx");
 
         for (int i = 0; i < 10000; i++) {
-            Thread.sleep(3);
+            Thread.sleep(30);
             pb.step();
             if (i == 300) {
                 pb.setExtraMessage("a");

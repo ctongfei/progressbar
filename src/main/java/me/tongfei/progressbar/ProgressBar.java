@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
  */
 public class ProgressBar {
 
-    private static String symbols = " ▏▎▍▌▋▊▉█";
 
-    private Progress progress;
+    private ProgressBarStyle style;
+    private ProgressState progress;
     private ProgressThread target;
     private Thread thread;
 
@@ -21,36 +21,29 @@ public class ProgressBar {
      * @param initialMax Initial maximum value
      */
     public ProgressBar(String task, int initialMax) {
-        this.progress = new Progress(task, initialMax);
-        this.target = new ProgressThread(progress, 1000, System.err);
-        this.thread = new Thread(target);
+        this(task, initialMax, 1000, System.err, ProgressBarStyle.UNICODE_BLOCK);
     }
 
-    /**
-     * Creates a progress bar with the specific task name, initial maximum value
-     * and customized update interval (default 1000 ms).
-     * @param task Task name
-     * @param initialMax Initial maximum value
-     * @param updateIntervalMillis Update interval (default value 1000 ms)
-     */
+    public ProgressBar(String task, int initialMax, ProgressBarStyle style) {
+        this(task, initialMax, 1000, System.err, style);
+    }
+
     public ProgressBar(String task, int initialMax, int updateIntervalMillis) {
-        this.progress = new Progress(task, initialMax);
-        this.target = new ProgressThread(progress, updateIntervalMillis, System.err);
-        this.thread = new Thread(target);
+        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.UNICODE_BLOCK);
     }
-
 
     /**
      * Creates a progress bar with the specific task name, initial maximum value,
-     * customized update interval (default 1000 ms) and the PrintStream to be used.
+     * customized update interval (default 1000 ms), the PrintStream to be used, and output style.
      * @param task Task name
      * @param initialMax Initial maximum value
      * @param updateIntervalMillis Update interval (default value 1000 ms)
      * @param os Print stream (default value System.err)
+     * @param style Output style (default value ProgresBarStyle.UNICODE_BLOCK)
      */
-    public ProgressBar(String task, int initialMax, int updateIntervalMillis, PrintStream os) {
-        this.progress = new Progress(task, initialMax);
-        this.target = new ProgressThread(progress, updateIntervalMillis, os);
+    public ProgressBar(String task, int initialMax, int updateIntervalMillis, PrintStream os, ProgressBarStyle style) {
+        this.progress = new ProgressState(task, initialMax);
+        this.target = new ProgressThread(progress, style, updateIntervalMillis, os);
         this.thread = new Thread(target);
     }
 
@@ -109,8 +102,31 @@ public class ProgressBar {
     }
 
 	/**
-     * @return current progress
+     * Returns the current progress.
      */
-    public int getCurrent() { return progress.getCurrent(); }
+    public int getCurrent() {
+        return progress.getCurrent();
+    }
+
+    /**
+     * Returns the maximum value of this progress bar.
+     */
+    public int getMax() {
+        return progress.getMax();
+    }
+
+    /**
+     * Returns the name of this task.
+     */
+    public String getTask() {
+        return progress.getTask();
+    }
+
+    /**
+     * Returns the extra message at the end of the progress bar.
+     */
+    public String getExtraMessage() {
+        return progress.getExtraMessage();
+    }
 
 }
