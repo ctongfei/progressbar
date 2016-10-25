@@ -1,4 +1,4 @@
-# progressbar [![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
+# progressbar [![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
 A simple console progress bar. Progress bar writing now runs on another thread.
 
 <img src="https://i.gyazo.com/1c02d51927e769cf245a108f5a8dfaf5.gif" width="600"/>
