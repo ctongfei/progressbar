@@ -8,17 +8,17 @@ package me.tongfei.progressbar;
 public enum ProgressBarStyle {
 
     /** Use Unicode block characters to draw the progress bar. */
-    UNICODE_BLOCK('│', '│', '█', " ▏▎▍▌▋▊▉"),
+    UNICODE_BLOCK("│", "│", '█', " ▏▎▍▌▋▊▉"),
 
     /** Use only ASCII characters to draw the progress bar. */
-    ASCII('[', ']', '=', ">");
+    ASCII("[", "]", '=', ">");
 
-    char leftBracket;
-    char rightBracket;
+    String leftBracket;
+    String rightBracket;
     char block;
     String fractionSymbols;
 
-    ProgressBarStyle(char leftBracket, char rightBracket, char block, String fractionSymbols) {
+    ProgressBarStyle(String leftBracket, String rightBracket, char block, String fractionSymbols) {
         this.leftBracket = leftBracket;
         this.rightBracket = rightBracket;
         this.block = block;

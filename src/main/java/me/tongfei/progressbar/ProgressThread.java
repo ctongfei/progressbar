@@ -100,10 +100,12 @@ public class ProgressThread implements Runnable {
     public void run() {
         running = true;
         try {
-            do {
+            while (running) {
                 refresh();
                 Thread.sleep(updateInterval);
-            } while (running);
+            }
+            refresh();
+            // do-while loop not right: must force to refresh after stopped
             consoleStream.print("\n");
         } catch (InterruptedException ex) { }
     }
