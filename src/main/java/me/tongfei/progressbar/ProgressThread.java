@@ -106,7 +106,6 @@ public class ProgressThread implements Runnable {
             }
             refresh();
             // do-while loop not right: must force to refresh after stopped
-            consoleStream.print("\n");
         } catch (InterruptedException ex) { }
     }
 }

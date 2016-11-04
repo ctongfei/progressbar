@@ -91,6 +91,12 @@ public class ProgressBar {
      */
     public void stop() {
         target.kill();
+        try {
+            thread.join();
+            target.consoleStream.print("\n");
+            target.consoleStream.flush();
+        }
+        catch (InterruptedException ex) { }
     }
 
     /**
