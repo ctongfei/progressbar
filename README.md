@@ -42,7 +42,7 @@ pb.stop() // stops the progress bar
 
 #### Changelog
 
- - 0.5.1: Fixed the refresh problem when progress ended. Added style (Unicode block characters / pure ASCII) support.
+ - 0.5.1: Fixed the refresh problem when progress ended. Added style (Unicode block characters / pure ASCII) support. Thanks @rualpe !
  - 0.5.0: Separated the progress bar thread from the main thread for better performance. Fixed the character offset issue. Thanks @rualpe !
  - 0.4.3: Changed the symbols to box-drawing characters; more fine-grained display. Thanks @hrj !
  - 0.4.2: Default output stream is changed to `System.err`; can be customized in constructor. Thanks @AluisioASG !
