@@ -1,4 +1,8 @@
-# progressbar [![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
+# progressbar 
+
+[![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
+[![Javadoc](https://img.shields.io/badge/javadoc.io-v0.5.1-ff69b4.svg?style=flat-square)](https://www.javadoc.io/doc/me.tongfei/progressbar)
+
 A simple console progress bar. Progress bar writing now runs on another thread.
 
 <img src="https://i.gyazo.com/1c02d51927e769cf245a108f5a8dfaf5.gif" width="600"/>
