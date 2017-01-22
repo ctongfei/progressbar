@@ -42,6 +42,8 @@ pb.stop() // stops the progress bar
 
 #### Changelog
 
+ - 0.5.2: Methods now returns `this`. This simplifies the initialization: Now you can do `pb = new ProgressBar(...).start()`. Extra messages
+ that are too long are trimmed properly. Thanks @mattcg !
  - 0.5.1: Fixed the refresh problem when progress ended. Added style (Unicode block characters / pure ASCII) support.
  - 0.5.0: Separated the progress bar thread from the main thread for better performance. Fixed the character offset issue. Thanks @rualpe !
  - 0.4.3: Changed the symbols to box-drawing characters; more fine-grained display. Thanks @hrj !

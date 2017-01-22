@@ -1,5 +1,7 @@
 package me.tongfei.progressbar;
 
+import com.sun.javaws.progress.Progress;
+
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 
@@ -50,46 +52,51 @@ public class ProgressBar {
     /**
      * Starts this progress bar.
      */
-    public void start() {
+    public ProgressBar start() {
         progress.startTime = LocalDateTime.now();
         thread.start();
+        return this;
     }
 
     /**
      * Advances this progress bar by a specific amount.
      * @param n Step size
      */
-    public void stepBy(int n) {
+    public ProgressBar stepBy(int n) {
         progress.stepBy(n);
+        return this;
     }
 
     /**
      * Advances this progress bar to the specific progress value.
      * @param n New progress value
      */
-    public void stepTo(int n) {
+    public ProgressBar stepTo(int n) {
         progress.stepTo(n);
+        return this;
     }
 
     /**
      * Advances this progress bar by one step.
      */
-    public void step() {
+    public ProgressBar step() {
         progress.stepBy(1);
+        return this;
     }
 
     /**
      * Gives a hint to the maximum value of the progress bar.
      * @param n Hint of the maximum value
      */
-    public void maxHint(int n) {
+    public ProgressBar maxHint(int n) {
         progress.maxHint(n);
+        return this;
     }
 
     /**
      * Stops this progress bar.
      */
-    public void stop() {
+    public ProgressBar stop() {
         target.kill();
         try {
             thread.join();
@@ -97,14 +104,16 @@ public class ProgressBar {
             target.consoleStream.flush();
         }
         catch (InterruptedException ex) { }
+        return this;
     }
 
     /**
      * Sets the extra message at the end of the progress bar.
      * @param msg New message
      */
-    public void setExtraMessage(String msg) {
+    public ProgressBar setExtraMessage(String msg) {
         progress.setExtraMessage(msg);
+        return this;
     }
 
 	/**

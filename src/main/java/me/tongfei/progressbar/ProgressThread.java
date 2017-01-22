@@ -56,7 +56,7 @@ public class ProgressThread implements Runnable {
     String percentage() {
         String res;
         if (progress.max == 0) res = "? %";
-        else res = String.valueOf(Math.round(100.0 * progress.current / progress.max)) + "%";
+        else res = String.valueOf((int) Math.floor(100.0 * progress.current / progress.max)) + "%";
         return Util.repeat(' ', 4 - res.length()) + res;
     }
 
@@ -76,7 +76,10 @@ public class ProgressThread implements Runnable {
         Duration elapsed = Duration.between(progress.startTime, currTime);
 
         String prefix = progress.task + " " + percentage() + " " + style.leftBracket;
+
+        int maxSuffixLength = consoleWidth() - consoleRightMargin - prefix.length() - 10;
         String suffix = style.rightBracket + " " + ratio() + " (" + Util.formatDuration(elapsed) + " / " + eta(elapsed) + ") " + progress.extraMessage;
+        if (suffix.length() > maxSuffixLength) suffix = suffix.substring(0, maxSuffixLength);
 
         length = consoleWidth() - consoleRightMargin - prefix.length() - suffix.length();
 
