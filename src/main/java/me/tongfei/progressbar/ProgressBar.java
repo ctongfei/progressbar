@@ -1,7 +1,5 @@
 package me.tongfei.progressbar;
 
-import com.sun.javaws.progress.Progress;
-
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 
