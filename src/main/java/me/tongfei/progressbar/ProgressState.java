@@ -11,28 +11,28 @@ class ProgressState {
 
     String task;
 
-    int current = 0;
-    int max = 0;
+    long current = 0;
+    long max = 0;
 
     LocalDateTime startTime = null;
 
     String extraMessage = "";
 
-    ProgressState(String task, int initialMax) {
+    ProgressState(String task, long initialMax) {
         this.task = task;
         this.max = initialMax;
     }
 
-    synchronized void maxHint(int n) {
+    synchronized void maxHint(long n) {
         max = n;
     }
 
-    synchronized void stepBy(int n) {
+    synchronized void stepBy(long n) {
         current += n;
         if (current > max) max = current;
     }
 
-    synchronized void stepTo(int n) {
+    synchronized void stepTo(long n) {
         current = n;
         if (current > max) max = current;
     }
@@ -49,11 +49,11 @@ class ProgressState {
         return extraMessage;
     }
 
-    synchronized int getCurrent() {
+    synchronized long getCurrent() {
         return current;
     }
 
-    synchronized int getMax() {
+    synchronized long getMax() {
         return max;
     }
 

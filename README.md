@@ -14,7 +14,7 @@ Maven:
     <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar</artifactId>
-      <version>0.5.1</version>
+      <version>0.5.3</version>
     </dependency>
 ```
 
@@ -24,6 +24,8 @@ Usage:
 ProgressBar pb = new ProgressBar("Test", 100); // name, initial max
  // Use ProgressBar("Test", 100, ProgressBarStyle.ASCII) if you want ASCII output style
 pb.start(); // the progress bar starts timing
+// Or you could combine these two lines like this:
+//   ProgressBar pb = new ProgressBar("Test", 100).start();
 some loop {
   ...
   pb.step(); // step by 1
@@ -42,6 +44,7 @@ pb.stop() // stops the progress bar
 
 #### Changelog
 
+ - 0.5.3: Type of max/current of a progress bar is changed from `int` to `long`. Thanks @vitobellini ! 
  - 0.5.2: Methods now returns `this`. This simplifies the initialization: Now you can do `pb = new ProgressBar(...).start()`. Extra messages
  that are too long are trimmed properly. Thanks @mattcg !
  - 0.5.1: Fixed the refresh problem when progress ended. Added style (Unicode block characters / pure ASCII) support.

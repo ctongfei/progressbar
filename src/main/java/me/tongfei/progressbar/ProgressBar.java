@@ -20,15 +20,15 @@ public class ProgressBar {
      * @param task Task name
      * @param initialMax Initial maximum value
      */
-    public ProgressBar(String task, int initialMax) {
+    public ProgressBar(String task, long initialMax) {
         this(task, initialMax, 1000, System.err, ProgressBarStyle.UNICODE_BLOCK);
     }
 
-    public ProgressBar(String task, int initialMax, ProgressBarStyle style) {
+    public ProgressBar(String task, long initialMax, ProgressBarStyle style) {
         this(task, initialMax, 1000, System.err, style);
     }
 
-    public ProgressBar(String task, int initialMax, int updateIntervalMillis) {
+    public ProgressBar(String task, long initialMax, int updateIntervalMillis) {
         this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.UNICODE_BLOCK);
     }
 
@@ -41,7 +41,7 @@ public class ProgressBar {
      * @param os Print stream (default value System.err)
      * @param style Output style (default value ProgresBarStyle.UNICODE_BLOCK)
      */
-    public ProgressBar(String task, int initialMax, int updateIntervalMillis, PrintStream os, ProgressBarStyle style) {
+    public ProgressBar(String task, long initialMax, int updateIntervalMillis, PrintStream os, ProgressBarStyle style) {
         this.progress = new ProgressState(task, initialMax);
         this.target = new ProgressThread(progress, style, updateIntervalMillis, os);
         this.thread = new Thread(target);
@@ -60,7 +60,7 @@ public class ProgressBar {
      * Advances this progress bar by a specific amount.
      * @param n Step size
      */
-    public ProgressBar stepBy(int n) {
+    public ProgressBar stepBy(long n) {
         progress.stepBy(n);
         return this;
     }
@@ -69,7 +69,7 @@ public class ProgressBar {
      * Advances this progress bar to the specific progress value.
      * @param n New progress value
      */
-    public ProgressBar stepTo(int n) {
+    public ProgressBar stepTo(long n) {
         progress.stepTo(n);
         return this;
     }
@@ -86,7 +86,7 @@ public class ProgressBar {
      * Gives a hint to the maximum value of the progress bar.
      * @param n Hint of the maximum value
      */
-    public ProgressBar maxHint(int n) {
+    public ProgressBar maxHint(long n) {
         progress.maxHint(n);
         return this;
     }
@@ -117,14 +117,14 @@ public class ProgressBar {
 	/**
      * Returns the current progress.
      */
-    public int getCurrent() {
+    public long getCurrent() {
         return progress.getCurrent();
     }
 
     /**
      * Returns the maximum value of this progress bar.
      */
-    public int getMax() {
+    public long getMax() {
         return progress.getMax();
     }
 

@@ -30,7 +30,7 @@ public class ProgressThread implements Runnable {
 
     // between 0 and 1
     double progress() {
-        if (progress.max == 0) return 0.0;
+        if (progress.max == 0l) return 0.0;
         else return ((double)progress.current) / progress.max;
     }
 
