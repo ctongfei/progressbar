@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
  */
 public class ProgressBar {
 
-
-    private ProgressBarStyle style;
     private ProgressState progress;
     private ProgressThread target;
     private Thread thread;
@@ -87,7 +85,12 @@ public class ProgressBar {
      * @param n Hint of the maximum value
      */
     public ProgressBar maxHint(long n) {
-        progress.maxHint(n);
+        if (n < 0)
+            progress.setAsIndefinite();
+        else {
+            progress.setAsDefinite();
+            progress.maxHint(n);
+        }
         return this;
     }
 

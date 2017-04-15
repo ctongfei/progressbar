@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * @author Tongfei Chen
  * @since 0.5.0
  */
-public class ProgressThread implements Runnable {
+class ProgressThread implements Runnable {
 
     volatile boolean running;
     ProgressBarStyle style;
@@ -30,7 +30,7 @@ public class ProgressThread implements Runnable {
 
     // between 0 and 1
     double progress() {
-        if (progress.max == 0l) return 0.0;
+        if (progress.max <= 0) return 0.0;
         else return ((double)progress.current) / progress.max;
     }
 
@@ -46,7 +46,7 @@ public class ProgressThread implements Runnable {
     }
 
     String eta(Duration elapsed) {
-        if (progress.max == 0) return "?";
+        if (progress.max <= 0 || progress.indefinite) return "?";
         else if (progress.current == 0) return "?";
         else return Util.formatDuration(
                 elapsed.dividedBy(progress.current)
@@ -55,13 +55,13 @@ public class ProgressThread implements Runnable {
 
     String percentage() {
         String res;
-        if (progress.max == 0) res = "? %";
+        if (progress.max <= 0 || progress.indefinite) res = "? %";
         else res = String.valueOf((int) Math.floor(100.0 * progress.current / progress.max)) + "%";
         return Util.repeat(' ', 4 - res.length()) + res;
     }
 
     String ratio() {
-        String m = String.valueOf(progress.max);
+        String m = progress.indefinite ? "?" : String.valueOf(progress.max);
         String c = String.valueOf(progress.current);
         return Util.repeat(' ', m.length() - c.length()) + c + "/" + m;
     }
@@ -72,6 +72,7 @@ public class ProgressThread implements Runnable {
 
     void refresh() {
         consoleStream.print('\r');
+
         LocalDateTime currTime = LocalDateTime.now();
         Duration elapsed = Duration.between(progress.startTime, currTime);
 
@@ -85,10 +86,21 @@ public class ProgressThread implements Runnable {
 
         StringBuilder sb = new StringBuilder();
         sb.append(prefix);
-        sb.append(Util.repeat(style.block, progressIntegralPart()));
-        if (progress.current < progress.max) {
-            sb.append(style.fractionSymbols.charAt(progressFractionalPart()));
-            sb.append(Util.repeat(' ', length - progressIntegralPart() - 1));
+
+        // case of indefinite progress bars
+        if (progress.indefinite) {
+            int pos = (int)(progress.current % length);
+            sb.append(Util.repeat(style.space, pos));
+            sb.append(style.block);
+            sb.append(Util.repeat(style.space, length - pos - 1));
+        }
+        // case of definite progress bars
+        else {
+            sb.append(Util.repeat(style.block, progressIntegralPart()));
+            if (progress.current < progress.max) {
+                sb.append(style.fractionSymbols.charAt(progressFractionalPart()));
+                sb.append(Util.repeat(style.space, length - progressIntegralPart() - 1));
+            }
         }
         sb.append(suffix);
         String line = sb.toString();

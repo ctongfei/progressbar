@@ -14,7 +14,7 @@ Maven:
     <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar</artifactId>
-      <version>0.5.3</version>
+      <version>0.5.4</version>
     </dependency>
 ```
 
@@ -36,6 +36,8 @@ some loop {
   pb.maxHint(n);
   // reset the max of this progress bar as n. This may be useful when the program
   // gets new information about the current progress.
+  // Can set n to be less than zero: this means that this progress bar would become
+  // indefinite: the max would be unknown.
   ...
   pb.setExtraMessage("Reading..."); // Set extra message to display at the end of the bar
 }
@@ -44,6 +46,7 @@ pb.stop() // stops the progress bar
 
 #### Changelog
 
+ - 0.5.4: Added indefinite progress bar support.
  - 0.5.3: Type of max/current of a progress bar is changed from `int` to `long`. Thanks @vitobellini ! 
  - 0.5.2: Methods now returns `this`. This simplifies the initialization: Now you can do `pb = new ProgressBar(...).start()`. Extra messages
  that are too long are trimmed properly. Thanks @mattcg !

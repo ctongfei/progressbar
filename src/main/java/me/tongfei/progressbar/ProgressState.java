@@ -11,6 +11,8 @@ class ProgressState {
 
     String task;
 
+    boolean indefinite = false;
+
     long current = 0;
     long max = 0;
 
@@ -21,6 +23,15 @@ class ProgressState {
     ProgressState(String task, long initialMax) {
         this.task = task;
         this.max = initialMax;
+        if (initialMax < 0) indefinite = true;
+    }
+
+    synchronized void setAsDefinite() {
+        indefinite = false;
+    }
+
+    synchronized void setAsIndefinite() {
+        indefinite = true;
     }
 
     synchronized void maxHint(long n) {
