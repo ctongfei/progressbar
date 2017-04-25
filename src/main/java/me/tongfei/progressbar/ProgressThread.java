@@ -78,7 +78,7 @@ class ProgressThread implements Runnable {
 
         String prefix = progress.task + " " + percentage() + " " + style.leftBracket;
 
-        int maxSuffixLength = consoleWidth() - consoleRightMargin - prefix.length() - 10;
+        int maxSuffixLength = Math.max(0, consoleWidth() - consoleRightMargin - prefix.length() - 10);
         String suffix = style.rightBracket + " " + ratio() + " (" + Util.formatDuration(elapsed) + " / " + eta(elapsed) + ") " + progress.extraMessage;
         if (suffix.length() > maxSuffixLength) suffix = suffix.substring(0, maxSuffixLength);
 
