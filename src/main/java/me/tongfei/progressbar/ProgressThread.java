@@ -1,10 +1,9 @@
 package me.tongfei.progressbar;
 
+import jline.TerminalFactory;
 import java.io.PrintStream;
 import java.time.Duration;
 import java.time.LocalDateTime;
-
-import jline.TerminalFactory;
 
 /**
  * @author Tongfei Chen
@@ -32,11 +31,8 @@ class ProgressThread implements Runnable {
 
     // between 0 and 1
     double progress() {
-        if (progress.max <= 0) {
-			return 0.0;
-		} else {
-			return (double)progress.current / progress.max;
-		}
+        if (progress.max <= 0) return 0.0;
+        else return ((double)progress.current) / progress.max;
     }
 
     // Number of full blocks
@@ -51,24 +47,17 @@ class ProgressThread implements Runnable {
     }
 
     String eta(Duration elapsed) {
-        if (progress.max <= 0 || progress.indefinite) {
-			return "?";
-		} else if (progress.current == 0) {
-			return "?";
-		} else {
-			return Util.formatDuration(
-			        elapsed.dividedBy(progress.current)
-			                .multipliedBy(progress.max - progress.current));
-		}
+        if (progress.max <= 0 || progress.indefinite) return "?";
+        else if (progress.current == 0) return "?";
+        else return Util.formatDuration(
+                elapsed.dividedBy(progress.current)
+                        .multipliedBy(progress.max - progress.current));
     }
 
     String percentage() {
         String res;
-        if (progress.max <= 0 || progress.indefinite) {
-			res = "? %";
-		} else {
-			res = String.valueOf((int) Math.floor(100.0 * progress.current / progress.max)) + "%";
-		}
+        if (progress.max <= 0 || progress.indefinite) res = "? %";
+        else res = String.valueOf((int) Math.floor(100.0 * progress.current / progress.max)) + "%";
         return Util.repeat(' ', 4 - res.length()) + res;
     }
 
@@ -92,9 +81,7 @@ class ProgressThread implements Runnable {
 
         int maxSuffixLength = consoleWidth() - consoleRightMargin - prefix.length() - 10;
         String suffix = style.rightBracket + " " + ratio() + " (" + Util.formatDuration(elapsed) + " / " + eta(elapsed) + ") " + progress.extraMessage;
-        if (suffix.length() > maxSuffixLength) {
-			suffix = suffix.substring(0, maxSuffixLength);
-		}
+        if (suffix.length() > maxSuffixLength) suffix = suffix.substring(0, maxSuffixLength);
 
         length = consoleWidth() - consoleRightMargin - prefix.length() - suffix.length();
 
@@ -137,4 +124,3 @@ class ProgressThread implements Runnable {
         } catch (InterruptedException ex) { }
     }
 }
-

@@ -1,6 +1,3 @@
-/*
- * (c) LeShop SA 2017
- */
 package me.tongfei.progressbar;
 
 import org.junit.Test;
