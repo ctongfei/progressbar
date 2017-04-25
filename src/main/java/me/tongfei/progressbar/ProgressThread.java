@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  */
 class ProgressThread implements Runnable {
 
-    volatile boolean running;
+    volatile boolean killed;
     ProgressBarStyle style;
     ProgressState progress;
     long updateInterval;
@@ -26,6 +26,7 @@ class ProgressThread implements Runnable {
         this.style = style;
         this.updateInterval = updateInterval;
         this.consoleStream = consoleStream;
+        this.killed = false;
     }
 
     // between 0 and 1
@@ -109,13 +110,12 @@ class ProgressThread implements Runnable {
     }
 
     void kill() {
-        running = false;
+    	killed = true;
     }
 
     public void run() {
-        running = true;
         try {
-            while (running) {
+            while (!killed) {
                 refresh();
                 Thread.sleep(updateInterval);
             }
@@ -124,4 +124,3 @@ class ProgressThread implements Runnable {
         } catch (InterruptedException ex) { }
     }
 }
-
