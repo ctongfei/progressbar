@@ -17,7 +17,7 @@ Maven:
     <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar</artifactId>
-      <version>0.5.4</version>
+      <version>0.5.5</version>
     </dependency>
 ```
 
@@ -49,6 +49,9 @@ pb.stop() // stops the progress bar
 
 #### Changelog
 
+ - 0.5.5: Fixed the problem of the progress bar being stuck if it finishes too fast. 
+ Fixed the problem of `StringIndexOutOfBoundsException` error when the console width is too small. 
+ Thanks @bwittwer, @rholdberh and Roman Bubiakin!
  - 0.5.4: Added indefinite progress bar support.
  - 0.5.3: Type of max/current of a progress bar is changed from `int` to `long`. Thanks @vitobellini ! 
  - 0.5.2: Methods now returns `this`. This simplifies the initialization: Now you can do `pb = new ProgressBar(...).start()`. Extra messages

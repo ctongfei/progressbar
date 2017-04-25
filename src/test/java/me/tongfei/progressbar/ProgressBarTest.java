@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ProgressBarTest {
 
     static public void main(String[] args) throws Exception {
-        ProgressBar pb = new ProgressBar("Test", -1, 50, System.out, ProgressBarStyle.UNICODE_BLOCK).start();
+        ProgressBar pb = new ProgressBar("Test", 5, 50, System.out, ProgressBarStyle.UNICODE_BLOCK).start();
 
         double x = 1.0;
         double y = x * x;
