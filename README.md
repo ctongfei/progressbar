@@ -1,5 +1,4 @@
-# progressbar
-[![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
+# progressbar [![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
 
 A simple console progress bar. Progress bar writing now runs on another thread.
 
@@ -26,7 +25,7 @@ Maven:
 Declarative usage (from 0.6.0):
 ```java
 // Looping over a collection:
-for (T x in ProgressBar.wrap(collection, "TaskName")) {
+for (T x : ProgressBar.wrap(collection, "TaskName")) {
     ...
     // Progress will automatically monitored by a progress bar
 }
@@ -57,3 +56,6 @@ for (T x : ProgressBar.wrap(collection, "TaskName")) {
 }
 pb.stop() // stops the progress bar
 ```
+
+#### Changelog
+[CHANGELOG](https://github.com/ctongfei/progressbar/blob/master/CHANGELOG.md)
