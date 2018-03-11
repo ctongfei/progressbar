@@ -39,7 +39,7 @@ ProgressBar pb = new ProgressBar("Test", 100); // name, initial max
 pb.start(); // the progress bar starts timing
 // Or you could combine these two lines like this:
 //   ProgressBar pb = new ProgressBar("Test", 100).start();
-for (T x : ProgressBar.wrap(collection, "TaskName")) {
+some loop {
   ...
   pb.step(); // step by 1
   pb.stepBy(n); // step by n
