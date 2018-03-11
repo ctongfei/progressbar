@@ -1,9 +1,12 @@
 package me.tongfei.progressbar;
 
-import jline.TerminalFactory;
 import java.io.PrintStream;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 
 /**
  * @author Tongfei Chen
@@ -16,8 +19,10 @@ class ProgressThread implements Runnable {
     ProgressState progress;
     long updateInterval;
     PrintStream consoleStream;
+    Terminal terminal;
+    int consoleWidth = 80;
 
-    static int consoleRightMargin = 3;
+    static int consoleRightMargin = 2;
 
     int length;
 
@@ -27,6 +32,16 @@ class ProgressThread implements Runnable {
         this.updateInterval = updateInterval;
         this.consoleStream = consoleStream;
         this.killed = false;
+
+        try {
+            this.terminal = TerminalBuilder.terminal();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (terminal.getWidth() >= 10)  // Workaround for issue #23 under IntelliJ
+            consoleWidth = terminal.getWidth();
     }
 
     // between 0 and 1
@@ -67,10 +82,6 @@ class ProgressThread implements Runnable {
         return Util.repeat(' ', m.length() - c.length()) + c + "/" + m;
     }
 
-    int consoleWidth() {
-        return TerminalFactory.get().getWidth();
-    }
-
     void refresh() {
         consoleStream.print('\r');
 
@@ -79,11 +90,11 @@ class ProgressThread implements Runnable {
 
         String prefix = progress.task + " " + percentage() + " " + style.leftBracket;
 
-        int maxSuffixLength = Math.max(0, consoleWidth() - consoleRightMargin - prefix.length() - 10);
+        int maxSuffixLength = Math.max(0, consoleWidth - consoleRightMargin - prefix.length() - 10);
         String suffix = style.rightBracket + " " + ratio() + " (" + Util.formatDuration(elapsed) + " / " + eta(elapsed) + ") " + progress.extraMessage;
         if (suffix.length() > maxSuffixLength) suffix = suffix.substring(0, maxSuffixLength);
 
-        length = consoleWidth() - consoleRightMargin - prefix.length() - suffix.length();
+        length = consoleWidth - consoleRightMargin - prefix.length() - suffix.length();
 
         StringBuilder sb = new StringBuilder();
         sb.append(prefix);

@@ -1,7 +1,14 @@
 package me.tongfei.progressbar;
 
+import me.tongfei.progressbar.wrapped.ProgressBarWrappedIterable;
+import me.tongfei.progressbar.wrapped.ProgressBarWrappedIterator;
+
 import java.io.PrintStream;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 
 /**
  * A simple console-based progress bar.
@@ -143,6 +150,29 @@ public class ProgressBar {
      */
     public String getExtraMessage() {
         return progress.getExtraMessage();
+    }
+
+    /**
+     * Wraps an iterator so that when iterated, a progress bar is shown to track the traversal progress.
+     * @param it Underlying iterator
+     * @param task Task name
+     */
+    public static <T> Iterator<T> wrap(Iterator<T> it, String task) {
+        return new ProgressBarWrappedIterator<>(it, task, -1); // indefinite progress bar
+    }
+
+    /**
+     * Wraps an iterable so that when iterated, a progress bar is shown to track the traversal progress.
+     * <p>
+     * Sample usage: {@code
+     *   for (T x : ProgressBar.wrap(collection, "Traversal")) { ... }
+     * }
+     * </p>
+     * @param ts Underlying iterable
+     * @param task Task name
+     */
+    public static <T> Iterable<T> wrap(Iterable<T> ts, String task) {
+        return new ProgressBarWrappedIterable<>(ts, task);
     }
 
 }

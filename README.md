@@ -1,6 +1,5 @@
 # progressbar
 [![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
-[![JavaDoc](https://img.shields.io/badge/javadoc.io-v0.5.5-ff69b4.svg?style=flat-square)](https://javadoc.io/doc/me.tongfei/progressbar/0.5.5)
 
 A simple console progress bar. Progress bar writing now runs on another thread.
 
@@ -12,16 +11,28 @@ For Consolas or Andale Mono fonts, use `ProgressBarStyle.ASCII` (see below) beca
 
 <img src="https://i.gyazo.com/e01943454443f90c9499c00a6c197a41.gif" width="600"/>
 
+Documentation:
+ - [Javadoc](https://javadoc.io/doc/me.tongfei/progressbar/0.6.0)
+
 Maven:
 ```xml
     <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar</artifactId>
-      <version>0.5.5</version>
+      <version>0.6.0</version>
     </dependency>
 ```
 
-Usage:
+Declarative usage (from 0.6.0):
+```java
+// Looping over a collection:
+for (T x in ProgressBar.wrap(collection, "TaskName")) {
+    ...
+    // Progress will automatically monitored by a progress bar
+}
+```
+
+Imperative usage:
 
 ```java
 ProgressBar pb = new ProgressBar("Test", 100); // name, initial max
@@ -29,7 +40,7 @@ ProgressBar pb = new ProgressBar("Test", 100); // name, initial max
 pb.start(); // the progress bar starts timing
 // Or you could combine these two lines like this:
 //   ProgressBar pb = new ProgressBar("Test", 100).start();
-some loop {
+for (T x : ProgressBar.wrap(collection, "TaskName")) {
   ...
   pb.step(); // step by 1
   pb.stepBy(n); // step by n
@@ -46,19 +57,3 @@ some loop {
 }
 pb.stop() // stops the progress bar
 ```
-
-#### Changelog
-
- - `0.5.5`: Fixed the problem of the progress bar being stuck if it finishes too fast. 
- Fixed the problem of `StringIndexOutOfBoundsException` error when the console width is too small. 
- Thanks @bwittwer, @rholdberh and @bubyakin !
- - `0.5.4`: Added indefinite progress bar support.
- - `0.5.3`: Type of max/current of a progress bar is changed from `int` to `long`. Thanks @vitobellini ! 
- - `0.5.2`: Methods now returns `this`. This simplifies the initialization: Now you can do `pb = new ProgressBar(...).start()`. Extra messages
- that are too long are trimmed properly. Thanks @mattcg !
- - `0.5.1`: Fixed the refresh problem when progress ended. Added style (Unicode block characters / pure ASCII) support.
- - `0.5.0`: Separated the progress bar thread from the main thread for better performance. Fixed the character offset issue. Thanks @rualpe !
- - `0.4.3`: Changed the symbols to box-drawing characters; more fine-grained display. Thanks @hrj !
- - `0.4.2`: Default output stream is changed to `System.err`; can be customized in constructor. Thanks @AluisioASG !
- - `0.4.1`: Added a `stepTo` method to `ProgressBar`s. Thanks @svenmauer !
- - `0.4.0`: Migrated from Scala to Java: less dependencies.

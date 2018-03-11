@@ -1,0 +1,21 @@
+### Changelog
+
+ - `0.6.0`: 
+   - Added declarative usage.
+   - Updated `jline` dependency to JLine 3. 
+   - Fixed problem in IntelliJ console. Thanks @saidaspen, @albancolley, @felixdivo, @AbhinavVishak !
+   - Fixed warning about encoding during Maven build. Thanks @khmarbaise !
+   - Fixed Java version in Maven build. Thanks @ccamel !
+ - `0.5.5`: Fixed the problem of the progress bar being stuck if it finishes too fast. 
+ Fixed the problem of `StringIndexOutOfBoundsException` error when the console width is too small. 
+ Thanks @bwittwer, @rholdberh and @bubyakin !
+ - `0.5.4`: Added indefinite progress bar support.
+ - `0.5.3`: Type of max/current of a progress bar is changed from `int` to `long`. Thanks @vitobellini ! 
+ - `0.5.2`: Methods now returns `this`. This simplifies the initialization: Now you can do `pb = new ProgressBar(...).start()`. Extra messages
+ that are too long are trimmed properly. Thanks @mattcg !
+ - `0.5.1`: Fixed the refresh problem when progress ended. Added style (Unicode block characters / pure ASCII) support.
+ - `0.5.0`: Separated the progress bar thread from the main thread for better performance. Fixed the character offset issue. Thanks @rualpe !
+ - `0.4.3`: Changed the symbols to box-drawing characters; more fine-grained display. Thanks @hrj !
+ - `0.4.2`: Default output stream is changed to `System.err`; can be customized in constructor. Thanks @AluisioASG !
+ - `0.4.1`: Added a `stepTo` method to `ProgressBar`s. Thanks @svenmauer !
+ - `0.4.0`: Migrated from Scala to Java: less dependencies.
