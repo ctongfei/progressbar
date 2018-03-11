@@ -27,7 +27,7 @@ Declarative usage (from 0.6.0):
 // Looping over a collection:
 for (T x : ProgressBar.wrap(collection, "TaskName")) {
     ...
-    // Progress will automatically monitored by a progress bar
+    // Progress will be automatically monitored by a progress bar
 }
 ```
 
