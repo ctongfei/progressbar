@@ -1,5 +1,7 @@
 package me.tongfei.progressbar;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 
 /**
@@ -7,8 +9,9 @@ import java.util.ArrayList;
  */
 public class ProgressBarTest {
 
-    static public void main(String[] args) throws Exception {
-        ProgressBar pb = new ProgressBar("Test", 5, 50, System.out, ProgressBarStyle.UNICODE_BLOCK).start();
+    @Test
+    public void test() {
+        ProgressBar pb = new ProgressBar("Test", 5, 50, System.out, ProgressBarStyle.UNICODE_BLOCK, "KB", 1024).start();
 
         double x = 1.0;
         double y = x * x;

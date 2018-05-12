@@ -21,17 +21,28 @@ class ProgressThread implements Runnable {
     PrintStream consoleStream;
     Terminal terminal;
     int consoleWidth = 80;
+    String unitName = "";
+    long unitSize = 1;
 
     static int consoleRightMargin = 2;
 
     int length;
 
-    ProgressThread(ProgressState progress, ProgressBarStyle style, long updateInterval, PrintStream consoleStream) {
+    ProgressThread(
+            ProgressState progress,
+            ProgressBarStyle style,
+            long updateInterval,
+            PrintStream consoleStream,
+            String unitName,
+            long unitSize
+    ) {
         this.progress = progress;
         this.style = style;
         this.updateInterval = updateInterval;
         this.consoleStream = consoleStream;
         this.killed = false;
+        this.unitName = unitName;
+        this.unitSize = unitSize;
 
         try {
             this.terminal = TerminalBuilder.terminal();
@@ -77,9 +88,9 @@ class ProgressThread implements Runnable {
     }
 
     String ratio() {
-        String m = progress.indefinite ? "?" : String.valueOf(progress.max);
-        String c = String.valueOf(progress.current);
-        return Util.repeat(' ', m.length() - c.length()) + c + "/" + m;
+        String m = progress.indefinite ? "?" : String.valueOf(progress.max / unitSize);
+        String c = String.valueOf(progress.current / unitSize);
+        return Util.repeat(' ', m.length() - c.length()) + c + "/" + m + unitName;
     }
 
     void refresh() {
@@ -114,6 +125,7 @@ class ProgressThread implements Runnable {
                 sb.append(Util.repeat(style.space, length - progressIntegralPart() - 1));
             }
         }
+
         sb.append(suffix);
         String line = sb.toString();
 

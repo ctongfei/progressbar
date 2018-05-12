@@ -13,9 +13,9 @@ public class ProgressBarWrappedIterator<T> implements Iterator<T> {
     Iterator<T> underlying;
     ProgressBar pb;
 
-    public ProgressBarWrappedIterator(Iterator<T> underlying, String task, long size) {
+    public ProgressBarWrappedIterator(Iterator<T> underlying, ProgressBar pb) {
         this.underlying = underlying;
-        pb = new ProgressBar(task, size).start();
+        this.pb = pb;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package me.tongfei.progressbar.wrapped;
 
+import me.tongfei.progressbar.ProgressBarBuilder;
+
 import java.util.Iterator;
 
 /**
@@ -9,19 +11,21 @@ import java.util.Iterator;
 public class ProgressBarWrappedIterable<T> implements Iterable<T> {
 
     Iterable<T> underlying;
-    String task;
+    ProgressBarBuilder pbb;
 
-    public ProgressBarWrappedIterable(Iterable<T> underlying, String task) {
+    public ProgressBarWrappedIterable(Iterable<T> underlying, ProgressBarBuilder pbb) {
         this.underlying = underlying;
-        this.task = task;
+        this.pbb = pbb;
     }
 
     @Override
     public Iterator<T> iterator() {
         return new ProgressBarWrappedIterator<>(
                 underlying.iterator(),
-                task,
-                underlying.spliterator().getExactSizeIfKnown() // if size unknown, -1, hence indefinite progress bar
+                pbb
+                        .setInitialMax(underlying.spliterator().getExactSizeIfKnown())
+                        // if size unknown, -1, hence indefinite progress bar
+                        .build().start()
         );
     }
 }
