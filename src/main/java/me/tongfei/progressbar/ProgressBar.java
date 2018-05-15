@@ -39,6 +39,18 @@ public class ProgressBar implements AutoCloseable {
 
     /**
      * Creates a progress bar with the specific task name, initial maximum value,
+     * customized update interval (default 1000 ms) and output style.
+     * @param task Task name
+     * @param initialMax Initial maximum value
+     * @param updateIntervalMillis Update interval given in [ms]
+     * @param style Output style (default value ProgresBarStyle.UNICODE_BLOCK)
+     */
+    public ProgressBar(String task, long initialMax, int updateIntervalMillis, ProgressBarStyle style) {
+        this(task, initialMax, updateIntervalMillis, System.err, style);
+    }
+
+    /**
+     * Creates a progress bar with the specific task name, initial maximum value,
      * customized update interval (default 1000 ms), the PrintStream to be used, and output style.
      * @param task Task name
      * @param initialMax Initial maximum value
