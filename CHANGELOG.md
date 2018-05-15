@@ -1,7 +1,7 @@
 ### Changelog
 
  - `0.7.0`:
-   - Utilized the try-with-resource pattern for the Java imperative syntax， deprecating `ProgressBar#start` and `ProgressBar#stop`.
+   - Utilized the try-with-resource pattern for the Java imperative syntax, deprecating `ProgressBar#start` and `ProgressBar#stop`.
    - Introduced units for progress bar that enables showing the total amount of work in some unit (e.g. MB / GB).
    - Introduced the builder pattern for constructing progress bars (instead of lots of different constructors).
    - Added declarative usage that wraps around `InputStream`, which enables tracking the progress of reading a large file or stream.
