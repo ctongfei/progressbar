@@ -11,26 +11,26 @@ public class ProgressBarTest {
 
     @Test
     public void test() {
-        ProgressBar pb = new ProgressBar("Test", 5, 50, System.out, ProgressBarStyle.UNICODE_BLOCK, "KB", 1024).start();
+        try (ProgressBar pb = new ProgressBar("Test", 5, 50, System.out, ProgressBarStyle.UNICODE_BLOCK, "KB", 1024)) {
 
-        double x = 1.0;
-        double y = x * x;
+            double x = 1.0;
+            double y = x * x;
 
-        ArrayList<Integer> l = new ArrayList<Integer>();
+            ArrayList<Integer> l = new ArrayList<Integer>();
 
-        System.out.println("\n\n\n\n\n");
+            System.out.println("\n\n\n\n\n");
 
-        for (int i = 0; i < 10000; i++) {
-            int sum = 0;
-            for (int j = 0; j < i * 2000; j++)
-                sum += j;
-            l.add(sum);
+            for (int i = 0; i < 10000; i++) {
+                int sum = 0;
+                for (int j = 0; j < i * 2000; j++)
+                    sum += j;
+                l.add(sum);
 
-            pb.step();
-            if (pb.getCurrent() > 8000) pb.maxHint(10000);
+                pb.step();
+                if (pb.getCurrent() > 8000) pb.maxHint(10000);
 
+            }
         }
-        pb.stop();
         System.out.println("Hello");
     }
 

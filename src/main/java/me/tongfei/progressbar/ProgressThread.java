@@ -3,7 +3,7 @@ package me.tongfei.progressbar;
 import java.io.PrintStream;
 import java.io.IOException;
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
@@ -47,9 +47,7 @@ class ProgressThread implements Runnable {
         try {
             this.terminal = TerminalBuilder.terminal();
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        catch (IOException e) { }
 
         if (terminal.getWidth() >= 10)  // Workaround for issue #23 under IntelliJ
             consoleWidth = terminal.getWidth();
@@ -77,7 +75,8 @@ class ProgressThread implements Runnable {
         else if (progress.current == 0) return "?";
         else return Util.formatDuration(
                 elapsed.dividedBy(progress.current)
-                        .multipliedBy(progress.max - progress.current));
+                        .multipliedBy(progress.max - progress.current)
+            );
     }
 
     String percentage() {
@@ -96,7 +95,7 @@ class ProgressThread implements Runnable {
     void refresh() {
         consoleStream.print('\r');
 
-        LocalDateTime currTime = LocalDateTime.now();
+        Instant currTime = Instant.now();
         Duration elapsed = Duration.between(progress.startTime, currTime);
 
         String prefix = progress.task + " " + percentage() + " " + style.leftBracket;

@@ -3,6 +3,7 @@ package me.tongfei.progressbar.wrapped;
 import me.tongfei.progressbar.ProgressBar;
 
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 /**
  * @author Tongfei Chen
@@ -31,4 +32,10 @@ public class ProgressBarWrappedIterator<T> implements Iterator<T> {
         pb.step();
         return r;
     }
+
+    @Override
+    public void remove() {
+        underlying.remove();
+    }
+
 }

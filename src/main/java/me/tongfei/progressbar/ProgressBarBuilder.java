@@ -11,7 +11,7 @@ public class ProgressBarBuilder {
 
     private String task = "";
     private long initialMax = 0;
-    private ProgressBarStyle style = ProgressBarStyle.UNICODE_BLOCK;
+    private ProgressBarStyle style = ProgressBarStyle.COLORFUL_UNICODE_BLOCK;
     private int updateIntervalMillis = 1000;
     private PrintStream stream = System.err;
     private String unitName = "";

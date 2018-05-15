@@ -20,12 +20,11 @@ public class ProgressBarWrappedIterable<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
+        Iterator<T> it = underlying.iterator();
         return new ProgressBarWrappedIterator<>(
-                underlying.iterator(),
-                pbb
-                        .setInitialMax(underlying.spliterator().getExactSizeIfKnown())
-                        // if size unknown, -1, hence indefinite progress bar
-                        .build().start()
+                it,
+                pbb.setInitialMax(underlying.spliterator().getExactSizeIfKnown()).build()
+                // getExactSizeIfKnown return -1 if not known, then indefinite progress bar naturally
         );
     }
 }

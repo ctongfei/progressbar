@@ -1,6 +1,6 @@
 package me.tongfei.progressbar;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * Encapsulates the internal states of a progress bar.
@@ -16,7 +16,7 @@ class ProgressState {
     long current = 0;
     long max = 0;
 
-    LocalDateTime startTime = null;
+    Instant startTime = null;
 
     String extraMessage = "";
 

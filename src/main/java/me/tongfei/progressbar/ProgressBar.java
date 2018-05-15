@@ -4,18 +4,17 @@ import me.tongfei.progressbar.wrapped.ProgressBarWrappedInputStream;
 import me.tongfei.progressbar.wrapped.ProgressBarWrappedIterable;
 import me.tongfei.progressbar.wrapped.ProgressBarWrappedIterator;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.IOException;
 import java.io.PrintStream;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 
 /**
- * A simple console-based progress bar.
+ * A console-based progress bar with minimal runtime overhead.
  * @author Tongfei Chen
  */
-public class ProgressBar {
+public class ProgressBar implements AutoCloseable {
 
     private ProgressState progress;
     private ProgressThread target;
@@ -27,7 +26,7 @@ public class ProgressBar {
      * @param initialMax Initial maximum value
      */
     public ProgressBar(String task, long initialMax) {
-        this(task, initialMax, 1000, System.err, ProgressBarStyle.UNICODE_BLOCK, "", 1);
+        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1);
     }
 
     public ProgressBar(String task, long initialMax, ProgressBarStyle style) {
@@ -35,7 +34,7 @@ public class ProgressBar {
     }
 
     public ProgressBar(String task, long initialMax, int updateIntervalMillis) {
-        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.UNICODE_BLOCK, "", 1);
+        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1);
     }
 
     /**
@@ -59,13 +58,20 @@ public class ProgressBar {
         this.progress = new ProgressState(task, initialMax);
         this.target = new ProgressThread(progress, style, updateIntervalMillis, os, unitName, unitSize);
         this.thread = new Thread(target, this.getClass().getName());
+
+        // starts the progress bar upon construction
+        progress.startTime = Instant.now();
+        thread.start();
+
     }
 
     /**
      * Starts this progress bar.
+     * @deprecated Please use the Java try-with-resource pattern instead.
      */
+    @Deprecated
     public ProgressBar start() {
-        progress.startTime = LocalDateTime.now();
+        progress.startTime = Instant.now();
         thread.start();
         return this;
     }
@@ -112,8 +118,22 @@ public class ProgressBar {
 
     /**
      * Stops this progress bar.
+     * @deprecated Please use the Java try-with-resource pattern instead.
      */
+    @Deprecated
     public ProgressBar stop() {
+        close();
+        return this;
+    }
+
+    /**
+     * <p>Stops this progress bar, effectively stops tracking the underlying process.</p>
+     * <p>Implements the {@link java.lang.AutoCloseable} interface which enables the try-with-resource
+     * pattern with progress bars.</p>
+     * @since 0.7.0
+     */
+    @Override
+    public void close() {
         target.kill();
         try {
             thread.join();
@@ -121,7 +141,6 @@ public class ProgressBar {
             target.consoleStream.flush();
         }
         catch (InterruptedException ex) { }
-        return this;
     }
 
     /**
@@ -161,6 +180,7 @@ public class ProgressBar {
         return progress.getExtraMessage();
     }
 
+    // STATIC WRAPPER METHODS
 
     /**
      * Wraps an iterator so that when iterated, a progress bar is shown to track the traversal progress.
@@ -179,7 +199,7 @@ public class ProgressBar {
      * @param pbb Progress bar builder
      */
     public static <T> Iterator<T> wrap(Iterator<T> it, ProgressBarBuilder pbb) {
-        return new ProgressBarWrappedIterator<>(it, pbb.build().start());
+        return new ProgressBarWrappedIterator<>(it, pbb.build());
     }
 
     /**
@@ -212,7 +232,7 @@ public class ProgressBar {
     }
 
     public static InputStream wrap(InputStream is, ProgressBarBuilder pbb) {
-        return new ProgressBarWrappedInputStream(is, pbb.setInitialMax(Util.getInputStreamSize(is)).build().start());
+        return new ProgressBarWrappedInputStream(is, pbb.setInitialMax(Util.getInputStreamSize(is)).build());
     }
 
 }
