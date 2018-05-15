@@ -1,0 +1,69 @@
+package me.tongfei.progressbar.wrapped;
+
+import me.tongfei.progressbar.ProgressBar;
+
+import java.io.FilterInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+/**
+ * @author Tongfei Chen
+ * @since 0.7.0
+ */
+public class ProgressBarWrappedInputStream extends FilterInputStream {
+
+    private ProgressBar pb;
+    private long mark = 0;
+
+    public ProgressBarWrappedInputStream(InputStream in, ProgressBar pb) {
+        super(in);
+        this.pb = pb;
+    }
+
+    @Override
+    public int read() throws IOException {
+        int r = in.read();
+        if (r != -1) pb.step();
+        return r;
+    }
+
+    @Override
+    public int read(byte[] b) throws IOException {
+        int r = in.read(b);
+        pb.stepBy(r);
+        return r;
+    }
+
+    @Override
+    public int read(byte[] b, int off, int len) throws IOException {
+        int r = in.read(b, off, len);
+        pb.stepBy(r);
+        return r;
+    }
+
+    @Override
+    public long skip(long n) throws IOException {
+        long r = in.skip(n);
+        pb.stepBy(r);
+        return r;
+    }
+
+    @Override
+    public void mark(int readLimit) {
+        in.mark(readLimit);
+        mark = pb.getCurrent();
+    }
+
+    @Override
+    public void reset() throws IOException {
+        in.reset();
+        pb.stepTo(mark);
+    }
+
+    @Override
+    public void close() throws IOException {
+        in.close();
+        pb.stop();
+    }
+
+}

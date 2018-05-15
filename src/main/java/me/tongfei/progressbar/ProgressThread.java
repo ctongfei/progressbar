@@ -3,7 +3,7 @@ package me.tongfei.progressbar;
 import java.io.PrintStream;
 import java.io.IOException;
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
@@ -21,24 +21,33 @@ class ProgressThread implements Runnable {
     PrintStream consoleStream;
     Terminal terminal;
     int consoleWidth = 80;
+    String unitName = "";
+    long unitSize = 1;
 
     static int consoleRightMargin = 2;
 
     int length;
 
-    ProgressThread(ProgressState progress, ProgressBarStyle style, long updateInterval, PrintStream consoleStream) {
+    ProgressThread(
+            ProgressState progress,
+            ProgressBarStyle style,
+            long updateInterval,
+            PrintStream consoleStream,
+            String unitName,
+            long unitSize
+    ) {
         this.progress = progress;
         this.style = style;
         this.updateInterval = updateInterval;
         this.consoleStream = consoleStream;
         this.killed = false;
+        this.unitName = unitName;
+        this.unitSize = unitSize;
 
         try {
             this.terminal = TerminalBuilder.terminal();
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        catch (IOException e) { }
 
         if (terminal.getWidth() >= 10)  // Workaround for issue #23 under IntelliJ
             consoleWidth = terminal.getWidth();
@@ -66,7 +75,8 @@ class ProgressThread implements Runnable {
         else if (progress.current == 0) return "?";
         else return Util.formatDuration(
                 elapsed.dividedBy(progress.current)
-                        .multipliedBy(progress.max - progress.current));
+                        .multipliedBy(progress.max - progress.current)
+            );
     }
 
     String percentage() {
@@ -77,15 +87,15 @@ class ProgressThread implements Runnable {
     }
 
     String ratio() {
-        String m = progress.indefinite ? "?" : String.valueOf(progress.max);
-        String c = String.valueOf(progress.current);
-        return Util.repeat(' ', m.length() - c.length()) + c + "/" + m;
+        String m = progress.indefinite ? "?" : String.valueOf(progress.max / unitSize);
+        String c = String.valueOf(progress.current / unitSize);
+        return Util.repeat(' ', m.length() - c.length()) + c + "/" + m + unitName;
     }
 
     void refresh() {
         consoleStream.print('\r');
 
-        LocalDateTime currTime = LocalDateTime.now();
+        Instant currTime = Instant.now();
         Duration elapsed = Duration.between(progress.startTime, currTime);
 
         String prefix = progress.task + " " + percentage() + " " + style.leftBracket;
@@ -114,6 +124,7 @@ class ProgressThread implements Runnable {
                 sb.append(Util.repeat(style.space, length - progressIntegralPart() - 1));
             }
         }
+
         sb.append(suffix);
         String line = sb.toString();
 

@@ -3,6 +3,7 @@ package me.tongfei.progressbar.wrapped;
 import me.tongfei.progressbar.ProgressBar;
 
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 /**
  * @author Tongfei Chen
@@ -13,9 +14,9 @@ public class ProgressBarWrappedIterator<T> implements Iterator<T> {
     Iterator<T> underlying;
     ProgressBar pb;
 
-    public ProgressBarWrappedIterator(Iterator<T> underlying, String task, long size) {
+    public ProgressBarWrappedIterator(Iterator<T> underlying, ProgressBar pb) {
         this.underlying = underlying;
-        pb = new ProgressBar(task, size).start();
+        this.pb = pb;
     }
 
     @Override
@@ -31,4 +32,10 @@ public class ProgressBarWrappedIterator<T> implements Iterator<T> {
         pb.step();
         return r;
     }
+
+    @Override
+    public void remove() {
+        underlying.remove();
+    }
+
 }
