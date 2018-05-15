@@ -1,5 +1,4 @@
-# progressbar
-[![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
+# progressbar [![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
 
 A console progress bar for JVM with minimal runtime overhead.
 
@@ -34,9 +33,9 @@ Maven:
 Declarative usage (since `0.6.0`):
 ```java
 // Looping over a collection:
-for (T x in ProgressBar.wrap(collection, "TaskName")) {
+for (T x : ProgressBar.wrap(collection, "TaskName")) {
     ...
-    // Progress will automatically monitored by a progress bar
+    // Progress will be automatically monitored by a progress bar
 }
 ```
 
@@ -63,3 +62,6 @@ try (ProgressBar pb = new ProgressBar("Test", 100)) { // name, initial max
   }
 } // progress bar stops automatically after completion of try-with-resource block
 ```
+
+#### Changelog
+[CHANGELOG](https://github.com/ctongfei/progressbar/blob/master/CHANGELOG.md)
