@@ -14,6 +14,7 @@ For Consolas or Andale Mono fonts, use `ProgressBarStyle.ASCII` because the box-
 <img src="https://i.gyazo.com/e01943454443f90c9499c00a6c197a41.gif" width="600"/>
 
 #### Documentation
+ - [Documentation](http://ctongfei.github.io/progressbar/docs/)
  - [Javadoc](https://javadoc.io/doc/me.tongfei/progressbar/0.7.0)
  
 
