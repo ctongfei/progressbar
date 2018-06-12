@@ -1,14 +1,27 @@
-Current version: `0.7.0`
+# Progressbar
 
-A console progress bar for JVM with minimal runtime overhead.
+`Progressbar` is a console-based progress bar for Java with minimal runtime overhead.
 
-#### Getting started
+#### Installation
 
-Installation through Maven:
-``` xml
+Depending on your build tool, add the following setting.
+
+``` xml fct_label="Maven"
   <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar</artifactId>
       <version>0.7.0</version>
   </dependency>
 ```
+
+``` groovy fct_label="Gradle"
+compile 'me.tongfei:progressbar:0.7.0'
+```
+
+#### Getting started
+
+``` java
+import me.tongfei.progressbar.*;
+```
+
+And then refer to [Declarative usage](declarative-usage.md) or [Imperative usage](imperative-usage.md), two flavors of using a progress bar.

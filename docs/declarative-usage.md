@@ -1,12 +1,12 @@
 Since Progressbar `0.6.0`, declarative usage is the preferred way of using a progress bar.
 
-Basically, you wrap an `Iterable`, `Iterator` or `InputStream` (can be seen as an `Iterator[Byte]`) so that when iterating over it, a progress bar automatically tracks its progress. 
+Basically, you wrap an `Iterable`, `Iterator` or `InputStream` (can be seen as an `Iterator[Byte]`) so that when iterating over it, a progress bar automatically tracks its progress. The type of your collection does not change after wrapped with a progress bar.
 
 This is done by using the static method `ProgressBar.wrap(...)`. The syntax is
 ``` java
 ProgressBar.wrap(iterable, <task name>)
 ```
-Or, if you want to use the builder pattern to customize the progress bar, use 
+Or, if you want to use the [builder pattern](builder.md) to customize the progress bar, use 
 ``` java
 ProgressBarBuilder pbb = new ProgressBarBuilder()
 // setting the builder
@@ -16,6 +16,9 @@ ProgressBar.wrap(iterable, pbb)
 Examples:
 
 ##### Example: Traverses through a Java collection
+
+If the size of the collection is known, the progress bar's max will be automatically set as the size of the collection; otherwise the progress bar will be indefinite.
+
 ``` java
 for (T x : ProgressBar.wrap(collection, "Traversing")) {
     ...
@@ -23,6 +26,9 @@ for (T x : ProgressBar.wrap(collection, "Traversing")) {
 ```
 
 ##### Example: Reads a large file lazily
+
+When wrapping around a `java.io.InputStream`, whether it is a `java.io.FileInputStream` will be detected. If successful, the file's full size in byte will be retrieved and set as the progress bar's max; otherwise, the progress bar will be indefinite.
+
 ``` java
 ProgressBarBuilder pbb = new ProgressBarBuilder()
     .setTaskName("Reading")

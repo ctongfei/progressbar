@@ -1,4 +1,4 @@
-site_name: 'Progressbar'
+site_name: 'Progressbar 0.7.0'
 site_description: 'A console progress bar for Java/JVM'
 site_author: 'Tongfei Chen'
 copyright: 'Copyright &copy; 2015-2018 Tongfei Chen'
@@ -12,15 +12,23 @@ theme:
     text: 'Source Sans Pro'
     code: 'Source Code Pro'
   
-markdown_extensions: [codehilite, extra]
+markdown_extensions: 
+  - codehilite
+  - extra
+  - markdown_fenced_code_tabs:
+      single_block_as_tab: False
+      active_class: 'active'
+      template: 'default'
 
 repo_name: 'ctongfei/progressbar'
 repo_url: 'https://github.com/ctongfei/progressbar'
 
+extra_css: ['css/extra.css']
+
 pages:
-  - Getting started: 'index.md'
-  - Declarative usage: 'declarative-usage.md'
-  - Imperative usage: 'imperative-usage.md'
-  - Visual styles: 'styles.md'
-  - Builder pattern: 'builder.md'
+  - 'Introduction': 'index.md'
+  - 'Declarative usage': 'declarative-usage.md'
+  - 'Imperative usage': 'imperative-usage.md'
+  - 'Visual styles': 'styles.md'
+  - 'Builder pattern': 'builder.md'
   
