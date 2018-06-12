@@ -25,3 +25,6 @@ import me.tongfei.progressbar.*;
 ```
 
 And then refer to [Declarative usage](declarative-usage.md) or [Imperative usage](imperative-usage.md), two flavors of using a progress bar.
+
+#### Changelog
+[Changelog](changelog.md)

@@ -31,4 +31,4 @@ pages:
   - 'Imperative usage': 'imperative-usage.md'
   - 'Visual styles': 'styles.md'
   - 'Builder pattern': 'builder.md'
-  
+  - 'Changelog': 'changelog.md'

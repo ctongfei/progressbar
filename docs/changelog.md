@@ -1,17 +1,20 @@
-### Changelog
+# Changelog
 
- - `0.7.0`:
-   - Utilized the try-with-resource pattern for the Java imperative syntax, deprecating `ProgressBar#start` and `ProgressBar#stop`.
-   - Introduced units for progress bar that enables showing the total amount of work in some unit (e.g. MB / GB).
-   - Introduced the builder pattern for constructing progress bars (instead of lots of different constructors).
-   - Added declarative usage that wraps around `InputStream`, which enables tracking the progress of reading a large file or stream.
-   - Progress bars are now colorful by default using ANSI color codes.
- - `0.6.0`: 
-   - Added declarative usage that wraps around `Iterator` and `Iterable`.
-   - Updated `jline` dependency to JLine 3. 
-   - Fixed problem in IntelliJ console. Thanks @saidaspen, @albancolley, @felixdivo, @AbhinavVishak !
-   - Fixed warning about encoding during Maven build. Thanks @khmarbaise !
-   - Fixed Java version in Maven build. Thanks @ccamel !
+ * `0.7.0`:
+     - Utilized the try-with-resource pattern for the Java imperative syntax, deprecating `ProgressBar#start` and `ProgressBar#stop`.
+     - Introduced units for progress bar that enables showing the total amount of work in some unit (e.g. MB / GB).
+     - Introduced the builder pattern for constructing progress bars (instead of lots of different constructors).
+     - Added declarative usage that wraps around `InputStream`, which enables tracking the progress of reading a large file or stream.
+     - Progress bars are now colorful by default using ANSI color codes.
+ 
+ * `0.6.0`: 
+ 
+     - Added declarative usage that wraps around `Iterator` and `Iterable`.
+     - Updated `jline` dependency to JLine 3. 
+     - Fixed problem in IntelliJ console. Thanks @saidaspen, @albancolley, @felixdivo, @AbhinavVishak !
+     - Fixed warning about encoding during Maven build. Thanks @khmarbaise !
+     - Fixed Java version in Maven build. Thanks @ccamel !
+ 
  - `0.5.5`: Fixed the problem of the progress bar being stuck if it finishes too fast. 
  Fixed the problem of `StringIndexOutOfBoundsException` error when the console width is too small. 
  Thanks @bwittwer, @rholdberh and @bubyakin !
