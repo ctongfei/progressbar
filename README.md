@@ -46,8 +46,7 @@ Imperative usage (since `0.7.0` switched to Java's try-with-resource pattern):
 // try-with-resource block
 try (ProgressBar pb = new ProgressBar("Test", 100)) { // name, initial max
  // Use ProgressBar("Test", 100, ProgressBarStyle.ASCII) if you want ASCII output style
-  for (T x : ProgressBar.wrap(collection, "TaskName")) {
-    ...
+  for ( /* TASK TO TRACK */ ) {
     pb.step(); // step by 1
     pb.stepBy(n); // step by n
     ...
