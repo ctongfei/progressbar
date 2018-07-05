@@ -47,7 +47,7 @@ class ProgressThread implements Runnable {
         try {
             this.terminal = TerminalBuilder.terminal();
         }
-        catch (IOException e) { }
+        catch (IOException ignored) { }
 
         if (terminal.getWidth() >= 10)  // Workaround for issue #23 under IntelliJ
             consoleWidth = terminal.getWidth();
@@ -143,6 +143,6 @@ class ProgressThread implements Runnable {
             }
             refresh();
             // do-while loop not right: must force to refresh after stopped
-        } catch (InterruptedException ex) { }
+        } catch (InterruptedException ignored) { }
     }
 }

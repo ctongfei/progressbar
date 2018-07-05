@@ -10,12 +10,16 @@ import java.util.Iterator;
  */
 public class ProgressBarWrappedIterable<T> implements Iterable<T> {
 
-    Iterable<T> underlying;
-    ProgressBarBuilder pbb;
+    private Iterable<T> underlying;
+    private ProgressBarBuilder pbb;
 
     public ProgressBarWrappedIterable(Iterable<T> underlying, ProgressBarBuilder pbb) {
         this.underlying = underlying;
         this.pbb = pbb;
+    }
+
+    public ProgressBarBuilder getProgressBarBuilder() {
+        return pbb;
     }
 
     @Override

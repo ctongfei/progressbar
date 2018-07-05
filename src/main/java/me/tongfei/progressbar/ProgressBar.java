@@ -5,9 +5,9 @@ import me.tongfei.progressbar.wrapped.ProgressBarWrappedIterable;
 import me.tongfei.progressbar.wrapped.ProgressBarWrappedIterator;
 
 import java.io.InputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Iterator;
 
 /**
@@ -139,8 +139,9 @@ public class ProgressBar implements AutoCloseable {
             thread.join();
             target.consoleStream.print("\n");
             target.consoleStream.flush();
+            target.terminal.close();
         }
-        catch (InterruptedException ex) { }
+        catch (InterruptedException | IOException ignored) { }
     }
 
     /**

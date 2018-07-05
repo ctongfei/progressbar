@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * Any input stream whose progress is tracked by a progress bar.
  * @author Tongfei Chen
  * @since 0.7.0
  */
@@ -18,6 +19,10 @@ public class ProgressBarWrappedInputStream extends FilterInputStream {
     public ProgressBarWrappedInputStream(InputStream in, ProgressBar pb) {
         super(in);
         this.pb = pb;
+    }
+
+    public ProgressBar getProgressBar() {
+        return pb;
     }
 
     @Override
@@ -63,7 +68,7 @@ public class ProgressBarWrappedInputStream extends FilterInputStream {
     @Override
     public void close() throws IOException {
         in.close();
-        pb.stop();
+        pb.close();
     }
 
 }

@@ -10,14 +10,10 @@ import java.time.Instant;
 class ProgressState {
 
     String task;
-
     boolean indefinite = false;
-
     long current = 0;
     long max = 0;
-
     Instant startTime = null;
-
     String extraMessage = "";
 
     ProgressState(String task, long initialMax) {
