@@ -64,4 +64,4 @@ try (ProgressBar pb = new ProgressBar("Test", 100)) { // name, initial max
 ```
 
 #### Changelog
-[CHANGELOG](https://github.com/ctongfei/progressbar/blob/master/CHANGELOG.md)
+[CHANGELOG](https://github.com/ctongfei/progressbar/blob/master/docs/changelog.md)
