@@ -1,5 +1,11 @@
 # Changelog
 
+ * Unreleased:
+     - Fixed the problem of not properly closing the JLine `Terminal` object. Thanks @voseldop !
+     - Documentation: 
+         - Moved `CHANGELOG.md` to the home directory and created a symlink in the `docs/` folder to it. Thanks @koppor !
+         - Fixed bug (demo code was wrong) in the declarative usage section. Thanks @AbhinavVishak !
+
  * `0.7.0`:
      - Utilized the try-with-resource pattern for the Java imperative syntax, deprecating `ProgressBar#start` and `ProgressBar#stop`.
      - Introduced units for progress bar that enables showing the total amount of work in some unit (e.g. MB / GB).
