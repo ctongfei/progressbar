@@ -1,10 +1,11 @@
 # Changelog
 
- * Unreleased:
-     - Fixed the problem of not properly closing the JLine `Terminal` object. Thanks @voseldop !
+ * `0.7.1`:
+     - Fixed the problem of not properly closing the JLine `Terminal` object (#40). Thanks @voseldop !
+     - Suppressed JLine warning if a dumb terminal is created (partially fixed #42). Thanks @BuZZ-DEE !
      - Documentation: 
-         - Moved `CHANGELOG.md` to the home directory and created a symlink in the `docs/` folder to it. Thanks @koppor !
-         - Fixed bug (demo code was wrong) in the declarative usage section. Thanks @AbhinavVishak !
+         - Moved `CHANGELOG.md` to the home directory and created a symlink in the `docs/` folder to it (#41). Thanks @koppor !
+         - Fixed bug (demo code was wrong) in the declarative usage section (#39). Thanks @AbhinavVishak !
 
  * `0.7.0`:
      - Utilized the try-with-resource pattern for the Java imperative syntax, deprecating `ProgressBar#start` and `ProgressBar#stop`.
@@ -12,6 +13,8 @@
      - Introduced the builder pattern for constructing progress bars (instead of lots of different constructors).
      - Added declarative usage that wraps around `InputStream`, which enables tracking the progress of reading a large file or stream.
      - Progress bars are now colorful by default using ANSI color codes.
+     - Documentation:
+        - Brand new `mkdocs` Material-style documentation!
  
  * `0.6.0`: 
  

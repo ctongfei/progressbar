@@ -128,7 +128,7 @@ public class ProgressBar implements AutoCloseable {
 
     /**
      * <p>Stops this progress bar, effectively stops tracking the underlying process.</p>
-     * <p>Implements the {@link java.lang.AutoCloseable} interface which enables the try-with-resource
+     * <p>Implements the {@link AutoCloseable} interface which enables the try-with-resource
      * pattern with progress bars.</p>
      * @since 0.7.0
      */
@@ -204,7 +204,7 @@ public class ProgressBar implements AutoCloseable {
     }
 
     /**
-     * Wraps an iterable so that when iterated, a progress bar is shown to track the traversal progress.
+     * Wraps an {@link Iterable} so that when iterated, a progress bar is shown to track the traversal progress.
      * <p>
      * Sample usage: {@code
      *   for (T x : ProgressBar.wrap(collection, "Traversal")) { ... }
@@ -218,7 +218,7 @@ public class ProgressBar implements AutoCloseable {
     }
 
     /**
-     * Wraps an iterable so that when iterated, a progress bar is shown to track the traversal progress.
+     * Wraps an {@link Iterable} so that when iterated, a progress bar is shown to track the traversal progress.
      * For this function the progress bar can be fully customized by using a {@link ProgressBarBuilder}.
      * @param ts Underlying iterable
      * @param pbb An instance of a {@link ProgressBarBuilder}
@@ -227,13 +227,27 @@ public class ProgressBar implements AutoCloseable {
         return new ProgressBarWrappedIterable<>(ts, pbb);
     }
 
+    /**
+     * Wraps an {@link InputStream} so that when read, a progress bar is shown to track the reading progress.
+     * @param is Input stream to be wrapped
+     * @param task Name of the progress
+     */
     public static InputStream wrap(InputStream is, String task) {
         ProgressBarBuilder pbb = new ProgressBarBuilder().setTaskName(task).setInitialMax(Util.getInputStreamSize(is));
         return wrap(is, pbb);
     }
 
+    /**
+     * Wraps an {@link InputStream} so that when read, a progress bar is shown to track the reading progress.
+     * For this function the progress bar can be fully customized by using a {@link ProgressBarBuilder}.
+     * @param is Input stream to be wrapped
+     * @param pbb An instance of a {@link ProgressBarBuilder}
+     */
     public static InputStream wrap(InputStream is, ProgressBarBuilder pbb) {
-        return new ProgressBarWrappedInputStream(is, pbb.setInitialMax(Util.getInputStreamSize(is)).build());
+        return new ProgressBarWrappedInputStream(
+                is,
+                pbb.setInitialMax(Util.getInputStreamSize(is)).build() // attempts to get the max size
+        );
     }
 
 }

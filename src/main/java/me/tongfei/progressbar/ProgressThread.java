@@ -45,7 +45,10 @@ class ProgressThread implements Runnable {
         this.unitSize = unitSize;
 
         try {
-            this.terminal = TerminalBuilder.terminal();
+            // Issue #42
+            // Defaulting to a dumb terminal when a supported terminal can not be correctly created
+            // see https://github.com/jline/jline3/issues/291
+            this.terminal = TerminalBuilder.builder().dumb(true).build();
         }
         catch (IOException ignored) { }
 
