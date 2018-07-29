@@ -40,7 +40,7 @@
     
     
       
-        <title>Changelog - Progressbar 0.7.0</title>
+        <title>Changelog - Progressbar 0.7.1</title>
       
     
     
@@ -108,7 +108,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href=".." title="Progressbar 0.7.0" class="md-header-nav__button md-logo">
+        <a href=".." title="Progressbar 0.7.1" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -122,7 +122,7 @@
           
             
               <span class="md-header-nav__topic">
-                Progressbar 0.7.0
+                Progressbar 0.7.1
               </span>
               <span class="md-header-nav__topic">
                 Changelog
@@ -209,7 +209,7 @@
         <i class="md-icon"></i>
       
     </span>
-    Progressbar 0.7.0
+    Progressbar 0.7.1
   </label>
   
     <div class="md-nav__source">
@@ -350,12 +350,13 @@
                 <h1 id="changelog">Changelog</h1>
 <ul>
 <li>
-<p>Unreleased:</p>
+<p><code>0.7.1</code>:</p>
 <ul>
-<li>Fixed the problem of not properly closing the JLine <code>Terminal</code> object. Thanks @voseldop !</li>
+<li>Fixed the problem of not properly closing the JLine <code>Terminal</code> object (#40). Thanks @voseldop !</li>
+<li>Suppressed JLine warning if a dumb terminal is created (partially fixed #42). Thanks @BuZZ-DEE !</li>
 <li>Documentation: <ul>
-<li>Moved <code>CHANGELOG.md</code> to the home directory and created a symlink in the <code>docs/</code> folder to it. Thanks @koppor !</li>
-<li>Fixed bug (demo code was wrong) in the declarative usage section. Thanks @AbhinavVishak !</li>
+<li>Moved <code>CHANGELOG.md</code> to the home directory and created a symlink in the <code>docs/</code> folder to it (#41). Thanks @koppor !</li>
+<li>Fixed bug (demo code was wrong) in the declarative usage section (#39). Thanks @AbhinavVishak !</li>
 </ul>
 </li>
 </ul>
@@ -368,6 +369,10 @@
 <li>Introduced the builder pattern for constructing progress bars (instead of lots of different constructors).</li>
 <li>Added declarative usage that wraps around <code>InputStream</code>, which enables tracking the progress of reading a large file or stream.</li>
 <li>Progress bars are now colorful by default using ANSI color codes.</li>
+<li>Documentation:<ul>
+<li>Brand new <code>mkdocs</code> Material-style documentation!</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>
