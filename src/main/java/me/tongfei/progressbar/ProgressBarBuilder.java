@@ -16,6 +16,7 @@ public class ProgressBarBuilder {
     private PrintStream stream = System.err;
     private String unitName = "";
     private long unitSize = 1;
+    private boolean showSpeed = false;
 
     public ProgressBarBuilder() { }
 
@@ -50,6 +51,11 @@ public class ProgressBarBuilder {
         return this;
     }
 
+    public ProgressBarBuilder showSpeed(){
+        this.showSpeed = true;
+        return this;
+    }
+
     public ProgressBar build() {
         return new ProgressBar(
                 task,
@@ -58,7 +64,8 @@ public class ProgressBarBuilder {
                 stream,
                 style,
                 unitName,
-                unitSize
+                unitSize,
+                showSpeed
         );
     }
 }

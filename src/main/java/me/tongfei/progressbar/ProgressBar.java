@@ -26,15 +26,25 @@ public class ProgressBar implements AutoCloseable {
      * @param initialMax Initial maximum value
      */
     public ProgressBar(String task, long initialMax) {
-        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1);
+        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false);
     }
 
     public ProgressBar(String task, long initialMax, ProgressBarStyle style) {
-        this(task, initialMax, 1000, System.err, style, "", 1);
+        this(task, initialMax, 1000, System.err, style, "", 1, false);
     }
 
     public ProgressBar(String task, long initialMax, int updateIntervalMillis) {
-        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1);
+        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false);
+    }
+
+    public ProgressBar(String task,
+                       long initialMax,
+                       int updateIntervalMillis,
+                       PrintStream os,
+                       ProgressBarStyle style,
+                       String unitName,
+                       long unitSize){
+        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, false);
     }
 
     /**
@@ -45,6 +55,7 @@ public class ProgressBar implements AutoCloseable {
      * @param updateIntervalMillis Update interval (default value 1000 ms)
      * @param os Print stream (default value System.err)
      * @param style Output style (default value ProgressBarStyle.UNICODE_BLOCK)
+     * @param showSpeed Should the calculated Speed be displayed
      */
     public ProgressBar(
             String task,
@@ -53,10 +64,11 @@ public class ProgressBar implements AutoCloseable {
             PrintStream os,
             ProgressBarStyle style,
             String unitName,
-            long unitSize
+            long unitSize,
+            boolean showSpeed
     ) {
         this.progress = new ProgressState(task, initialMax);
-        this.target = new ProgressThread(progress, style, updateIntervalMillis, os, unitName, unitSize);
+        this.target = new ProgressThread(progress, style, updateIntervalMillis, os, unitName, unitSize, showSpeed);
         this.thread = new Thread(target, this.getClass().getName());
 
         // starts the progress bar upon construction
