@@ -2,6 +2,7 @@ package me.tongfei.progressbar;
 
 import java.io.PrintStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.Instant;
 
@@ -23,6 +24,7 @@ class ProgressThread implements Runnable {
     int consoleWidth = 80;
     String unitName = "";
     long unitSize = 1;
+    boolean showSpeed;
 
     static int consoleRightMargin = 2;
 
@@ -34,7 +36,8 @@ class ProgressThread implements Runnable {
             long updateInterval,
             PrintStream consoleStream,
             String unitName,
-            long unitSize
+            long unitSize,
+            boolean showSpeed
     ) {
         this.progress = progress;
         this.style = style;
@@ -43,6 +46,7 @@ class ProgressThread implements Runnable {
         this.killed = false;
         this.unitName = unitName;
         this.unitSize = unitSize;
+        this.showSpeed = showSpeed;
 
         try {
             // Issue #42
@@ -95,6 +99,17 @@ class ProgressThread implements Runnable {
         return Util.repeat(' ', m.length() - c.length()) + c + "/" + m + unitName;
     }
 
+    String speed(Duration elapsed) {
+        if (!showSpeed) return "";
+        if (elapsed.getSeconds() == 0) return "(?" + unitName + "/s)";
+
+        double speed = (double) progress.current / elapsed.getSeconds();
+        double speedWithUnit = speed / unitSize;
+        String formattedSpeed = new DecimalFormat("#.#").format(speedWithUnit);
+
+        return "(" + formattedSpeed + unitName + "/s)";
+    }
+
     void refresh() {
         consoleStream.print('\r');
 
@@ -104,7 +119,7 @@ class ProgressThread implements Runnable {
         String prefix = progress.task + " " + percentage() + " " + style.leftBracket;
 
         int maxSuffixLength = Math.max(0, consoleWidth - consoleRightMargin - prefix.length() - 10);
-        String suffix = style.rightBracket + " " + ratio() + " (" + Util.formatDuration(elapsed) + " / " + eta(elapsed) + ") " + progress.extraMessage;
+        String suffix = style.rightBracket + " " + ratio() + " (" + Util.formatDuration(elapsed) + " / " + eta(elapsed) + ") " + speed(elapsed) + progress.extraMessage;
         if (suffix.length() > maxSuffixLength) suffix = suffix.substring(0, maxSuffixLength);
 
         length = consoleWidth - consoleRightMargin - prefix.length() - suffix.length();
