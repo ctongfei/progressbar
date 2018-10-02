@@ -51,7 +51,7 @@ public class ProgressBarBuilder {
         return this;
     }
 
-    public ProgressBarBuilder showSpeed(){
+    public ProgressBarBuilder showSpeed() {
         this.showSpeed = true;
         return this;
     }

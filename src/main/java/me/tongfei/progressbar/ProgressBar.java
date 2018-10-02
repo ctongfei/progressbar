@@ -3,12 +3,17 @@ package me.tongfei.progressbar;
 import me.tongfei.progressbar.wrapped.ProgressBarWrappedInputStream;
 import me.tongfei.progressbar.wrapped.ProgressBarWrappedIterable;
 import me.tongfei.progressbar.wrapped.ProgressBarWrappedIterator;
+import me.tongfei.progressbar.wrapped.ProgressBarWrappedSpliterator;
 
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.time.Instant;
 import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.stream.BaseStream;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * A console-based progress bar with minimal runtime overhead.
@@ -43,7 +48,7 @@ public class ProgressBar implements AutoCloseable {
                        PrintStream os,
                        ProgressBarStyle style,
                        String unitName,
-                       long unitSize){
+                       long unitSize) {
         this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, false);
     }
 
@@ -55,7 +60,7 @@ public class ProgressBar implements AutoCloseable {
      * @param updateIntervalMillis Update interval (default value 1000 ms)
      * @param os Print stream (default value System.err)
      * @param style Output style (default value ProgressBarStyle.UNICODE_BLOCK)
-     * @param showSpeed Should the calculated Speed be displayed
+     * @param showSpeed Should the calculated speed be displayed
      */
     public ProgressBar(
             String task,
@@ -74,7 +79,6 @@ public class ProgressBar implements AutoCloseable {
         // starts the progress bar upon construction
         progress.startTime = Instant.now();
         thread.start();
-
     }
 
     /**
@@ -236,6 +240,9 @@ public class ProgressBar implements AutoCloseable {
      * @param pbb An instance of a {@link ProgressBarBuilder}
      */
     public static <T> Iterable<T> wrap(Iterable<T> ts, ProgressBarBuilder pbb) {
+        long size = ts.spliterator().getExactSizeIfKnown();
+        if (size != -1)
+            pbb.setInitialMax(size);
         return new ProgressBarWrappedIterable<>(ts, pbb);
     }
 
@@ -256,10 +263,43 @@ public class ProgressBar implements AutoCloseable {
      * @param pbb An instance of a {@link ProgressBarBuilder}
      */
     public static InputStream wrap(InputStream is, ProgressBarBuilder pbb) {
-        return new ProgressBarWrappedInputStream(
-                is,
-                pbb.setInitialMax(Util.getInputStreamSize(is)).build() // attempts to get the max size
-        );
+        long size = Util.getInputStreamSize(is);
+        if (size != -1)
+            pbb.setInitialMax(size);
+        return new ProgressBarWrappedInputStream(is, pbb.build());
+    }
+
+    /**
+     * Wraps a {@link Spliterator} so that when iterated, a progress bar is shown to track the traversal progress.
+     * @param sp Underlying pliterator
+     * @param task Task name
+     */
+    public static <T> Spliterator<T> wrap(Spliterator<T> sp, String task) {
+        ProgressBarBuilder pbb = new ProgressBarBuilder().setTaskName(task);
+        return wrap(sp, pbb);
+    }
+
+    /**
+     * Wraps a {@link Spliterator} so that when iterated, a progress bar is shown to track the traversal progress.
+     * For this function the progress bar can be fully customized by using a {@link ProgressBarBuilder}.
+     * @param sp Underlying pliterator
+     * @param pbb An instance of a {@link ProgressBarBuilder}
+     */
+    public static <T> Spliterator<T> wrap(Spliterator<T> sp, ProgressBarBuilder pbb) {
+        long size = sp.getExactSizeIfKnown();
+        if (size != -1)
+            pbb.setInitialMax(size);
+        return new ProgressBarWrappedSpliterator<>(sp, pbb.build());
+    }
+
+    public static <T, S extends BaseStream<T, S>> Stream<T> wrap(S stream, String task) {
+        ProgressBarBuilder pbb = new ProgressBarBuilder().setTaskName(task);
+        return wrap(stream, pbb);
+    }
+
+    public static <T, S extends BaseStream<T, S>> Stream<T> wrap(S stream, ProgressBarBuilder pbb) {
+        Spliterator<T> sp = wrap(stream.spliterator(), pbb);
+        return StreamSupport.stream(sp, stream.isParallel());
     }
 
 }

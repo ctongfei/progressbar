@@ -24,11 +24,12 @@ class ProgressThread implements Runnable {
     int consoleWidth = 80;
     String unitName = "";
     long unitSize = 1;
-    boolean showSpeed;
+    boolean isSpeedShown;
 
-    static int consoleRightMargin = 2;
+    private static int consoleRightMargin = 2;
+    private static DecimalFormat speedFormat = new DecimalFormat("#.#");
 
-    int length;
+    private int length;
 
     ProgressThread(
             ProgressState progress,
@@ -37,7 +38,7 @@ class ProgressThread implements Runnable {
             PrintStream consoleStream,
             String unitName,
             long unitSize,
-            boolean showSpeed
+            boolean isSpeedShown
     ) {
         this.progress = progress;
         this.style = style;
@@ -46,7 +47,7 @@ class ProgressThread implements Runnable {
         this.killed = false;
         this.unitName = unitName;
         this.unitSize = unitSize;
-        this.showSpeed = showSpeed;
+        this.isSpeedShown = isSpeedShown;
 
         try {
             // Issue #42
@@ -100,14 +101,10 @@ class ProgressThread implements Runnable {
     }
 
     String speed(Duration elapsed) {
-        if (!showSpeed) return "";
-        if (elapsed.getSeconds() == 0) return "(?" + unitName + "/s)";
-
+        if (elapsed.getSeconds() == 0) return "?" + unitName + "/s";
         double speed = (double) progress.current / elapsed.getSeconds();
         double speedWithUnit = speed / unitSize;
-        String formattedSpeed = new DecimalFormat("#.#").format(speedWithUnit);
-
-        return "(" + formattedSpeed + unitName + "/s)";
+        return speedFormat.format(speedWithUnit) + unitName + "/s";
     }
 
     void refresh() {
@@ -119,7 +116,10 @@ class ProgressThread implements Runnable {
         String prefix = progress.task + " " + percentage() + " " + style.leftBracket;
 
         int maxSuffixLength = Math.max(0, consoleWidth - consoleRightMargin - prefix.length() - 10);
-        String suffix = style.rightBracket + " " + ratio() + " (" + Util.formatDuration(elapsed) + " / " + eta(elapsed) + ") " + speed(elapsed) + progress.extraMessage;
+        String speedString = isSpeedShown ? speed(elapsed) : "";
+        String suffix = style.rightBracket + " " + ratio()
+                + " (" + Util.formatDuration(elapsed) + " / " + eta(elapsed) + ") "
+                + speedString + progress.extraMessage;
         if (suffix.length() > maxSuffixLength) suffix = suffix.substring(0, maxSuffixLength);
 
         length = consoleWidth - consoleRightMargin - prefix.length() - suffix.length();
