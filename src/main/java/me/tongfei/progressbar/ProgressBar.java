@@ -271,7 +271,7 @@ public class ProgressBar implements AutoCloseable {
 
     /**
      * Wraps a {@link Spliterator} so that when iterated, a progress bar is shown to track the traversal progress.
-     * @param sp Underlying pliterator
+     * @param sp Underlying spliterator
      * @param task Task name
      */
     public static <T> Spliterator<T> wrap(Spliterator<T> sp, String task) {
@@ -282,7 +282,7 @@ public class ProgressBar implements AutoCloseable {
     /**
      * Wraps a {@link Spliterator} so that when iterated, a progress bar is shown to track the traversal progress.
      * For this function the progress bar can be fully customized by using a {@link ProgressBarBuilder}.
-     * @param sp Underlying pliterator
+     * @param sp Underlying spliterator
      * @param pbb An instance of a {@link ProgressBarBuilder}
      */
     public static <T> Spliterator<T> wrap(Spliterator<T> sp, ProgressBarBuilder pbb) {
@@ -292,11 +292,22 @@ public class ProgressBar implements AutoCloseable {
         return new ProgressBarWrappedSpliterator<>(sp, pbb.build());
     }
 
+    /**
+     * Wraps a {@link Stream} so that when iterated, a progress bar is shown to track the traversal progress.
+     * @param stream Underlying stream (can be sequential or parallel)
+     * @param task Task name
+     */
     public static <T, S extends BaseStream<T, S>> Stream<T> wrap(S stream, String task) {
         ProgressBarBuilder pbb = new ProgressBarBuilder().setTaskName(task);
         return wrap(stream, pbb);
     }
 
+    /**
+     * Wraps a {@link Stream} so that when iterated, a progress bar is shown to track the traversal progress.
+     * For this function the progress bar can be fully customized by using a {@link ProgressBarBuilder}.
+     * @param stream Underlying stream (can be sequential or parallel)
+     * @param pbb An instance of a {@link ProgressBarBuilder}
+     */
     public static <T, S extends BaseStream<T, S>> Stream<T> wrap(S stream, ProgressBarBuilder pbb) {
         Spliterator<T> sp = wrap(stream.spliterator(), pbb);
         return StreamSupport.stream(sp, stream.isParallel());
