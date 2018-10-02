@@ -40,7 +40,7 @@
     
     
       
-        <title>Builder pattern - Progressbar 0.7.1</title>
+        <title>Builder pattern - Progressbar 0.7.2</title>
       
     
     
@@ -108,7 +108,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href=".." title="Progressbar 0.7.1" class="md-header-nav__button md-logo">
+        <a href=".." title="Progressbar 0.7.2" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -122,7 +122,7 @@
           
             
               <span class="md-header-nav__topic">
-                Progressbar 0.7.1
+                Progressbar 0.7.2
               </span>
               <span class="md-header-nav__topic">
                 Builder pattern
@@ -209,7 +209,7 @@
         <i class="md-icon"></i>
       
     </span>
-    Progressbar 0.7.1
+    Progressbar 0.7.2
   </label>
   
     <div class="md-nav__source">
@@ -349,13 +349,14 @@
                 
                 <h1 id="progress-bar-builders">Progress bar builders</h1>
 <p>Since <code>0.7.0</code>, apart from standard constructors, you can also use the so-called builder pattern to customize a progress bar.</p>
-<p>All <code>setXXX()</code> clauses belwo are optional. </p>
+<p>All <code>setXXX()</code> (also <code>showSpeed</code>) clauses belwo are optional. </p>
 <p> <div class=codehilite><pre><span></span><span class=n>ProgressBarBuilder</span> <span class=n>pbb</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ProgressBarBuilder</span><span class=o>()</span>
     <span class=o>.</span><span class=na>setInitialMax</span><span class=o>(&lt;</span><span class=n>initial</span> <span class=n>max</span><span class=o>&gt;)</span>
     <span class=o>.</span><span class=na>setStyle</span><span class=o>(</span><span class=n>ProgressBarStyle</span><span class=o>.&lt;</span><span class=n>style</span><span class=o>&gt;)</span>
     <span class=o>.</span><span class=na>setTaskName</span><span class=o>(&lt;</span><span class=n>task</span> <span class=n>name</span><span class=o>&gt;)</span>
     <span class=o>.</span><span class=na>setUnit</span><span class=o>(&lt;</span><span class=n>unit</span> <span class=n>name</span><span class=o>&gt;,</span> <span class=o>&lt;</span><span class=n>unit</span> <span class=n>size</span><span class=o>&gt;)</span>
-    <span class=o>.</span><span class=na>setUpdateIntervalMillis</span><span class=o>(&lt;</span><span class=n>update</span> <span class=n>interval</span><span class=o>&gt;);</span>
+    <span class=o>.</span><span class=na>setUpdateIntervalMillis</span><span class=o>(&lt;</span><span class=n>update</span> <span class=n>interval</span><span class=o>&gt;)</span>
+    <span class=o>.</span><span class=na>showSpeed</span><span class=o>();</span>
 
 <span class=k>for</span> <span class=o>(</span><span class=n>T</span> <span class=n>x</span> <span class=o>:</span> <span class=n>ProgressBar</span><span class=o>.</span><span class=na>wrap</span><span class=o>(</span><span class=n>collection</span><span class=o>,</span> <span class=n>pbb</span><span class=o>))</span> <span class=o>{</span>
     <span class=o>...</span>

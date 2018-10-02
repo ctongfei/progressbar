@@ -40,7 +40,7 @@
     
     
       
-        <title>Declarative usage - Progressbar 0.7.1</title>
+        <title>Declarative usage - Progressbar 0.7.2</title>
       
     
     
@@ -108,7 +108,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href=".." title="Progressbar 0.7.1" class="md-header-nav__button md-logo">
+        <a href=".." title="Progressbar 0.7.2" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -122,7 +122,7 @@
           
             
               <span class="md-header-nav__topic">
-                Progressbar 0.7.1
+                Progressbar 0.7.2
               </span>
               <span class="md-header-nav__topic">
                 Declarative usage
@@ -209,7 +209,7 @@
         <i class="md-icon"></i>
       
     </span>
-    Progressbar 0.7.1
+    Progressbar 0.7.2
   </label>
   
     <div class="md-nav__source">
@@ -279,6 +279,13 @@
         <li class="md-nav__item">
   <a href="#example-traverses-through-a-java-collection" title="Example: Traverses through a Java collection" class="md-nav__link">
     Example: Traverses through a Java collection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-loops-over-an-integer-range" title="Example: Loops over an integer range" class="md-nav__link">
+    Example: Loops over an integer range
   </a>
   
 </li>
@@ -375,6 +382,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#example-loops-over-an-integer-range" title="Example: Loops over an integer range" class="md-nav__link">
+    Example: Loops over an integer range
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example-reads-a-large-file-lazily" title="Example: Reads a large file lazily" class="md-nav__link">
     Example: Reads a large file lazily
   </a>
@@ -403,9 +417,10 @@
                   <h1>Declarative usage</h1>
                 
                 <p>Since Progressbar <code>0.6.0</code>, declarative usage is the preferred way of using a progress bar.</p>
-<p>Basically, you wrap an <code>Iterable</code>, <code>Iterator</code> or <code>InputStream</code> (can be seen as an <code>Iterator[Byte]</code>) so that when iterating over it, a progress bar automatically tracks its progress. The type of your collection does not change after wrapped with a progress bar.</p>
+<p>Basically, you wrap an <code>Iterable</code>, <code>Iterator</code>, <code>InputStream</code> (can be seen as an <code>Iterator&lt;Byte&gt;</code>), 
+<code>Spliterator</code> or <code>Stream</code>, so that when iterating over it, a progress bar automatically tracks its progress. The type of your collection does not change after wrapped with a progress bar.</p>
 <p>This is done by using the static method <code>ProgressBar.wrap(...)</code>. The syntax is</p>
-<p> <div class=codehilite><pre><span></span><span class=n>ProgressBar</span><span class=o>.</span><span class=na>wrap</span><span class=o>(</span><span class=n>iterable</span><span class=o>,</span> <span class=o>&lt;</span><span class=n>task</span> <span class=n>name</span><span class=o>&gt;)</span>
+<p> <div class=codehilite><pre><span></span><span class=n>ProgressBar</span><span class=o>.</span><span class=na>wrap</span><span class=o>(</span><span class=n>collection</span><span class=o>,</span> <span class=o>&lt;</span><span class=n>task</span> <span class=n>name</span><span class=o>&gt;)</span>
 </pre></div></p>
 <p>Or, if you want to use the <a href="../builder/">builder pattern</a> to customize the progress bar, use </p>
 <p> <div class=codehilite><pre><span></span><span class=n>ProgressBarBuilder</span> <span class=n>pbb</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ProgressBarBuilder</span><span class=o>()</span>
@@ -418,6 +433,12 @@
 <p> <div class=codehilite><pre><span></span><span class=k>for</span> <span class=o>(</span><span class=n>T</span> <span class=n>x</span> <span class=o>:</span> <span class=n>ProgressBar</span><span class=o>.</span><span class=na>wrap</span><span class=o>(</span><span class=n>collection</span><span class=o>,</span> <span class=s>&quot;Traversing&quot;</span><span class=o>))</span> <span class=o>{</span>
     <span class=o>...</span>
 <span class=o>}</span>
+</pre></div></p>
+<h5 id="example-loops-over-an-integer-range">Example: Loops over an integer range</h5>
+<p>Since <code>0.7.2</code>, tracking the progress of sequential or parallel Java streams is supported. </p>
+<p> <div class=codehilite><pre><span></span><span class=n>ProgressBar</span><span class=o>.</span><span class=na>wrap</span><span class=o>(</span><span class=n>IntStream</span><span class=o>.</span><span class=na>range</span><span class=o>(</span><span class=n>left</span><span class=o>,</span> <span class=n>right</span><span class=o>).</span><span class=na>parallel</span><span class=o>(),</span> <span class=s>&quot;Task&quot;</span><span class=o>).</span><span class=na>forEach</span><span class=o>(</span><span class=n>i</span> <span class=o>-&gt;</span> <span class=o>{</span>
+        <span class=o>...</span>
+    <span class=o>});</span>
 </pre></div></p>
 <h5 id="example-reads-a-large-file-lazily">Example: Reads a large file lazily</h5>
 <p>When wrapping around a <code>java.io.InputStream</code>, whether it is a <code>java.io.FileInputStream</code> will be detected. If successful, the file's full size in byte will be retrieved and set as the progress bar's max; otherwise, the progress bar will be indefinite.</p>
