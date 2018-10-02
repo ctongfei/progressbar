@@ -1,4 +1,5 @@
-# progressbar [![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
+# progressbar 
+[![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar)
 
 A console progress bar for JVM with minimal runtime overhead.
 
@@ -15,7 +16,7 @@ For Consolas or Andale Mono fonts, use `ProgressBarStyle.ASCII` because the box-
 
 #### Documentation
  - [Documentation](http://ctongfei.github.io/progressbar/)
- - [Javadoc](https://javadoc.io/doc/me.tongfei/progressbar/0.7.0)
+ - [Javadoc](https://javadoc.io/doc/me.tongfei/progressbar/0.7.2)
  
 
 #### Installation
@@ -26,7 +27,7 @@ Maven:
   <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar</artifactId>
-      <version>0.7.1</version>
+      <version>0.7.2</version>
   </dependency>
 ```
 
