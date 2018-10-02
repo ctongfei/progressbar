@@ -1,10 +1,11 @@
 Since Progressbar `0.6.0`, declarative usage is the preferred way of using a progress bar.
 
-Basically, you wrap an `Iterable`, `Iterator` or `InputStream` (can be seen as an `Iterator[Byte]`) so that when iterating over it, a progress bar automatically tracks its progress. The type of your collection does not change after wrapped with a progress bar.
+Basically, you wrap an `Iterable`, `Iterator`, `InputStream` (can be seen as an `Iterator<Byte>`), 
+`Spliterator` or `Stream`, so that when iterating over it, a progress bar automatically tracks its progress. The type of your collection does not change after wrapped with a progress bar.
 
 This is done by using the static method `ProgressBar.wrap(...)`. The syntax is
 ``` java
-ProgressBar.wrap(iterable, <task name>)
+ProgressBar.wrap(collection, <task name>)
 ```
 Or, if you want to use the [builder pattern](builder.md) to customize the progress bar, use 
 ``` java
@@ -23,6 +24,15 @@ If the size of the collection is known, the progress bar's max will be automatic
 for (T x : ProgressBar.wrap(collection, "Traversing")) {
     ...
 }
+```
+
+##### Example: Loops over an integer range
+
+Since `0.7.2`, tracking the progress of sequential or parallel Java streams is supported. 
+``` java
+ProgressBar.wrap(IntStream.range(left, right).parallel(), "Task").forEach(i -> {
+        ...
+    });
 ```
 
 ##### Example: Reads a large file lazily
