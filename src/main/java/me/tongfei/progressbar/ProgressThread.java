@@ -70,9 +70,6 @@ class ProgressThread implements Runnable {
         } catch (NullPointerException e) {
             // skip it
         }
-
-        if (terminal.getWidth() >= 10)  // Workaround for issue #23 under IntelliJ
-            consoleWidth = terminal.getWidth();
     }
 
     // between 0 and 1
