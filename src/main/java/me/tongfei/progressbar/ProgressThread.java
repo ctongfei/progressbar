@@ -53,9 +53,23 @@ class ProgressThread implements Runnable {
             // Issue #42
             // Defaulting to a dumb terminal when a supported terminal can not be correctly created
             // see https://github.com/jline/jline3/issues/291
-            this.terminal = TerminalBuilder.builder().dumb(true).build();
+            String prop = System.getProperty("org.jline.terminal.dumb");
+            System.setProperty("org.jline.terminal.dumb", "true");
+            this.terminal = TerminalBuilder.builder().build();
+            if (prop == null) {
+                System.clearProperty("org.jline.terminal.dumb");
+            } else {
+                System.setProperty("org.jline.terminal.dumb", prop);
+            }
+        } catch (IOException ignored) {
         }
-        catch (IOException ignored) { }
+
+        try {
+            if (terminal.getSize().getColumns() >= 10)  // Workaround for issue #23 under IntelliJ
+                consoleWidth = terminal.getSize().getColumns();
+        } catch (NullPointerException e) {
+            // skip it
+        }
 
         if (terminal.getWidth() >= 10)  // Workaround for issue #23 under IntelliJ
             consoleWidth = terminal.getWidth();
