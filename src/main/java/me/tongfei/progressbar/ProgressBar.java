@@ -55,6 +55,18 @@ public class ProgressBar implements AutoCloseable {
         this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, false, null);
     }
 
+    public ProgressBar(
+            String task,
+            long initialMax,
+            int updateIntervalMillis,
+            PrintStream os,
+            ProgressBarStyle style,
+            String unitName,
+            long unitSize,
+            boolean showSpeed) {
+        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, showSpeed, null);
+    }
+
     /**
      * Creates a progress bar with the specific task name, initial maximum value,
      * customized update interval (default 1000 ms), the PrintStream to be used, and output style.
@@ -64,6 +76,7 @@ public class ProgressBar implements AutoCloseable {
      * @param os Print stream (default value System.err)
      * @param style Output style (default value ProgressBarStyle.UNICODE_BLOCK)
      * @param showSpeed Should the calculated speed be displayed
+     * @param speedFormat Speed number format
      */
     public ProgressBar(
             String task,
@@ -76,8 +89,7 @@ public class ProgressBar implements AutoCloseable {
             boolean showSpeed,
             String speedFormat
     ) {
-        if (speedFormat != null)
-            this.speedFormat = new DecimalFormat(speedFormat);
+        if (speedFormat != null) this.speedFormat = new DecimalFormat(speedFormat);
 
         this.progress = new ProgressState(task, initialMax);
         this.target = new ProgressThread(progress, style, updateIntervalMillis, os, unitName, unitSize, showSpeed, this.speedFormat);
