@@ -8,6 +8,7 @@ import me.tongfei.progressbar.wrapped.ProgressBarWrappedSpliterator;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.Spliterator;
@@ -25,21 +26,23 @@ public class ProgressBar implements AutoCloseable {
     private ProgressThread target;
     private Thread thread;
 
+    private DecimalFormat speedFormat = new DecimalFormat("#.#");
+
     /**
      * Creates a progress bar with the specific task name and initial maximum value.
      * @param task Task name
      * @param initialMax Initial maximum value
      */
     public ProgressBar(String task, long initialMax) {
-        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false);
+        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null);
     }
 
     public ProgressBar(String task, long initialMax, ProgressBarStyle style) {
-        this(task, initialMax, 1000, System.err, style, "", 1, false);
+        this(task, initialMax, 1000, System.err, style, "", 1, false, null);
     }
 
     public ProgressBar(String task, long initialMax, int updateIntervalMillis) {
-        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false);
+        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null);
     }
 
     public ProgressBar(String task,
@@ -49,7 +52,7 @@ public class ProgressBar implements AutoCloseable {
                        ProgressBarStyle style,
                        String unitName,
                        long unitSize) {
-        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, false);
+        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, false, null);
     }
 
     /**
@@ -70,11 +73,16 @@ public class ProgressBar implements AutoCloseable {
             ProgressBarStyle style,
             String unitName,
             long unitSize,
-            boolean showSpeed
+            boolean showSpeed,
+            String speedFormat
     ) {
+        if (speedFormat != null)
+            this.speedFormat = new DecimalFormat(speedFormat);
+
         this.progress = new ProgressState(task, initialMax);
-        this.target = new ProgressThread(progress, style, updateIntervalMillis, os, unitName, unitSize, showSpeed);
+        this.target = new ProgressThread(progress, style, updateIntervalMillis, os, unitName, unitSize, showSpeed, this.speedFormat);
         this.thread = new Thread(target, this.getClass().getName());
+
 
         // starts the progress bar upon construction
         progress.startTime = Instant.now();

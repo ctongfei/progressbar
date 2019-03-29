@@ -27,7 +27,7 @@ class ProgressThread implements Runnable {
     boolean isSpeedShown;
 
     private static int consoleRightMargin = 2;
-    private static DecimalFormat speedFormat = new DecimalFormat("#.#");
+    private DecimalFormat speedFormat;
 
     private int length;
 
@@ -38,8 +38,8 @@ class ProgressThread implements Runnable {
             PrintStream consoleStream,
             String unitName,
             long unitSize,
-            boolean isSpeedShown
-    ) {
+            boolean isSpeedShown,
+            DecimalFormat speedFormat) {
         this.progress = progress;
         this.style = style;
         this.updateInterval = updateInterval;
@@ -48,6 +48,7 @@ class ProgressThread implements Runnable {
         this.unitName = unitName;
         this.unitSize = unitSize;
         this.isSpeedShown = isSpeedShown;
+        this.speedFormat = speedFormat;
 
         try {
             // Issue #42
