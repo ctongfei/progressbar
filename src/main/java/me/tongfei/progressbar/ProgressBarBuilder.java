@@ -17,6 +17,7 @@ public class ProgressBarBuilder {
     private String unitName = "";
     private long unitSize = 1;
     private boolean showSpeed = false;
+    private String speedFormat = null;
 
     public ProgressBarBuilder() { }
 
@@ -52,7 +53,12 @@ public class ProgressBarBuilder {
     }
 
     public ProgressBarBuilder showSpeed() {
+        return showSpeed(null);
+    }
+
+    public ProgressBarBuilder showSpeed(String speedFormat) {
         this.showSpeed = true;
+        this.speedFormat = speedFormat;
         return this;
     }
 
@@ -65,7 +71,8 @@ public class ProgressBarBuilder {
                 style,
                 unitName,
                 unitSize,
-                showSpeed
+                showSpeed,
+                speedFormat
         );
     }
 }
