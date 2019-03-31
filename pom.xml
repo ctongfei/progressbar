@@ -6,7 +6,7 @@
 
     <groupId>me.tongfei</groupId>
     <artifactId>progressbar</artifactId>
-    <version>0.7.2</version>
+    <version>0.7.3</version>
     <name>progressbar</name>
     <description>A console-based progress bar for JVM</description>
     <url>http://github.com/ctongfei/progressbar</url>
@@ -32,7 +32,35 @@
         <developer>
             <id>ctongfei</id>
             <name>Tongfei Chen</name>
-            <url>http://tongfei.me/</url>
+            <url>https://tongfei.me/</url>
+        </developer>
+        <developer>
+            <id>bwittwer</id>
+            <name>Bernard Wittwer</name>
+        </developer>
+        <developer>
+            <id>AluisioASG</id>
+            <name>Aluísio Augusto Silva Gonçalves</name>
+        </developer>
+        <developer>
+            <id>neopaf</id>
+            <name>Alexander Petrossian</name>
+        </developer>
+        <developer>
+            <id>dani909</id>
+            <name>Daniel Huber</name>
+        </developer>
+        <developer>
+            <id>khmarbaise</id>
+            <name>Karl Heinz Marbaise</name>
+        </developer>
+        <developer>
+            <id>AbhinavVishak</id>
+            <name>Abhinav Vishak</name>
+        </developer>
+        <developer>
+            <id>wfxr</id>
+            <name>Wenxuan</name>
         </developer>
     </developers>
 
@@ -40,9 +68,15 @@
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline</artifactId>
-            <version>3.7.0</version>
+            <version>3.10.0</version>
         </dependency>
-        
+
+        <dependency>
+            <groupId>org.fusesource.jansi</groupId>
+            <artifactId>jansi</artifactId>
+            <version>1.17.1</version>
+        </dependency>
+
         <dependency>
 	    	<groupId>junit</groupId>
 	    	<artifactId>junit</artifactId>
@@ -64,8 +98,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-
 
     <distributionManagement>
         <snapshotRepository>

@@ -12,6 +12,7 @@ ProgressBarBuilder pbb = new ProgressBarBuilder()
     .setUnit(<unit name>, <unit size>)
     .setUpdateIntervalMillis(<update interval>)
     .showSpeed();
+  // or .showSpeed(new DecimalFormat("#.##")) to customize speed display
 
 for (T x : ProgressBar.wrap(collection, pbb)) {
     ...

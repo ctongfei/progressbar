@@ -11,7 +11,7 @@ public class RangeTest {
 
     @Test
     public void parallelRangeTest() {
-        ProgressBar.wrap(IntStream.range(1000, 2000).parallel(), "Test parallel").forEach(i -> {
+        ProgressBar.wrap(IntStream.range(1000, 9000).parallel(), "Test parallel").forEach(i -> {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {

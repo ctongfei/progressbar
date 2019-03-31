@@ -26,8 +26,6 @@ public class ProgressBar implements AutoCloseable {
     private ProgressThread target;
     private Thread thread;
 
-    private DecimalFormat speedFormat = new DecimalFormat("#.#");
-
     /**
      * Creates a progress bar with the specific task name and initial maximum value.
      * @param task Task name
@@ -87,14 +85,11 @@ public class ProgressBar implements AutoCloseable {
             String unitName,
             long unitSize,
             boolean showSpeed,
-            String speedFormat
+            DecimalFormat speedFormat
     ) {
-        if (speedFormat != null) this.speedFormat = new DecimalFormat(speedFormat);
-
         this.progress = new ProgressState(task, initialMax);
-        this.target = new ProgressThread(progress, style, updateIntervalMillis, os, unitName, unitSize, showSpeed, this.speedFormat);
+        this.target = new ProgressThread(progress, style, updateIntervalMillis, os, unitName, unitSize, showSpeed, speedFormat);
         this.thread = new Thread(target, this.getClass().getName());
-
 
         // starts the progress bar upon construction
         progress.startTime = Instant.now();

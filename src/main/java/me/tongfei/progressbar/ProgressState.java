@@ -64,4 +64,10 @@ class ProgressState {
         return max;
     }
 
+    // The progress, normalized to range [0, 1].
+    synchronized double prog() {
+        if (max <= 0) return 0.0;
+        else return ((double)current) / max;
+    }
+
 }

@@ -2,6 +2,9 @@ package me.tongfei.progressbar;
 
 import org.junit.Test;
 
+import java.text.DecimalFormat;
+
+
 public class SpeedDisplayTest {
     @Test
     public void test() throws InterruptedException {
@@ -23,7 +26,7 @@ public class SpeedDisplayTest {
     @Test
     public void testSpeedFormat() throws InterruptedException {
         ProgressBar bar = new ProgressBarBuilder()
-                .showSpeed("0.00")
+                .showSpeed(new DecimalFormat("#.##"))
                 .setUnit("k", 1000)
                 .setInitialMax(10000)
                 .build();

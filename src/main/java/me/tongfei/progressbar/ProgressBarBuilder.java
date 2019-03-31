@@ -1,6 +1,7 @@
 package me.tongfei.progressbar;
 
 import java.io.PrintStream;
+import java.text.DecimalFormat;
 
 /**
  * Builder class for {@link ProgressBar}s.
@@ -17,7 +18,7 @@ public class ProgressBarBuilder {
     private String unitName = "";
     private long unitSize = 1;
     private boolean showSpeed = false;
-    private String speedFormat = null;
+    private DecimalFormat speedFormat;
 
     public ProgressBarBuilder() { }
 
@@ -53,10 +54,10 @@ public class ProgressBarBuilder {
     }
 
     public ProgressBarBuilder showSpeed() {
-        return showSpeed(null);
+        return showSpeed(new DecimalFormat("#.#"));
     }
 
-    public ProgressBarBuilder showSpeed(String speedFormat) {
+    public ProgressBarBuilder showSpeed(DecimalFormat speedFormat) {
         this.showSpeed = true;
         this.speedFormat = speedFormat;
         return this;

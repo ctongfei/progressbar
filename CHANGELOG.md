@@ -1,5 +1,8 @@
 # Changelog
 
+ * `0.7.3`:
+     - Added support for customizing the decimal format of speed display (PR #49). Thanks @wfxr !
+     
  * `0.7.2`:
      - Added support for wrapping around `Spliterator`s and `Stream`s. Streams could be either sequential or parallel (#44). Thanks @michaelmior !
      - Added support for displaying speed with unit (PR #43). Thanks @dani909 !
