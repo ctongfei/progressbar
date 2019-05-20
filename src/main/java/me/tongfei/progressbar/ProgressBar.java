@@ -165,7 +165,7 @@ public class ProgressBar implements AutoCloseable {
      */
     @Override
     public void close() {
-        target.kill();
+        thread.interrupt();
         try {
             thread.join();
             target.consoleStream.print("\n");

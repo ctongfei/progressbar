@@ -44,7 +44,6 @@ class ProgressThread implements Runnable {
         this.style = style;
         this.updateInterval = updateInterval;
         this.consoleStream = consoleStream;
-        this.killed = false;
         this.unitName = unitName;
         this.unitSize = unitSize;
         this.isSpeedShown = isSpeedShown;
@@ -150,13 +149,9 @@ class ProgressThread implements Runnable {
         consoleStream.print(line);
     }
 
-    void kill() {
-    	killed = true;
-    }
-
     public void run() {
         try {
-            while (!killed) {
+            while (!Thread.interrupted()) {
                 refresh();
                 Thread.sleep(updateInterval);
             }
