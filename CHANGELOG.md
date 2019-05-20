@@ -1,5 +1,9 @@
 # Changelog
 
+ * `0.7.4`:
+     - Fixes the bug of slow exit with fast jobs (#50, PR #51). Thanks @meawoppl @denisrosset !
+     - Dependency version bump.
+ 
  * `0.7.3`:
      - Added support for customizing the decimal format of speed display (PR #49). Thanks @wfxr !
      

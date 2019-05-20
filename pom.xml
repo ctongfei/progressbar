@@ -6,7 +6,7 @@
 
     <groupId>me.tongfei</groupId>
     <artifactId>progressbar</artifactId>
-    <version>0.7.3</version>
+    <version>0.7.4</version>
     <name>progressbar</name>
     <description>A console-based progress bar for JVM</description>
     <url>http://github.com/ctongfei/progressbar</url>
@@ -62,19 +62,23 @@
             <id>wfxr</id>
             <name>Wenxuan</name>
         </developer>
+        <developer>
+            <id>meawoppl</id>
+            <name>Matty G</name>
+        </developer>
     </developers>
 
     <dependencies>
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline</artifactId>
-            <version>3.10.0</version>
+            <version>3.11.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.fusesource.jansi</groupId>
             <artifactId>jansi</artifactId>
-            <version>1.17.1</version>
+            <version>1.18</version>
         </dependency>
 
         <dependency>
@@ -82,7 +86,7 @@
 	    	<artifactId>junit</artifactId>
 	    	<version>4.12</version>
 	    	<scope>test</scope>
-		</dependency>
+        </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>

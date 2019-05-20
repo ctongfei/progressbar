@@ -2,7 +2,7 @@
 
 Since `0.7.0`, apart from standard constructors, you can also use the so-called builder pattern to customize a progress bar.
 
-All `setXXX()` (also `showSpeed`) clauses belwo are optional. 
+All `setXXX()` (also `showSpeed`) clauses below are optional. 
 
 ``` java
 ProgressBarBuilder pbb = new ProgressBarBuilder()

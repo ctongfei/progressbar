@@ -155,8 +155,9 @@ class ProgressThread implements Runnable {
                 refresh();
                 Thread.sleep(updateInterval);
             }
+        } catch (InterruptedException ignored) {
             refresh();
-            // do-while loop not right: must force to refresh after stopped
-        } catch (InterruptedException ignored) { }
+            // force refreshing after being interrupted
+        }
     }
 }
