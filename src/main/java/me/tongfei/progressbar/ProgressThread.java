@@ -97,14 +97,14 @@ class ProgressThread implements Runnable {
     String ratio() {
         String m = progress.indefinite ? "?" : String.valueOf(progress.max / unitSize);
         String c = String.valueOf(progress.current / unitSize);
-        return Util.repeat(' ', m.length() - c.length()) + c + "/" + m + unitName;
+        return Util.repeat(' ', m.length() - c.length()) + c + "/" + m + " " + unitName;
     }
 
     String speed(Duration elapsed) {
-        if (elapsed.getSeconds() == 0) return "?" + unitName + "/s";
+        if (elapsed.getSeconds() == 0) return "? " + unitName + "/s";
         double speed = (double) progress.current / elapsed.getSeconds();
         double speedWithUnit = speed / unitSize;
-        return speedFormat.format(speedWithUnit) + unitName + "/s";
+        return speedFormat.format(speedWithUnit) + " " + unitName + "/s";
     }
 
     void refresh() {
