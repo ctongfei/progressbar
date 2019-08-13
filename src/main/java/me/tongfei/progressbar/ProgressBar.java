@@ -38,6 +38,10 @@ public class ProgressBar implements AutoCloseable {
     public ProgressBar(String task, long initialMax, ProgressBarStyle style) {
         this(task, initialMax, 1000, System.err, style, "", 1, false, null);
     }
+	
+    public ProgressBar(String task, long initialMax, ProgressBarStyle style, int updateIntervalMillis) {
+        this(task, initialMax, updateIntervalMillis, System.err, style, "", 1, false, null);
+    }
 
     public ProgressBar(String task, long initialMax, int updateIntervalMillis) {
         this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null);
