@@ -14,7 +14,7 @@ public class ProgressBarBuilder {
     private long initialMax = 0;
     private ProgressBarStyle style = ProgressBarStyle.COLORFUL_UNICODE_BLOCK;
     private int updateIntervalMillis = 1000;
-    private PrintStream stream = System.err;
+    private ProgressBarConsumer progressBarConsumer = new ConsoleLogger();
     private String unitName = "";
     private long unitSize = 1;
     private boolean showSpeed = false;
@@ -42,8 +42,8 @@ public class ProgressBarBuilder {
         return this;
     }
 
-    public ProgressBarBuilder setPrintStream(PrintStream stream) {
-        this.stream = stream;
+    public ProgressBarBuilder setProgressBarConsumer(ProgressBarConsumer progressBarConsumer) {
+        this.progressBarConsumer = progressBarConsumer;
         return this;
     }
 
@@ -68,7 +68,7 @@ public class ProgressBarBuilder {
                 task,
                 initialMax,
                 updateIntervalMillis,
-                stream,
+                progressBarConsumer,
                 style,
                 unitName,
                 unitSize,

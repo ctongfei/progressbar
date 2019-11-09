@@ -12,6 +12,7 @@ import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.Spliterator;
+import java.util.function.Consumer;
 import java.util.stream.BaseStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -32,37 +33,37 @@ public class ProgressBar implements AutoCloseable {
      * @param initialMax Initial maximum value
      */
     public ProgressBar(String task, long initialMax) {
-        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null);
+        this(task, initialMax, 1000, new ConsoleLogger(), ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null);
     }
 
     public ProgressBar(String task, long initialMax, ProgressBarStyle style) {
-        this(task, initialMax, 1000, System.err, style, "", 1, false, null);
+        this(task, initialMax, 1000, new ConsoleLogger(), style, "", 1, false, null);
     }
 
     public ProgressBar(String task, long initialMax, int updateIntervalMillis) {
-        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null);
+        this(task, initialMax, updateIntervalMillis, new ConsoleLogger(), ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null);
     }
 
     public ProgressBar(String task,
                        long initialMax,
                        int updateIntervalMillis,
-                       PrintStream os,
+                       ProgressBarConsumer progressBarConsumer,
                        ProgressBarStyle style,
                        String unitName,
                        long unitSize) {
-        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, false, null);
+        this(task, initialMax, updateIntervalMillis, progressBarConsumer, style, unitName, unitSize, false, null);
     }
 
     public ProgressBar(
             String task,
             long initialMax,
             int updateIntervalMillis,
-            PrintStream os,
+            ProgressBarConsumer progressBarConsumer,
             ProgressBarStyle style,
             String unitName,
             long unitSize,
             boolean showSpeed) {
-        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, showSpeed, null);
+        this(task, initialMax, updateIntervalMillis, progressBarConsumer, style, unitName, unitSize, showSpeed, null);
     }
 
     /**
@@ -71,7 +72,7 @@ public class ProgressBar implements AutoCloseable {
      * @param task Task name
      * @param initialMax Initial maximum value
      * @param updateIntervalMillis Update interval (default value 1000 ms)
-     * @param os Print stream (default value System.err)
+     * @param progressBarConsumer Progress bar consumer (default value {@link ConsoleLogger})
      * @param style Output style (default value ProgressBarStyle.UNICODE_BLOCK)
      * @param showSpeed Should the calculated speed be displayed
      * @param speedFormat Speed number format
@@ -80,7 +81,7 @@ public class ProgressBar implements AutoCloseable {
             String task,
             long initialMax,
             int updateIntervalMillis,
-            PrintStream os,
+            ProgressBarConsumer progressBarConsumer,
             ProgressBarStyle style,
             String unitName,
             long unitSize,
@@ -88,7 +89,7 @@ public class ProgressBar implements AutoCloseable {
             DecimalFormat speedFormat
     ) {
         this.progress = new ProgressState(task, initialMax);
-        this.target = new ProgressThread(progress, style, updateIntervalMillis, os, unitName, unitSize, showSpeed, speedFormat);
+        this.target = new ProgressThread(progress, style, updateIntervalMillis, progressBarConsumer, unitName, unitSize, showSpeed, speedFormat);
         this.thread = new Thread(target, this.getClass().getName());
 
         // starts the progress bar upon construction
@@ -168,11 +169,9 @@ public class ProgressBar implements AutoCloseable {
         thread.interrupt();
         try {
             thread.join();
-            target.consoleStream.print("\n");
-            target.consoleStream.flush();
-            target.terminal.close();
+            target.close();
         }
-        catch (InterruptedException | IOException ignored) { }
+        catch (InterruptedException ignored) { }
     }
 
     /**

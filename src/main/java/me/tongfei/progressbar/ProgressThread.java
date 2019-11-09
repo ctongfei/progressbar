@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.function.Consumer;
 
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
@@ -19,14 +20,11 @@ class ProgressThread implements Runnable {
     ProgressBarStyle style;
     ProgressState progress;
     long updateInterval;
-    PrintStream consoleStream;
-    Terminal terminal;
-    int consoleWidth = 80;
+    ProgressBarConsumer progressBarConsumer;
     String unitName = "";
     long unitSize = 1;
     boolean isSpeedShown;
 
-    private static int consoleRightMargin = 2;
     private DecimalFormat speedFormat;
 
     private int length;
@@ -35,7 +33,7 @@ class ProgressThread implements Runnable {
             ProgressState progress,
             ProgressBarStyle style,
             long updateInterval,
-            PrintStream consoleStream,
+            ProgressBarConsumer progressBarConsumer,
             String unitName,
             long unitSize,
             boolean isSpeedShown,
@@ -43,22 +41,11 @@ class ProgressThread implements Runnable {
         this.progress = progress;
         this.style = style;
         this.updateInterval = updateInterval;
-        this.consoleStream = consoleStream;
+        this.progressBarConsumer = progressBarConsumer;
         this.unitName = unitName;
         this.unitSize = unitSize;
         this.isSpeedShown = isSpeedShown;
         this.speedFormat = speedFormat;
-
-        try {
-            // Issue #42
-            // Defaulting to a dumb terminal when a supported terminal can not be correctly created
-            // see https://github.com/jline/jline3/issues/291
-            this.terminal = TerminalBuilder.builder().dumb(true).build();
-        }
-        catch (IOException ignored) { }
-
-        if (terminal.getWidth() >= 10)  // Workaround for issue #23 under IntelliJ
-            consoleWidth = terminal.getWidth();
     }
 
     // between 0 and 1
@@ -108,21 +95,22 @@ class ProgressThread implements Runnable {
     }
 
     void refresh() {
-        consoleStream.print('\r');
+        progressBarConsumer.beforeUpdate();
 
         Instant currTime = Instant.now();
         Duration elapsed = Duration.between(progress.startTime, currTime);
 
         String prefix = progress.task + " " + percentage() + " " + style.leftBracket;
 
-        int maxSuffixLength = Math.max(0, consoleWidth - consoleRightMargin - prefix.length() - 10);
+        int maxSuffixLength  = progressBarConsumer.getMaxSuffixLength(prefix.length());
         String speedString = isSpeedShown ? speed(elapsed) : "";
         String suffix = style.rightBracket + " " + ratio()
                 + " (" + Util.formatDuration(elapsed) + " / " + eta(elapsed) + ") "
                 + speedString + progress.extraMessage;
         if (suffix.length() > maxSuffixLength) suffix = suffix.substring(0, maxSuffixLength);
 
-        length = consoleWidth - consoleRightMargin - prefix.length() - suffix.length();
+        //what is this ?
+        length = progressBarConsumer.getMaxProgressLength() - prefix.length() - suffix.length();
 
         StringBuilder sb = new StringBuilder();
         sb.append(prefix);
@@ -146,7 +134,7 @@ class ProgressThread implements Runnable {
         sb.append(suffix);
         String line = sb.toString();
 
-        consoleStream.print(line);
+        progressBarConsumer.accept(line);
     }
 
     public void run() {
@@ -159,5 +147,9 @@ class ProgressThread implements Runnable {
             refresh();
             // force refreshing after being interrupted
         }
+    }
+
+    public void close() {
+        this.progressBarConsumer.close();
     }
 }
