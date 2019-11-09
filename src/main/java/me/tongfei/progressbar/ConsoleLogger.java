@@ -34,8 +34,15 @@ public class ConsoleLogger implements ProgressBarConsumer {
         }
         catch (IOException ignored) { }
 
-        if (terminal != null && terminal.getWidth() >= 10)  // Workaround for issue #23 under IntelliJ
-            consoleWidth = terminal.getWidth();
+        if (terminal != null && terminal.getWidth() >= 10) { // Workaround for issue #23 under IntelliJ
+            this.consoleWidth = terminal.getWidth();
+
+            try {
+                terminal.close();
+            } catch (IOException e) {
+                //NOOP
+            }
+        }
     }
 
     @Override
