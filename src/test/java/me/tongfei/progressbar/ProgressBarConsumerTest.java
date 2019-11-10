@@ -1,6 +1,8 @@
 package me.tongfei.progressbar;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ProgressBarConsumerTest {
 
@@ -33,11 +35,12 @@ public class ProgressBarConsumerTest {
 
     //Prints progress as new lines without carriage return
     @Test
-    public void toSystemOutTest() throws InterruptedException {
+    public void printLoggerTest() throws InterruptedException {
+        final Logger log = LoggerFactory.getLogger("Test");
         try (ProgressBar progressBar = new ProgressBarBuilder()
                 .setInitialMax(100)
-                .setTaskName("System.out.println.test")
-                .setProgressBarConsumer(new SystemOutProgressBarConsumer())
+                .setTaskName("log.test")
+                .setProgressBarConsumer(new DelegatingProgressbarConsumer(progress -> log.info("{}", progress)))
                 .setUpdateIntervalMillis(100)
                 .showSpeed()
                 .build()) {

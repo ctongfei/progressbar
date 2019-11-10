@@ -6,6 +6,10 @@ import org.jline.terminal.TerminalBuilder;
 import java.io.IOException;
 import java.io.PrintStream;
 
+/**
+ * Progress bar consumer that prints the progress bar state to console.
+ * By default {@link System#err} is used as {@link PrintStream}
+ */
 public class ConsoleLogger implements ProgressBarConsumer {
 
     private static int consoleRightMargin = 2;
@@ -18,7 +22,7 @@ public class ConsoleLogger implements ProgressBarConsumer {
     }
 
     public ConsoleLogger(PrintStream out) {
-        this(System.err, DEFAULT_CONSOLE_WIDTH);
+        this(out, DEFAULT_CONSOLE_WIDTH);
     }
 
     public ConsoleLogger(PrintStream out, int consoleWidth) {
