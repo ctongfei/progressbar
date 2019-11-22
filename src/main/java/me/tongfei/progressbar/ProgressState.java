@@ -1,6 +1,8 @@
 package me.tongfei.progressbar;
 
+import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Encapsulates the internal states of a progress bar.
@@ -15,11 +17,20 @@ class ProgressState {
     long max = 0;
     Instant startTime = null;
     String extraMessage = "";
+    long start = 0;
+    Duration elapsed = Duration.ofSeconds(0L);
+    ChronoUnit speedUnit;
+    
+    
 
-    ProgressState(String task, long initialMax) {
+    ProgressState(String task, long initialMax, long startFrom, long elapsedSecond,ChronoUnit speedUnit) {
         this.task = task;
         this.max = initialMax;
         if (initialMax < 0) indefinite = true;
+        this.start = startFrom;
+        this.current += startFrom;
+        this.elapsed = Duration.ofSeconds(elapsedSecond);
+        this.speedUnit = speedUnit;
     }
 
     synchronized void setAsDefinite() {
@@ -42,6 +53,17 @@ class ProgressState {
     synchronized void stepTo(long n) {
         current = n;
         if (current > max) max = current;
+    }
+
+    synchronized void startFrom(long n) {
+        start = n;
+        current += n;
+        if (current > max)
+            max = current;
+    }
+
+    synchronized void addElapsedSecond(long n) {
+        elapsed = elapsed.minus(Duration.ofSeconds(n));
     }
 
     synchronized void setExtraMessage(String msg) {
@@ -67,7 +89,9 @@ class ProgressState {
     // The progress, normalized to range [0, 1].
     synchronized double prog() {
         if (max <= 0) return 0.0;
-        else return ((double)current) / max;
+        else if (max-start < current)
+            return 1.0;
+        else return ((double)current) / (max-start);
     }
 
 }

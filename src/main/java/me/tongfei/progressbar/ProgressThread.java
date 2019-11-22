@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
@@ -80,10 +81,10 @@ class ProgressThread implements Runnable {
 
     String eta(Duration elapsed) {
         if (progress.max <= 0 || progress.indefinite) return "?";
-        else if (progress.current == 0) return "?";
+        else if (progress.current - progress.start == 0) return "?";
         else return Util.formatDuration(
-                elapsed.dividedBy(progress.current)
-                        .multipliedBy(progress.max - progress.current)
+                elapsed.dividedBy(progress.current-progress.start)
+                        .multipliedBy(progress.max- progress.current)
             );
     }
 
@@ -101,10 +102,32 @@ class ProgressThread implements Runnable {
     }
 
     String speed(Duration elapsed) {
-        if (elapsed.getSeconds() == 0) return "?" + unitName + "/s";
-        double speed = (double) progress.current / elapsed.getSeconds();
+        String suffix = null;
+        double elapsedWithUnit = 0;
+        if (null != progress.speedUnit)switch (progress.speedUnit) {
+            case MINUTES:
+                suffix = "/m";
+                elapsedWithUnit = (double)elapsed.getSeconds() / (double)60;
+                break;
+            case HOURS:
+                suffix = "/h";
+                elapsedWithUnit = (double)elapsed.getSeconds() / (double)(60*60);
+                break; 
+            case DAYS:
+                suffix = "/d";
+                elapsedWithUnit = (double)elapsed.getSeconds() / (double)(60 * 60 * 24);
+                break;
+            default:
+                suffix = "/s";
+                elapsedWithUnit = (double)elapsed.getSeconds();
+                break;
+        }
+            
+     
+        if (elapsed.getSeconds() == 0) return "?" + unitName + suffix;
+        double speed = (double) (progress.current - progress.start) / elapsedWithUnit;
         double speedWithUnit = speed / unitSize;
-        return speedFormat.format(speedWithUnit) + unitName + "/s";
+        return speedFormat.format(speedWithUnit) + unitName + suffix;
     }
 
     void refresh() {
@@ -147,6 +170,7 @@ class ProgressThread implements Runnable {
         String line = sb.toString();
 
         consoleStream.print(line);
+        consoleStream.print('\r');
     }
 
     public void run() {

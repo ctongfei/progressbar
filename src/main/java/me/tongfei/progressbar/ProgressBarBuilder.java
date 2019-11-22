@@ -2,6 +2,7 @@ package me.tongfei.progressbar;
 
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Builder class for {@link ProgressBar}s.
@@ -19,6 +20,9 @@ public class ProgressBarBuilder {
     private long unitSize = 1;
     private boolean showSpeed = false;
     private DecimalFormat speedFormat;
+    private ChronoUnit speedUnit = ChronoUnit.SECONDS;
+    private long startFrom = 0;
+    private long elapsedSecond = 0;
 
     public ProgressBarBuilder() { }
 
@@ -52,6 +56,13 @@ public class ProgressBarBuilder {
         this.unitSize = unitSize;
         return this;
     }
+    /**
+     * @param startFrom the startFrom to set
+     */
+    public ProgressBarBuilder setStartFrom(long startFrom) {
+        this.startFrom = startFrom;
+        return this;
+    }
 
     public ProgressBarBuilder showSpeed() {
         return showSpeed(new DecimalFormat("#.#"));
@@ -60,6 +71,28 @@ public class ProgressBarBuilder {
     public ProgressBarBuilder showSpeed(DecimalFormat speedFormat) {
         this.showSpeed = true;
         this.speedFormat = speedFormat;
+        return this;
+    }
+
+    /**
+     * Speed Unit of eta. 
+     * @param speedUnit supported only second, minutes, hours and days, default is second.
+     * @return
+     */
+    public ProgressBarBuilder setSpeedUnit(ChronoUnit speedUnit) {
+        this.speedUnit = speedUnit;
+        return this;
+    }
+
+    /**
+     * you can set parameters of elapsed duration and number of processed units if you want to continue a process before started
+     * @param startFrom amount of processed units
+     * @param elapsedSecond you can convert from other formats
+     * @return
+     */
+    public ProgressBarBuilder setBeforeProcessed(long startFrom,long elapsedSecond) {
+        this.startFrom = startFrom;
+        this.elapsedSecond = elapsedSecond;
         return this;
     }
 
@@ -73,7 +106,11 @@ public class ProgressBarBuilder {
                 unitName,
                 unitSize,
                 showSpeed,
-                speedFormat
+                speedFormat,
+                speedUnit,
+                startFrom,
+                elapsedSecond
         );
     }
+    
 }

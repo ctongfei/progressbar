@@ -9,7 +9,10 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.time.Duration;
 import java.time.Instant;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.stream.BaseStream;
@@ -32,15 +35,15 @@ public class ProgressBar implements AutoCloseable {
      * @param initialMax Initial maximum value
      */
     public ProgressBar(String task, long initialMax) {
-        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null);
+        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null, ChronoUnit.SECONDS, 0L, 0L);
     }
 
     public ProgressBar(String task, long initialMax, ProgressBarStyle style) {
-        this(task, initialMax, 1000, System.err, style, "", 1, false, null);
+        this(task, initialMax, 1000, System.err, style, "", 1, false, null, ChronoUnit.SECONDS, 0L, 0L);
     }
 
     public ProgressBar(String task, long initialMax, int updateIntervalMillis) {
-        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null);
+        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null, ChronoUnit.SECONDS, 0L, 0L);
     }
 
     public ProgressBar(String task,
@@ -50,7 +53,7 @@ public class ProgressBar implements AutoCloseable {
                        ProgressBarStyle style,
                        String unitName,
                        long unitSize) {
-        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, false, null);
+        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, false, null, ChronoUnit.SECONDS, 0L, 0L);
     }
 
     public ProgressBar(
@@ -62,7 +65,7 @@ public class ProgressBar implements AutoCloseable {
             String unitName,
             long unitSize,
             boolean showSpeed) {
-        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, showSpeed, null);
+        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, showSpeed, null,ChronoUnit.SECONDS,0L,0L);
     }
 
     /**
@@ -73,8 +76,13 @@ public class ProgressBar implements AutoCloseable {
      * @param updateIntervalMillis Update interval (default value 1000 ms)
      * @param os Print stream (default value System.err)
      * @param style Output style (default value ProgressBarStyle.UNICODE_BLOCK)
+     * @param unitName
+     * @param unitSize
      * @param showSpeed Should the calculated speed be displayed
      * @param speedFormat Speed number format
+     * @param speedUnit
+     * @param startFrom
+     * @param elapsedSecond
      */
     public ProgressBar(
             String task,
@@ -85,14 +93,17 @@ public class ProgressBar implements AutoCloseable {
             String unitName,
             long unitSize,
             boolean showSpeed,
-            DecimalFormat speedFormat
+            DecimalFormat speedFormat,
+            ChronoUnit speedUnit,
+            long startFrom,
+            long elapsedSecond
     ) {
-        this.progress = new ProgressState(task, initialMax);
+        this.progress = new ProgressState(task, initialMax,startFrom,elapsedSecond,speedUnit);
         this.target = new ProgressThread(progress, style, updateIntervalMillis, os, unitName, unitSize, showSpeed, speedFormat);
         this.thread = new Thread(target, this.getClass().getName());
 
         // starts the progress bar upon construction
-        progress.startTime = Instant.now();
+        progress.startTime = Instant.now().minus(elapsedSecond,ChronoUnit.SECONDS);
         thread.start();
     }
 

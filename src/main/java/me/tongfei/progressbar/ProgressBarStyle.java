@@ -7,7 +7,7 @@ package me.tongfei.progressbar;
  */
 public enum ProgressBarStyle {
 
-    COLORFUL_UNICODE_BLOCK("\r", "\u001b[33m│", "│\u001b[0m", '█', ' ', " ▏▎▍▌▋▊▉"),
+    COLORFUL_UNICODE_BLOCK("\r", "\u001b[33m│", "│\u001b[0m", '█', ' ', "        "),
 
     /** Use Unicode block characters to draw the progress bar. */
     UNICODE_BLOCK("\r", "│", "│", '█', ' ', " ▏▎▍▌▋▊▉"),
