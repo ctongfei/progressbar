@@ -3,7 +3,7 @@ package me.tongfei.progressbar;
 import java.util.function.Consumer;
 
 /**
- * Progress bar consumer that delegates the progress bar handling to a custom {@link Consumer}
+ * Progress bar consumer that delegates the progress bar handling to a custom {@link Consumer}.
  * @author Alex Peelman
  * @since 0.8.0
  */
@@ -13,7 +13,7 @@ public class DelegatingProgressBarConsumer implements ProgressBarConsumer {
     private final Consumer<String> consumer;
 
     public DelegatingProgressBarConsumer(Consumer<String> consumer) {
-        this(consumer, 80);
+        this(consumer, Util.getTerminalWidth());
     }
 
     public DelegatingProgressBarConsumer(Consumer<String> consumer, int maxProgressLength) {

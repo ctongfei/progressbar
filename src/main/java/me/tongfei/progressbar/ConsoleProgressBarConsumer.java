@@ -15,9 +15,8 @@ import java.io.PrintStream;
 public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
     private static int consoleRightMargin = 2;
-    private static int defaultConsoleWidth = 80;
     private final PrintStream out;
-    private int consoleWidth = defaultConsoleWidth;
+    private int consoleWidth = Util.getTerminalWidth();
 
     ConsoleProgressBarConsumer() {
         this(System.err);
@@ -25,25 +24,6 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
     ConsoleProgressBarConsumer(PrintStream out) {
         this.out = out;
-
-        Terminal terminal = null;
-        try {
-            // Issue #42
-            // Defaulting to a dumb terminal when a supported terminal can not be correctly created
-            // see https://github.com/jline/jline3/issues/291
-            terminal = TerminalBuilder.builder().dumb(true).build();
-        }
-        catch (IOException ignored) { }
-
-        if (terminal != null && terminal.getWidth() >= 10) { // Workaround for issue #23 under IntelliJ
-            this.consoleWidth = terminal.getWidth();
-
-            try {
-                terminal.close();
-            } catch (IOException e) {
-                //NOOP
-            }
-        }
     }
 
     @Override
@@ -65,6 +45,5 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
     public void close() {
         out.println();
         out.flush();
-        out.close();
     }
 }

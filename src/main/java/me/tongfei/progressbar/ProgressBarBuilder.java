@@ -13,7 +13,7 @@ public class ProgressBarBuilder {
     private long initialMax = 0;
     private int updateIntervalMillis = 1000;
     private ProgressBarStyle style = ProgressBarStyle.COLORFUL_UNICODE_BLOCK;
-    private ProgressBarConsumer progressBarConsumer = new ConsoleProgressBarConsumer();
+    private ProgressBarConsumer consumer = new ConsoleProgressBarConsumer();
     private String unitName = "";
     private long unitSize = 1;
     private boolean showSpeed = false;
@@ -41,8 +41,8 @@ public class ProgressBarBuilder {
         return this;
     }
 
-    public ProgressBarBuilder setProgressBarConsumer(ProgressBarConsumer progressBarConsumer) {
-        this.progressBarConsumer = progressBarConsumer;
+    public ProgressBarBuilder setConsumer(ProgressBarConsumer consumer) {
+        this.consumer = consumer;
         return this;
     }
 
@@ -53,7 +53,7 @@ public class ProgressBarBuilder {
     }
 
     public ProgressBarBuilder showSpeed() {
-        return showSpeed(new DecimalFormat("#.#"));
+        return showSpeed(new DecimalFormat("#.0"));
     }
 
     public ProgressBarBuilder showSpeed(DecimalFormat speedFormat) {
@@ -68,7 +68,7 @@ public class ProgressBarBuilder {
                 initialMax,
                 updateIntervalMillis,
                 new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat),
-                progressBarConsumer
+                consumer
         );
     }
 }
