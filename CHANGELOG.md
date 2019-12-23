@@ -1,7 +1,7 @@
 # Changelog
 
  * `0.8.0`:
-     - Supports loggers (PR #54) by factoring out progress bar consumers and renderers. This allows progress bars to be used with logging libraries such as SLF4J. This PR fixes #12 and #18. Thanks @alexpeelman !
+     - Supports loggers (PR #54) by factoring out progress bar consumers and renderers. This allows progress bars to be used with logging libraries such as SLF4J, hence fixing #12 and #18. Thanks @alexpeelman !
      - Dependency version bump.
 
  * `0.7.4`:
