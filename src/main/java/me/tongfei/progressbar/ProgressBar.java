@@ -191,7 +191,7 @@ public class ProgressBar implements AutoCloseable {
         thread.interrupt();
         try {
             thread.join();
-            target.consumer.close();
+            target.closeConsumer();
         }
         catch (InterruptedException ignored) { }
     }

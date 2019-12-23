@@ -38,6 +38,10 @@ class ProgressThread implements Runnable {
         consumer.accept(rendered);
     }
 
+    void closeConsumer() {
+        consumer.close();
+    }
+
     public void run() {
         try {
             while (!Thread.interrupted()) {
