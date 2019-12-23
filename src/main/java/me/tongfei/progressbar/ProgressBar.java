@@ -6,7 +6,6 @@ import me.tongfei.progressbar.wrapped.ProgressBarWrappedIterator;
 import me.tongfei.progressbar.wrapped.ProgressBarWrappedSpliterator;
 
 import java.io.InputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.time.Instant;
@@ -71,7 +70,6 @@ public class ProgressBar implements AutoCloseable {
      * @param task Task name
      * @param initialMax Initial maximum value
      * @param updateIntervalMillis Update interval (default value 1000 ms)
-     * @param os Print stream (default value System.err)
      * @param style Output style (default value ProgressBarStyle.UNICODE_BLOCK)
      * @param showSpeed Should the calculated speed be displayed
      * @param speedFormat Speed number format
@@ -87,8 +85,30 @@ public class ProgressBar implements AutoCloseable {
             boolean showSpeed,
             DecimalFormat speedFormat
     ) {
+        this(task, initialMax, updateIntervalMillis,
+                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat),
+                new ConsoleProgressBarConsumer(os)
+        );
+    }
+
+    /**
+     * Creates a progress bar with the specific name, initial maximum value, customized update interval (default 1s),
+     * and the provided progress bar renderer ({@link ProgressBarRenderer}) and consumer ({@link ProgressBarConsumer}).
+     * @param task Task name
+     * @param initialMax Initial maximum value
+     * @param updateIntervalMillis Update time interval (default value 1000ms)
+     * @param renderer Progress bar renderer
+     * @param consumer Progress bar consumer
+     */
+    public ProgressBar(
+            String task,
+            long initialMax,
+            int updateIntervalMillis,
+            ProgressBarRenderer renderer,
+            ProgressBarConsumer consumer
+    ) {
         this.progress = new ProgressState(task, initialMax);
-        this.target = new ProgressThread(progress, style, updateIntervalMillis, os, unitName, unitSize, showSpeed, speedFormat);
+        this.target = new ProgressThread(progress, renderer, updateIntervalMillis, consumer);
         this.thread = new Thread(target, this.getClass().getName());
 
         // starts the progress bar upon construction
@@ -153,7 +173,10 @@ public class ProgressBar implements AutoCloseable {
      */
     @Deprecated
     public ProgressBar stop() {
-        close();
+        try {
+            close();
+        }
+        catch (Exception e) { /* ignored, for backward compatibility */ }
         return this;
     }
 
@@ -168,11 +191,9 @@ public class ProgressBar implements AutoCloseable {
         thread.interrupt();
         try {
             thread.join();
-            target.consoleStream.print("\n");
-            target.consoleStream.flush();
-            target.terminal.close();
+            target.consumer.close();
         }
-        catch (InterruptedException | IOException ignored) { }
+        catch (InterruptedException ignored) { }
     }
 
     /**

@@ -1,4 +1,4 @@
-site_name: 'Progressbar 0.7.4'
+site_name: 'Progressbar 0.8.0'
 site_description: 'A console progress bar for Java/JVM'
 site_author: 'Tongfei Chen'
 copyright: 'Copyright &copy; 2015-2019 Tongfei Chen'
@@ -33,4 +33,5 @@ pages:
   - 'Imperative usage': 'imperative-usage.md'
   - 'Visual styles': 'styles.md'
   - 'Builder pattern': 'builder.md'
+  - 'Integrating with loggers': 'loggers.md'
   - 'Changelog': 'changelog.md'

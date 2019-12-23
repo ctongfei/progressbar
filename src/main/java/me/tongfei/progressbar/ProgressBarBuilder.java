@@ -1,6 +1,5 @@
 package me.tongfei.progressbar;
 
-import java.io.PrintStream;
 import java.text.DecimalFormat;
 
 /**
@@ -12,9 +11,9 @@ public class ProgressBarBuilder {
 
     private String task = "";
     private long initialMax = 0;
-    private ProgressBarStyle style = ProgressBarStyle.COLORFUL_UNICODE_BLOCK;
     private int updateIntervalMillis = 1000;
-    private PrintStream stream = System.err;
+    private ProgressBarStyle style = ProgressBarStyle.COLORFUL_UNICODE_BLOCK;
+    private ProgressBarConsumer consumer = null;
     private String unitName = "";
     private long unitSize = 1;
     private boolean showSpeed = false;
@@ -42,8 +41,8 @@ public class ProgressBarBuilder {
         return this;
     }
 
-    public ProgressBarBuilder setPrintStream(PrintStream stream) {
-        this.stream = stream;
+    public ProgressBarBuilder setConsumer(ProgressBarConsumer consumer) {
+        this.consumer = consumer;
         return this;
     }
 
@@ -54,7 +53,7 @@ public class ProgressBarBuilder {
     }
 
     public ProgressBarBuilder showSpeed() {
-        return showSpeed(new DecimalFormat("#.#"));
+        return showSpeed(new DecimalFormat("#.0"));
     }
 
     public ProgressBarBuilder showSpeed(DecimalFormat speedFormat) {
@@ -64,16 +63,15 @@ public class ProgressBarBuilder {
     }
 
     public ProgressBar build() {
+        if (consumer == null)
+            consumer = new ConsoleProgressBarConsumer();
+
         return new ProgressBar(
                 task,
                 initialMax,
                 updateIntervalMillis,
-                stream,
-                style,
-                unitName,
-                unitSize,
-                showSpeed,
-                speedFormat
+                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat),
+                consumer
         );
     }
 }

@@ -1,5 +1,8 @@
 package me.tongfei.progressbar;
 
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
@@ -10,6 +13,8 @@ import java.time.Duration;
  * @since 0.5.0
  */
 class Util {
+
+    private static int defaultTerminalWidth = 80;
 
     static String repeat(char c, int n) {
         if (n <= 0) return "";
@@ -32,6 +37,35 @@ class Util {
             return -1;
         }
         return -1;
+    }
+
+    static Terminal getTerminal() {
+        Terminal terminal = null;
+        try {
+            // Issue #42
+            // Defaulting to a dumb terminal when a supported terminal can not be correctly created
+            // see https://github.com/jline/jline3/issues/291
+            terminal = TerminalBuilder.builder().dumb(true).build();
+        }
+        catch (IOException ignored) { }
+        return terminal;
+    }
+
+    static int getTerminalWidth(Terminal terminal) {
+        if (terminal != null && terminal.getWidth() >= 10) // Workaround for issue #23 under IntelliJ
+            return terminal.getWidth();
+        else return defaultTerminalWidth;
+    }
+
+    static int getTerminalWidth() {
+        Terminal terminal = getTerminal();
+        int width = getTerminalWidth(terminal);
+        try {
+            if (terminal != null)
+                terminal.close();
+        }
+        catch (IOException ignored) { /* noop */ }
+        return width;
     }
 
 }
