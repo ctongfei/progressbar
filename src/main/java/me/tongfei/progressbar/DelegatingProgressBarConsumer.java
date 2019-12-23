@@ -4,29 +4,26 @@ import java.util.function.Consumer;
 
 /**
  * Progress bar consumer that delegates the progress bar handling to a custom {@link Consumer}
+ * @author Alex Peelman
+ * @since 0.8.0
  */
-public class DelegatingProgressbarConsumer implements ProgressBarConsumer {
+public class DelegatingProgressBarConsumer implements ProgressBarConsumer {
 
     private final int maxProgressLength;
-    private final Consumer<String> progressBarConsumer;
+    private final Consumer<String> consumer;
 
-    public DelegatingProgressbarConsumer(Consumer<String> progressBarConsumer) {
-        this(progressBarConsumer, 80);
+    public DelegatingProgressBarConsumer(Consumer<String> consumer) {
+        this(consumer, 80);
     }
 
-    public DelegatingProgressbarConsumer(Consumer<String> progressBarConsumer, int maxProgressLength) {
+    public DelegatingProgressBarConsumer(Consumer<String> consumer, int maxProgressLength) {
         this.maxProgressLength = maxProgressLength;
-        this.progressBarConsumer = progressBarConsumer;
+        this.consumer = consumer;
     }
 
     @Override
     public void beforeUpdate() {
         //NOOP
-    }
-
-    @Override
-    public int getMaxSuffixLength(int prefixLength) {
-        return Integer.MAX_VALUE;
     }
 
     @Override
@@ -36,7 +33,7 @@ public class DelegatingProgressbarConsumer implements ProgressBarConsumer {
 
     @Override
     public void accept(String progressBar) {
-        this.progressBarConsumer.accept(progressBar);
+        this.consumer.accept(progressBar);
     }
 
     @Override

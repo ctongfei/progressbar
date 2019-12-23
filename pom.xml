@@ -6,7 +6,7 @@
 
     <groupId>me.tongfei</groupId>
     <artifactId>progressbar</artifactId>
-    <version>0.7.5-SNAPSHOT</version>
+    <version>0.8.0</version>
     <name>progressbar</name>
     <description>A console-based progress bar for JVM</description>
     <url>http://github.com/ctongfei/progressbar</url>
@@ -76,13 +76,13 @@
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline</artifactId>
-            <version>3.11.0</version>
+            <version>3.13.2</version>
         </dependency>
 
         <dependency>
-            <groupId>org.fusesource.jansi</groupId>
-            <artifactId>jansi</artifactId>
-            <version>1.18</version>
+            <groupId>org.jline</groupId>
+            <artifactId>jline-terminal-jansi</artifactId>
+            <version>3.13.2</version>
         </dependency>
 
         <dependency>
@@ -95,14 +95,14 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
+            <version>1.7.30</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.25</version>
+            <version>1.7.30</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

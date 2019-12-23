@@ -13,7 +13,6 @@ public class WrappedIterableTest {
 
     @Test
     public void test() throws Exception {
-        System.out.println(System.getenv("TERM"));
 
         List<Integer> sizedColl = Stream.iterate(1, x -> x + 1).limit(10000).collect(Collectors.toList());
 

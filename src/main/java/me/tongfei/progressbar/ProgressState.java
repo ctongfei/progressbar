@@ -65,7 +65,7 @@ class ProgressState {
     }
 
     // The progress, normalized to range [0, 1].
-    synchronized double prog() {
+    synchronized double getNormalizedProgress() {
         if (max <= 0) return 0.0;
         else return ((double)current) / max;
     }

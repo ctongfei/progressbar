@@ -1,33 +1,29 @@
 package me.tongfei.progressbar;
 
-public interface ProgressBarConsumer {
+/**
+ * A consumer that prints a rendered progress bar.
+ * @since 0.8.0
+ * @author Alex Peelman
+ * @author Tongfei Chen
+ */
+public interface ProgressBarConsumer extends AutoCloseable {
 
     /**
-     * method that runs before passing the new state of the progress bar
+     * Event that is triggered before passing the new rendered form of a progress bar.
      */
     void beforeUpdate();
 
     /**
-     * If any output or max limitations are applicable, return the maximum allowed suffix length.
-     * @see ConsoleLogger
-     *
-     * @param prefixLength
-     * @return
-     */
-    int getMaxSuffixLength(int prefixLength);
-
-    /**
-     * Max length of the progress bar
-     *
-     * @return
+     * Returns the maximum length allowed for the rendered form of a progress bar.
      */
     int getMaxProgressLength();
 
     /**
-     *
-     * @param progressBar The current progress bar state
+     * Accepts a rendered form of a progress bar, e.g., prints to a specified stream.
+     * @param rendered Rendered form of a progress bar, a string
      */
-    void accept(String progressBar);
+    void accept(String rendered);
 
     void close();
+
 }

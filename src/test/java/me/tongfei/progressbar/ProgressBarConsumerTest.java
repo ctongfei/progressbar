@@ -4,17 +4,15 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author Alex Peelman
+ */
 public class ProgressBarConsumerTest {
 
-    public static class SystemOutProgressBarConsumer implements ProgressBarConsumer{
+    public static class SystemOutProgressBarConsumer implements ProgressBarConsumer {
         @Override
         public void beforeUpdate() {
             //NOOP
-        }
-
-        @Override
-        public int getMaxSuffixLength(int prefixLength) {
-            return Integer.MAX_VALUE;
         }
 
         @Override
@@ -40,13 +38,12 @@ public class ProgressBarConsumerTest {
         try (ProgressBar progressBar = new ProgressBarBuilder()
                 .setInitialMax(100)
                 .setTaskName("log.test")
-                .setProgressBarConsumer(new DelegatingProgressbarConsumer(progress -> log.info("{}", progress)))
+                .setProgressBarConsumer(new DelegatingProgressBarConsumer(log::info))
                 .setUpdateIntervalMillis(100)
-                .showSpeed()
                 .build()) {
             for (int i=0; i < 100; i++) {
                 progressBar.step();
-                Thread.sleep(15);
+                Thread.sleep(100);
             }
         }
     }
@@ -57,13 +54,13 @@ public class ProgressBarConsumerTest {
         try (ProgressBar progressBar = new ProgressBarBuilder()
                 .setInitialMax(100)
                 .setTaskName("System.out.console.test")
-                .setProgressBarConsumer(new ConsoleLogger(System.out, 100))
+                .setProgressBarConsumer(new ConsoleProgressBarConsumer(System.out))
                 .setUpdateIntervalMillis(100)
                 .showSpeed()
                 .build()) {
             for (int i=0; i < 100; i++) {
                 progressBar.step();
-                Thread.sleep(15);
+                Thread.sleep(100);
             }
         }
     }

@@ -11,7 +11,7 @@ public class ProgressBarTest {
 
     @Test
     public void test() {
-        try (ProgressBar pb = new ProgressBar("Test", 5, 50, new ConsoleLogger(System.out), ProgressBarStyle.UNICODE_BLOCK, "KB", 1024)) {
+        try (ProgressBar pb = new ProgressBar("Test", 5, 50, System.out, ProgressBarStyle.UNICODE_BLOCK, "K", 1024)) {
 
             double x = 1.0;
             double y = x * x;

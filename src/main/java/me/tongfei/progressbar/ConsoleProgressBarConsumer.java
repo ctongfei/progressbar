@@ -8,26 +8,23 @@ import java.io.PrintStream;
 
 /**
  * Progress bar consumer that prints the progress bar state to console.
- * By default {@link System#err} is used as {@link PrintStream}
+ * By default {@link System#err} is used as {@link PrintStream}.
+ * @author Tongfei Chen
+ * @author Alex Peelman
  */
-public class ConsoleLogger implements ProgressBarConsumer {
+public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
     private static int consoleRightMargin = 2;
-    private static int DEFAULT_CONSOLE_WIDTH = 80;
-    final PrintStream out;
-    int consoleWidth;
+    private static int defaultConsoleWidth = 80;
+    private final PrintStream out;
+    private int consoleWidth = defaultConsoleWidth;
 
-    public ConsoleLogger() {
+    ConsoleProgressBarConsumer() {
         this(System.err);
     }
 
-    public ConsoleLogger(PrintStream out) {
-        this(out, DEFAULT_CONSOLE_WIDTH);
-    }
-
-    public ConsoleLogger(PrintStream out, int consoleWidth) {
+    ConsoleProgressBarConsumer(PrintStream out) {
         this.out = out;
-        this.consoleWidth = consoleWidth;
 
         Terminal terminal = null;
         try {
@@ -52,11 +49,6 @@ public class ConsoleLogger implements ProgressBarConsumer {
     @Override
     public void beforeUpdate() {
         out.print('\r');
-    }
-
-    @Override
-    public int getMaxSuffixLength(int prefixLength) {
-        return Math.max(0, consoleWidth - consoleRightMargin - prefixLength - 10);
     }
 
     @Override
