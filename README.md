@@ -16,7 +16,7 @@ For Consolas or Andale Mono fonts, use `ProgressBarStyle.ASCII` because the box-
 
 #### Documentation
  - [Documentation](http://ctongfei.github.io/progressbar/)
- - [Javadoc](https://javadoc.io/doc/me.tongfei/progressbar/0.7.4)
+ - [Javadoc](https://javadoc.io/doc/me.tongfei/progressbar/0.8.0)
  
 
 #### Installation
@@ -27,7 +27,7 @@ Maven:
   <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar</artifactId>
-      <version>0.7.4</version>
+      <version>0.8.0</version>
   </dependency>
 ```
 
