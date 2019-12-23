@@ -39,10 +39,7 @@ class Util {
         return -1;
     }
 
-    static int getTerminalWidth() {
-
-        int terminalWidth = defaultTerminalWidth;
-
+    static Terminal getTerminal() {
         Terminal terminal = null;
         try {
             // Issue #42
@@ -51,18 +48,24 @@ class Util {
             terminal = TerminalBuilder.builder().dumb(true).build();
         }
         catch (IOException ignored) { }
+        return terminal;
+    }
 
-        if (terminal != null && terminal.getWidth() >= 10) { // Workaround for issue #23 under IntelliJ
-            terminalWidth = terminal.getWidth();
+    static int getTerminalWidth(Terminal terminal) {
+        if (terminal != null && terminal.getWidth() >= 10) // Workaround for issue #23 under IntelliJ
+            return terminal.getWidth();
+        else return defaultTerminalWidth;
+    }
 
-            try {
+    static int getTerminalWidth() {
+        Terminal terminal = getTerminal();
+        int width = getTerminalWidth(terminal);
+        try {
+            if (terminal != null)
                 terminal.close();
-            } catch (IOException e) {
-                //NOOP
-            }
         }
-
-        return terminalWidth;
+        catch (IOException ignored) { /* noop */ }
+        return width;
     }
 
 }

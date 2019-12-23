@@ -13,7 +13,7 @@ public class ProgressBarBuilder {
     private long initialMax = 0;
     private int updateIntervalMillis = 1000;
     private ProgressBarStyle style = ProgressBarStyle.COLORFUL_UNICODE_BLOCK;
-    private ProgressBarConsumer consumer = new ConsoleProgressBarConsumer();
+    private ProgressBarConsumer consumer = null;
     private String unitName = "";
     private long unitSize = 1;
     private boolean showSpeed = false;
@@ -63,6 +63,9 @@ public class ProgressBarBuilder {
     }
 
     public ProgressBar build() {
+        if (consumer == null)
+            consumer = new ConsoleProgressBarConsumer();
+
         return new ProgressBar(
                 task,
                 initialMax,

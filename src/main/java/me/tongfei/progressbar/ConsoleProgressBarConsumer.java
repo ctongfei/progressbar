@@ -1,7 +1,6 @@
 package me.tongfei.progressbar;
 
 import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -16,7 +15,7 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
     private static int consoleRightMargin = 2;
     private final PrintStream out;
-    private int consoleWidth = Util.getTerminalWidth();
+    private Terminal terminal = Util.getTerminal();
 
     ConsoleProgressBarConsumer() {
         this(System.err);
@@ -27,23 +26,23 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
     }
 
     @Override
-    public void beforeUpdate() {
-        out.print('\r');
-    }
-
-    @Override
     public int getMaxProgressLength() {
-        return consoleWidth - consoleRightMargin;
+        return Util.getTerminalWidth(terminal) - consoleRightMargin;
     }
 
     @Override
-    public void accept(String progressBar) {
-        out.print(progressBar);
+    public void accept(String str) {
+        out.print('\r'); // before update
+        out.print(str);
     }
 
     @Override
     public void close() {
         out.println();
         out.flush();
+        try {
+            terminal.close();
+        }
+        catch (IOException ignored) { /* noop */ }
     }
 }

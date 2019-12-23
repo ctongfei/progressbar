@@ -22,18 +22,13 @@ public class DelegatingProgressBarConsumer implements ProgressBarConsumer {
     }
 
     @Override
-    public void beforeUpdate() {
-        //NOOP
-    }
-
-    @Override
     public int getMaxProgressLength() {
         return maxProgressLength;
     }
 
     @Override
-    public void accept(String progressBar) {
-        this.consumer.accept(progressBar);
+    public void accept(String str) {
+        this.consumer.accept(str);
     }
 
     @Override
