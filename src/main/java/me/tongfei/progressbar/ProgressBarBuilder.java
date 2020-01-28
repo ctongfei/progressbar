@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
 public class ProgressBarBuilder {
 
     private String task = "";
-    private long initialMax = 0;
+    private long initialMax = -1;
     private int updateIntervalMillis = 1000;
     private ProgressBarStyle style = ProgressBarStyle.COLORFUL_UNICODE_BLOCK;
     private ProgressBarConsumer consumer = null;
