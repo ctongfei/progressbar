@@ -35,14 +35,14 @@ public class ProgressBarWrappedInputStream extends FilterInputStream {
     @Override
     public int read(byte[] b) throws IOException {
         int r = in.read(b);
-        pb.stepBy(r);
+        if (r != -1) pb.stepBy(r);
         return r;
     }
 
     @Override
     public int read(byte[] b, int off, int len) throws IOException {
         int r = in.read(b, off, len);
-        pb.stepBy(r);
+        if (r != -1) pb.stepBy(r);
         return r;
     }
 
