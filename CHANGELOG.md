@@ -2,9 +2,9 @@
 
  * `0.8.1`:
      - Bugfixes:
-       - Fixed the bug of possible negative suffix length (PR #58). Thanks @kristofarkas !
-       - Fixed the issue of stepping by -1 when wrapped input stream is depleted (#60, PR #61). Thanks @mordechaim !
-       - Default value for initial max in progress bar builders should be -1, not 0 (#60, PR #61). Thanks @mordechaim !
+         - Fixed the bug of possible negative suffix length (PR #58). Thanks @kristofarkas !
+         - Fixed the issue of stepping by -1 when wrapped input stream is depleted (#60, PR #61). Thanks @mordechaim !
+         - Default value for initial max in progress bar builders should be -1, not 0 (#60, PR #61). Thanks @mordechaim !
      - Dependency version bump.
 
  * `0.8.0`:
