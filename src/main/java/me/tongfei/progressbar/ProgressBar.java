@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.stream.BaseStream;
@@ -31,15 +32,15 @@ public class ProgressBar implements AutoCloseable {
      * @param initialMax Initial maximum value
      */
     public ProgressBar(String task, long initialMax) {
-        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null);
+        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null,ChronoUnit.SECONDS, 0L, 0L);
     }
 
     public ProgressBar(String task, long initialMax, ProgressBarStyle style) {
-        this(task, initialMax, 1000, System.err, style, "", 1, false, null);
+        this(task, initialMax, 1000, System.err, style, "", 1, false, null,ChronoUnit.SECONDS, 0L, 0L);
     }
 
     public ProgressBar(String task, long initialMax, int updateIntervalMillis) {
-        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null);
+        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null, ChronoUnit.SECONDS, 0L, 0L);
     }
 
     public ProgressBar(String task,
@@ -49,7 +50,7 @@ public class ProgressBar implements AutoCloseable {
                        ProgressBarStyle style,
                        String unitName,
                        long unitSize) {
-        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, false, null);
+        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, false, null, ChronoUnit.SECONDS, 0L, 0L);
     }
 
     public ProgressBar(
@@ -61,7 +62,7 @@ public class ProgressBar implements AutoCloseable {
             String unitName,
             long unitSize,
             boolean showSpeed) {
-        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, showSpeed, null);
+        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, showSpeed, null, ChronoUnit.SECONDS, 0L, 0L);
     }
 
     /**
@@ -83,11 +84,14 @@ public class ProgressBar implements AutoCloseable {
             String unitName,
             long unitSize,
             boolean showSpeed,
-            DecimalFormat speedFormat
+            DecimalFormat speedFormat,
+            ChronoUnit speedUnit,
+            long startFrom,
+            long elapsedSecond
     ) {
         this(task, initialMax, updateIntervalMillis,
-                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat),
-                new ConsoleProgressBarConsumer(os)
+                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat,speedUnit),
+                new ConsoleProgressBarConsumer(os),startFrom, elapsedSecond
         );
     }
 
@@ -99,20 +103,24 @@ public class ProgressBar implements AutoCloseable {
      * @param updateIntervalMillis Update time interval (default value 1000ms)
      * @param renderer Progress bar renderer
      * @param consumer Progress bar consumer
+     * @param startFrom Initial completed process value
+     * @param elapsedSecond Initial elapsed second before
      */
     public ProgressBar(
             String task,
             long initialMax,
             int updateIntervalMillis,
             ProgressBarRenderer renderer,
-            ProgressBarConsumer consumer
+            ProgressBarConsumer consumer,
+            long startFrom,
+            long elapsedSecond
     ) {
-        this.progress = new ProgressState(task, initialMax);
+        this.progress = new ProgressState(task, initialMax,startFrom, elapsedSecond);
         this.target = new ProgressThread(progress, renderer, updateIntervalMillis, consumer);
         this.thread = new Thread(target, this.getClass().getName());
 
         // starts the progress bar upon construction
-        progress.startTime = Instant.now();
+        progress.startTime = Instant.now().minus(elapsedSecond, ChronoUnit.SECONDS);
         thread.start();
     }
 

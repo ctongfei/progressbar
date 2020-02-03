@@ -1,6 +1,7 @@
 package me.tongfei.progressbar;
 
 import java.text.DecimalFormat;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Builder class for {@link ProgressBar}s.
@@ -18,6 +19,9 @@ public class ProgressBarBuilder {
     private long unitSize = 1;
     private boolean showSpeed = false;
     private DecimalFormat speedFormat;
+    private ChronoUnit speedUnit = ChronoUnit.SECONDS;
+    private long startFrom = 0;
+    private long elapsedSecond = 0;
 
     public ProgressBarBuilder() { }
 
@@ -61,6 +65,39 @@ public class ProgressBarBuilder {
         this.speedFormat = speedFormat;
         return this;
     }
+    /**
+     * Speed Unit of eta.
+     *
+     * @param speedUnit supported only second, minutes, hours and days, default
+     * is second.
+     * @return
+     */
+    public ProgressBarBuilder setSpeedUnit(ChronoUnit speedUnit) {
+        this.speedUnit = speedUnit;
+        return this;
+    }
+    /**
+     * @param startFrom the startFrom to set
+     * @return 
+     */
+    public ProgressBarBuilder setStartFrom(long startFrom) {
+        this.startFrom = startFrom;
+        return this;
+    }
+
+    /**
+     * you can set parameters of elapsed duration and number of processed units
+     * if you want to continue a process before started
+     *
+     * @param startFrom amount of processed units
+     * @param elapsedSecond you can convert from other formats
+     * @return
+     */
+    public ProgressBarBuilder setBeforeProcessed(long startFrom, long elapsedSecond) {
+        this.startFrom = startFrom;
+        this.elapsedSecond = elapsedSecond;
+        return this;
+    }
 
     public ProgressBar build() {
         if (consumer == null)
@@ -70,8 +107,8 @@ public class ProgressBarBuilder {
                 task,
                 initialMax,
                 updateIntervalMillis,
-                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat),
-                consumer
+                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat,speedUnit),
+                consumer,startFrom, elapsedSecond
         );
     }
 }
