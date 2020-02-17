@@ -74,7 +74,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         if (null != speedUnit)
             switch (speedUnit) {
                 case MINUTES:
-                    suffix = "/m";
+                    suffix = "/min";
                     elapsedWithUnit = (double) elapsed.getSeconds() / (double) 60;
                     break;
                 case HOURS:

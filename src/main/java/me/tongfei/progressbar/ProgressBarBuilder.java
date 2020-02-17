@@ -1,6 +1,7 @@
 package me.tongfei.progressbar;
 
 import java.text.DecimalFormat;
+import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 /**
@@ -21,7 +22,7 @@ public class ProgressBarBuilder {
     private DecimalFormat speedFormat;
     private ChronoUnit speedUnit = ChronoUnit.SECONDS;
     private long startFrom = 0;
-    private long elapsedSecond = 0;
+    private Duration elapsed = Duration.ZERO;
 
     public ProgressBarBuilder() { }
 
@@ -90,12 +91,12 @@ public class ProgressBarBuilder {
      * if you want to continue a process before started
      *
      * @param startFrom amount of processed units
-     * @param elapsedSecond you can convert from other formats
+     * @param elapsed you can convert from other formats
      * @return
      */
-    public ProgressBarBuilder setBeforeProcessed(long startFrom, long elapsedSecond) {
+    public ProgressBarBuilder setBeforeProcessed(long startFrom, Duration elapsed) {
         this.startFrom = startFrom;
-        this.elapsedSecond = elapsedSecond;
+        this.elapsed = elapsed;
         return this;
     }
 
@@ -106,9 +107,9 @@ public class ProgressBarBuilder {
         return new ProgressBar(
                 task,
                 initialMax,
-                updateIntervalMillis,
+                updateIntervalMillis, startFrom, elapsed,
                 new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat,speedUnit),
-                consumer,startFrom, elapsedSecond
+                consumer
         );
     }
 }
