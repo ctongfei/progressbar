@@ -20,13 +20,13 @@ class ProgressState {
     long start = 0;
     Duration elapsed = Duration.ofSeconds(0L);
 
-    ProgressState(String task, long initialMax, long startFrom, long elapsedSecond) {
+    ProgressState(String task, long initialMax, long startFrom, Duration elapsed) {
         this.task = task;
         this.max = initialMax;
         if (initialMax < 0) indefinite = true;
         this.start = startFrom;
         this.current += startFrom;
-        this.elapsed = Duration.ofSeconds(elapsedSecond);
+        this.elapsed = elapsed;
     }
 
     synchronized void setAsDefinite() {
@@ -74,9 +74,7 @@ class ProgressState {
     // The progress, normalized to range [0, 1].
     synchronized double getNormalizedProgress() {
         if (max <= 0) return 0.0;
-        else if (max - start < current)
-            return 1.0;
-        else return ((double)current) / max;
+        return ((double)current) / max;
     }
 
 }
