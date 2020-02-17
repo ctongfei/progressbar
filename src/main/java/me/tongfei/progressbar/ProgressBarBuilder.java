@@ -107,7 +107,9 @@ public class ProgressBarBuilder {
         return new ProgressBar(
                 task,
                 initialMax,
-                updateIntervalMillis, startFrom, elapsed,
+                updateIntervalMillis,
+                startFrom,
+                elapsed,
                 new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat,speedUnit),
                 consumer
         );
