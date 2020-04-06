@@ -1,12 +1,19 @@
 package me.tongfei.progressbar;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+
+import org.jline.terminal.Cursor;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
-
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.time.Duration;
+import org.jline.utils.InfoCmp;
 
 /**
  * @author Tongfei Chen
@@ -14,7 +21,18 @@ import java.time.Duration;
  */
 class Util {
 
+    static ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1, runnable -> {
+        Thread thread = Executors.defaultThreadFactory().newThread(runnable);
+        thread.setName("tongfei.progressbar");
+        thread.setDaemon(true);
+        return thread;
+    });
+
+    static List<ConsoleProgressBarConsumer> terminalConsumers = Collections.synchronizedList(new ArrayList<>());
+
     private static int defaultTerminalWidth = 80;
+    private static boolean cursorMovementSupport = false;
+    private static Terminal terminal = null;
 
     static String repeat(char c, int n) {
         if (n <= 0) return "";
@@ -32,23 +50,54 @@ class Util {
         try {
             if (is instanceof FileInputStream)
                 return ((FileInputStream) is).getChannel().size();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             return -1;
         }
         return -1;
     }
 
-    static Terminal getTerminal() {
-        Terminal terminal = null;
-        try {
-            // Issue #42
-            // Defaulting to a dumb terminal when a supported terminal can not be correctly created
-            // see https://github.com/jline/jline3/issues/291
-            terminal = TerminalBuilder.builder().dumb(true).build();
+    static boolean cursorMovementSupport() {
+        getTerminal();
+        return cursorMovementSupport;
+    }
+
+    static void closeTerminal() {
+        if (terminalConsumers.size() == 0) {
+            try {
+                terminal.close();
+            } catch (IOException ignored) { /* noop */ }
+            terminal = null;
+            cursorMovementSupport = false;
         }
-        catch (IOException ignored) { }
+    }
+
+    static Terminal getTerminal() {
+        if (terminal == null) {
+            try {
+                // Issue #42
+                // Defaulting to a dumb terminal when a supported terminal can not be correctly created
+                // see https://github.com/jline/jline3/issues/291
+                terminal = TerminalBuilder.builder().dumb(true).build();
+
+                if (!terminal.getType().equals(Terminal.TYPE_DUMB)) {
+                    terminal.enterRawMode();
+                }
+            } catch (IOException ignored) {
+            }
+            cursorMovementSupport = terminal.getStringCapability(InfoCmp.Capability.cursor_up) != null
+                    && terminal.getStringCapability(InfoCmp.Capability.cursor_down) != null;
+        }
         return terminal;
+    }
+
+    static int currentCursorPosition() {
+        Cursor cursor = getTerminal().getCursorPosition(value -> {
+            //FIXME: what to do about discarded characters??
+        });
+        if (cursor == null) {
+            return 0;
+        }
+        return cursor.getY();
     }
 
     static int getTerminalWidth(Terminal terminal) {
@@ -59,13 +108,7 @@ class Util {
 
     static int getTerminalWidth() {
         Terminal terminal = getTerminal();
-        int width = getTerminalWidth(terminal);
-        try {
-            if (terminal != null)
-                terminal.close();
-        }
-        catch (IOException ignored) { /* noop */ }
-        return width;
+        return getTerminalWidth(terminal);
     }
 
 }
