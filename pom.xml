@@ -84,13 +84,13 @@
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline</artifactId>
-            <version>3.13.3</version>
+            <version>3.14.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline-terminal-jansi</artifactId>
-            <version>3.13.3</version>
+            <version>3.14.0</version>
         </dependency>
 
         <dependency>

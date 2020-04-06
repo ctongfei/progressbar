@@ -11,6 +11,8 @@ import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.Spliterator;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.BaseStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -23,7 +25,7 @@ public class ProgressBar implements AutoCloseable {
 
     private ProgressState progress;
     private ProgressThread target;
-    private Thread thread;
+    private ScheduledFuture scheduled;
 
     /**
      * Creates a progress bar with the specific task name and initial maximum value.
@@ -109,11 +111,9 @@ public class ProgressBar implements AutoCloseable {
     ) {
         this.progress = new ProgressState(task, initialMax);
         this.target = new ProgressThread(progress, renderer, updateIntervalMillis, consumer);
-        this.thread = new Thread(target, this.getClass().getName());
-
         // starts the progress bar upon construction
         progress.startTime = Instant.now();
-        thread.start();
+        scheduled = Util.executor.scheduleAtFixedRate(target, 0, updateIntervalMillis, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -123,7 +123,7 @@ public class ProgressBar implements AutoCloseable {
     @Deprecated
     public ProgressBar start() {
         progress.startTime = Instant.now();
-        thread.start();
+        scheduled = Util.executor.scheduleAtFixedRate(target, 0, target.updateInterval, TimeUnit.MILLISECONDS);
         return this;
     }
 
@@ -188,12 +188,8 @@ public class ProgressBar implements AutoCloseable {
      */
     @Override
     public void close() {
-        thread.interrupt();
-        try {
-            thread.join();
-            target.closeConsumer();
-        }
-        catch (InterruptedException ignored) { }
+        scheduled.cancel(false);
+        target.closeConsumer();
     }
 
     /**

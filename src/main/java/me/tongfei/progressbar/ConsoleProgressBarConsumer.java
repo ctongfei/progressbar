@@ -1,13 +1,11 @@
 package me.tongfei.progressbar;
 
-import org.jline.terminal.Terminal;
-
-import java.io.IOException;
 import java.io.PrintStream;
 
 /**
  * Progress bar consumer that prints the progress bar state to console.
  * By default {@link System#err} is used as {@link PrintStream}.
+ *
  * @author Tongfei Chen
  * @author Alex Peelman
  */
@@ -15,7 +13,9 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
     private static int consoleRightMargin = 2;
     private final PrintStream out;
-    private Terminal terminal = Util.getTerminal();
+
+    private boolean initialized = false;
+    int position = -1;
 
     ConsoleProgressBarConsumer() {
         this(System.err);
@@ -23,26 +23,70 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
     ConsoleProgressBarConsumer(PrintStream out) {
         this.out = out;
+        Util.terminalConsumers.add(this);
     }
 
     @Override
     public int getMaxProgressLength() {
-        return Util.getTerminalWidth(terminal) - consoleRightMargin;
+        return Util.getTerminalWidth() - consoleRightMargin;
     }
 
     @Override
     public void accept(String str) {
-        out.print('\r'); // before update
+        if (Util.cursorMovementSupport()) {
+            synchronized (out) {
+                if (initialized) {
+                    int currentPosition = Util.currentCursorPosition();
+                    moveCursorUp(currentPosition - position);
+                    replaceLine(str);
+                    moveCursorDown(currentPosition - position);
+                } else {
+                    position = Util.currentCursorPosition();
+
+                    // prevent issues caused by reaching terminal height => multiple progressbars having same (maximum) cursor position
+                    if (position == Util.getTerminal().getHeight() - 1) {
+                        Util.terminalConsumers.forEach(c -> {
+                            c.position--;
+                        });
+                    }
+
+                    out.print('\r');
+                    out.println(str);
+                    initialized = true;
+                }
+            }
+        } else {
+            replaceLine(str);
+        }
+    }
+
+    private void moveCursorUp(int count) {
+        if (count <= 0) {
+            return;
+        }
+        out.print(String.format("\u001b[%sA", count));
+    }
+
+    private void moveCursorDown(int count) {
+        if (count <= 0) {
+            return;
+        }
+        out.print(String.format("\u001b[%sB", count));
+    }
+
+    private void replaceLine(String str) {
+        out.print('\r');
         out.print(str);
+        out.print('\r');
     }
 
     @Override
     public void close() {
-        out.println();
-        out.flush();
-        try {
-            terminal.close();
+        if (!Util.cursorMovementSupport()) {
+            out.println();
         }
-        catch (IOException ignored) { /* noop */ }
+        out.flush();
+        Util.terminalConsumers.remove(this);
+        Util.closeTerminal();
     }
 }
