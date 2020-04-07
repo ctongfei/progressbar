@@ -24,7 +24,6 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
     ConsoleProgressBarConsumer(PrintStream out) {
         this.out = out;
-        Util.terminalConsumers.add(this);
     }
 
     @Override
@@ -39,14 +38,10 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
                 if (initialized) {
                     out.print(moveCursorUp(position) + str + moveCursorDown(position));
                 } else {
-                    position = 0;
-                    Util.terminalConsumers.forEach(c -> {
-                        if (c.position != -1) {
-                            c.position++;
-                        }
-                    });
-
+                    Util.terminalConsumers.forEach(c -> c.position++);
+                    Util.terminalConsumers.add(this);
                     out.println(MOVE_CURSOR_TO_LINE_START + str);
+                    position = 1;
                     initialized = true;
                 }
             }
