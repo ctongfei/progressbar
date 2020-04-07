@@ -11,8 +11,9 @@ import java.io.PrintStream;
  */
 public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
+    private static final char MOVE_CURSOR_TO_LINE_START = '\r';
     private static int consoleRightMargin = 2;
-    private final PrintStream out;
+    final PrintStream out;
 
     private boolean initialized = false;
     int position = -1;
@@ -36,48 +37,36 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
         if (Util.cursorMovementSupport()) {
             synchronized (out) {
                 if (initialized) {
-                    int currentPosition = Util.currentCursorPosition();
-                    moveCursorUp(currentPosition - position);
-                    replaceLine(str);
-                    moveCursorDown(currentPosition - position);
+                    out.print(moveCursorUp(position) + str + moveCursorDown(position));
                 } else {
-                    position = Util.currentCursorPosition();
+                    position = 0;
+                    Util.terminalConsumers.forEach(c -> {
+                        if (c.position != -1) {
+                            c.position++;
+                        }
+                    });
 
-                    // prevent issues caused by reaching terminal height => multiple progressbars having same (maximum) cursor position
-                    if (position == Util.getTerminal().getHeight() - 1) {
-                        Util.terminalConsumers.forEach(c -> {
-                            c.position--;
-                        });
-                    }
-
-                    out.print('\r');
-                    out.println(str);
+                    out.println(MOVE_CURSOR_TO_LINE_START + str);
                     initialized = true;
                 }
             }
         } else {
-            replaceLine(str);
+            out.print(MOVE_CURSOR_TO_LINE_START + str);
         }
     }
 
-    private void moveCursorUp(int count) {
+    private String moveCursorUp(int count) {
         if (count <= 0) {
-            return;
+            return "";
         }
-        out.print(String.format("\u001b[%sA", count));
+        return String.format("\u001b[%sA", count) + MOVE_CURSOR_TO_LINE_START;
     }
 
-    private void moveCursorDown(int count) {
+    private String moveCursorDown(int count) {
         if (count <= 0) {
-            return;
+            return "";
         }
-        out.print(String.format("\u001b[%sB", count));
-    }
-
-    private void replaceLine(String str) {
-        out.print('\r');
-        out.print(str);
-        out.print('\r');
+        return String.format("\u001b[%sB", count) + MOVE_CURSOR_TO_LINE_START;
     }
 
     @Override

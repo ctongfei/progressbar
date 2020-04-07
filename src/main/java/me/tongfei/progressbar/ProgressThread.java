@@ -29,9 +29,17 @@ class ProgressThread implements Runnable {
     }
 
     void closeConsumer() {
-        consumer.close();
+        if (consumer instanceof ConsoleProgressBarConsumer) {
+            synchronized (((ConsoleProgressBarConsumer) consumer).out) {
+                // force refreshing after being "interrupted"
+                refresh();
+                consumer.close();
+            }
+            return;
+        }
         // force refreshing after being "interrupted"
         refresh();
+        consumer.close();
     }
 
     public void run() {

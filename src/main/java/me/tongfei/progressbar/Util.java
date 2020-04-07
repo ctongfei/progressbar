@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
-import org.jline.terminal.Cursor;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.jline.utils.InfoCmp;
@@ -88,16 +87,6 @@ class Util {
                     && terminal.getStringCapability(InfoCmp.Capability.cursor_down) != null;
         }
         return terminal;
-    }
-
-    static int currentCursorPosition() {
-        Cursor cursor = getTerminal().getCursorPosition(value -> {
-            //FIXME: what to do about discarded characters??
-        });
-        if (cursor == null) {
-            return 0;
-        }
-        return cursor.getY();
     }
 
     static int getTerminalWidth(Terminal terminal) {
