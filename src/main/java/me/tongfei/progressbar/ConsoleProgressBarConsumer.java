@@ -13,6 +13,7 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
     private static final char MOVE_CURSOR_TO_LINE_START = '\r';
     private static int consoleRightMargin = 2;
+    private final boolean cursorMovementSupport;
     final PrintStream out;
 
     private boolean initialized = false;
@@ -24,22 +25,23 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
     ConsoleProgressBarConsumer(PrintStream out) {
         this.out = out;
+        cursorMovementSupport = TerminalUtils.cursorMovementSupport();
     }
 
     @Override
     public int getMaxProgressLength() {
-        return Util.getTerminalWidth() - consoleRightMargin;
+        return TerminalUtils.getTerminalWidth() - consoleRightMargin;
     }
 
     @Override
     public void accept(String str) {
-        if (Util.cursorMovementSupport()) {
+        if (cursorMovementSupport) {
             synchronized (out) {
                 if (initialized) {
                     out.print(moveCursorUp(position) + str + moveCursorDown(position));
                 } else {
-                    Util.terminalConsumers.forEach(c -> c.position++);
-                    Util.terminalConsumers.add(this);
+                    TerminalUtils.filterActiveConsumers(ConsoleProgressBarConsumer.class).forEach(c -> c.position++);
+                    TerminalUtils.activeConsumers.add(this);
                     out.println(MOVE_CURSOR_TO_LINE_START + str);
                     position = 1;
                     initialized = true;
@@ -66,11 +68,10 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
     @Override
     public void close() {
-        if (!Util.cursorMovementSupport()) {
+        if (!cursorMovementSupport) {
             out.println();
         }
         out.flush();
-        Util.terminalConsumers.remove(this);
-        Util.closeTerminal();
+        TerminalUtils.activeConsumers.remove(this);
     }
 }

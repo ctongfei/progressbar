@@ -13,7 +13,7 @@ public class DelegatingProgressBarConsumer implements ProgressBarConsumer {
     private final Consumer<String> consumer;
 
     public DelegatingProgressBarConsumer(Consumer<String> consumer) {
-        this(consumer, Util.getTerminalWidth());
+        this(consumer, TerminalUtils.getTerminalWidth());
     }
 
     public DelegatingProgressBarConsumer(Consumer<String> consumer, int maxProgressLength) {
