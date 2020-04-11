@@ -10,6 +10,7 @@ class ProgressThread implements Runnable {
     private ProgressBarRenderer renderer;
     long updateInterval;
     private ProgressBarConsumer consumer;
+    private boolean active = true;
 
     ProgressThread(
             ProgressState progress,
@@ -28,21 +29,18 @@ class ProgressThread implements Runnable {
         consumer.accept(rendered);
     }
 
-    void closeConsumer() {
-        if (consumer instanceof ConsoleProgressBarConsumer) {
-            synchronized (((ConsoleProgressBarConsumer) consumer).out) {
-                // force refreshing after being "interrupted"
-                refresh();
-                consumer.close();
-            }
-            return;
-        }
-        // force refreshing after being "interrupted"
-        refresh();
-        consumer.close();
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
+    @Override
     public void run() {
+        if (!active) {
+            refresh();
+            consumer.close();
+            return;
+        }
+
         refresh();
     }
 

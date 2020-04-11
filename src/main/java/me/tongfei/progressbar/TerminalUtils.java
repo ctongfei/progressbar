@@ -15,9 +15,12 @@ import static org.jline.utils.InfoCmp.Capability.cursor_up;
  * @author Martin Vehovsky
  * @since 0.9.0
  */
-class TerminalUtils {
+public class TerminalUtils {
+
+    public static final char MOVE_CURSOR_TO_LINE_START = '\r';
 
     private static int defaultTerminalWidth = 80;
+    private static Boolean cursorMovementSupported = null;
 
     public static Queue<ProgressBarConsumer> activeConsumers = new ConcurrentLinkedQueue<>();
 
@@ -38,11 +41,14 @@ class TerminalUtils {
     }
 
     synchronized public static boolean cursorMovementSupport() {
-        Terminal terminal = getTerminal();
-        boolean cursorMovementSupported = false;
-        if (terminal != null) {
-            cursorMovementSupported = terminal.getStringCapability(cursor_up) != null && terminal.getStringCapability(cursor_down) != null;
-            close(terminal);
+        if (cursorMovementSupported == null) {
+            Terminal terminal = getTerminal();
+            if (terminal != null) {
+                cursorMovementSupported = terminal.getStringCapability(cursor_up) != null && terminal.getStringCapability(cursor_down) != null;
+                close(terminal);
+            } else {
+                cursorMovementSupported = false;
+            }
         }
         return cursorMovementSupported;
     }
@@ -53,13 +59,21 @@ class TerminalUtils {
                 .map(clazz::cast);
     }
 
-    private static void close(Terminal terminal) {
+    public static String moveCursorUp(int count) {
+        return String.format("\u001b[%sA", count) + MOVE_CURSOR_TO_LINE_START;
+    }
+
+    public static String moveCursorDown(int count) {
+        return String.format("\u001b[%sB", count) + MOVE_CURSOR_TO_LINE_START;
+    }
+
+    static void close(Terminal terminal) {
         try {
             terminal.close();
         } catch (IOException ignored) { /* noop */ }
     }
 
-    private static Terminal getTerminal() {
+    static Terminal getTerminal() {
         try {
             // Issue #42
             // Defaulting to a dumb terminal when a supported terminal can not be correctly created

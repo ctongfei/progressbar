@@ -11,11 +11,14 @@ import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.Spliterator;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.BaseStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+
+import static me.tongfei.progressbar.Util.createConsoleConsumer;
 
 /**
  * A console-based progress bar with minimal runtime overhead.
@@ -89,7 +92,7 @@ public class ProgressBar implements AutoCloseable {
     ) {
         this(task, initialMax, updateIntervalMillis,
                 new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat),
-                new ConsoleProgressBarConsumer(os)
+                createConsoleConsumer(os)
         );
     }
 
@@ -189,7 +192,12 @@ public class ProgressBar implements AutoCloseable {
     @Override
     public void close() {
         scheduled.cancel(false);
-        target.closeConsumer();
+        target.setActive(false);
+        try {
+            Util.executor.schedule(target, 0, TimeUnit.NANOSECONDS).get();
+        } catch (InterruptedException | ExecutionException e) {
+            //noop
+        }
     }
 
     /**

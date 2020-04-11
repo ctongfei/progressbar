@@ -3,6 +3,7 @@ package me.tongfei.progressbar;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.time.Duration;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -19,6 +20,17 @@ class Util {
         thread.setDaemon(true);
         return thread;
     });
+
+    static ConsoleProgressBarConsumer createConsoleConsumer() {
+        return createConsoleConsumer(System.err);
+    }
+
+    static ConsoleProgressBarConsumer createConsoleConsumer(PrintStream out) {
+        if (TerminalUtils.cursorMovementSupport()) {
+            return new InteractiveConsoleProgressBarConsumer(out);
+        }
+        return new ConsoleProgressBarConsumer(out);
+    }
 
     static String repeat(char c, int n) {
         if (n <= 0) return "";
