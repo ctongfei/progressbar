@@ -49,8 +49,10 @@ public class TerminalUtils {
 
     synchronized static void closeTerminal() {
         try {
-            terminal.close();
-            terminal = null;
+            if (terminal != null) {
+                terminal.close();
+                terminal = null;
+            }
         } catch (IOException ignored) { /* noop */ }
     }
 
