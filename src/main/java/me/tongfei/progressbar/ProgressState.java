@@ -45,7 +45,7 @@ class ProgressState {
     }
 
     synchronized void setExtraMessage(String msg) {
-        extraMessage = msg;
+        extraMessage = msg.trim();
     }
 
     String getTask() {

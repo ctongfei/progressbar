@@ -6,6 +6,7 @@ import java.time.Instant;
 
 /**
  * Default progress bar renderer (see {@link ProgressBarRenderer}).
+ *
  * @author Tongfei Chen
  * @since 0.8.0
  */
@@ -33,7 +34,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
     // Number of full blocks
     private int progressIntegralPart(ProgressState progress, int length) {
-        return (int)(progress.getNormalizedProgress() * length);
+        return (int) (progress.getNormalizedProgress() * length);
     }
 
     private int progressFractionalPart(ProgressState progress, int length) {
@@ -78,10 +79,10 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         String prefix = progress.task + " " + percentage(progress) + " " + style.leftBracket;
         int maxSuffixLength = Math.max(maxLength - prefix.length(), 0);
 
-        String speedString = isSpeedShown ? speed(progress, elapsed) : "";
+        String speedString = isSpeedShown ? " " + speed(progress, elapsed) : "";
         String suffix = style.rightBracket + " " + ratio(progress) + " ("
-                + Util.formatDuration(elapsed) + " / " + eta(progress, elapsed) + ") "
-                + speedString + progress.extraMessage;
+                + Util.formatDuration(elapsed) + " / " + eta(progress, elapsed) + ")"
+                + speedString + (progress.extraMessage.isEmpty() ? "" : " " + progress.extraMessage);
         // trim excessive suffix
         if (suffix.length() > maxSuffixLength)
             suffix = suffix.substring(0, maxSuffixLength);
@@ -93,7 +94,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
         // case of indefinite progress bars
         if (progress.indefinite) {
-            int pos = (int)(progress.current % length);
+            int pos = (int) (progress.current % length);
             sb.append(Util.repeat(style.space, pos));
             sb.append(style.block);
             sb.append(Util.repeat(style.space, length - pos - 1));
