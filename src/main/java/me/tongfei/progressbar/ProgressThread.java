@@ -38,6 +38,7 @@ class ProgressThread implements Runnable {
         if (!active) {
             refresh();
             consumer.close();
+            TerminalUtils.closeTerminal();
             return;
         }
 
