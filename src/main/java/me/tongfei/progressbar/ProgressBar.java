@@ -8,12 +8,16 @@ import me.tongfei.progressbar.wrapped.ProgressBarWrappedSpliterator;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
-import java.time.Instant;
 import java.util.Iterator;
 import java.util.Spliterator;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.BaseStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+
+import static me.tongfei.progressbar.Util.createConsoleConsumer;
 
 /**
  * A console-based progress bar with minimal runtime overhead.
@@ -22,8 +26,8 @@ import java.util.stream.StreamSupport;
 public class ProgressBar implements AutoCloseable {
 
     private ProgressState progress;
-    private ProgressThread target;
-    private Thread thread;
+    private final ProgressThread target;
+    private ScheduledFuture scheduled;
 
     /**
      * Creates a progress bar with the specific task name and initial maximum value.
@@ -87,7 +91,7 @@ public class ProgressBar implements AutoCloseable {
     ) {
         this(task, initialMax, updateIntervalMillis,
                 new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat),
-                new ConsoleProgressBarConsumer(os)
+                createConsoleConsumer(os)
         );
     }
 
@@ -108,23 +112,13 @@ public class ProgressBar implements AutoCloseable {
             ProgressBarConsumer consumer
     ) {
         this.progress = new ProgressState(task, initialMax);
-        this.target = new ProgressThread(progress, renderer, updateIntervalMillis, consumer);
-        this.thread = new Thread(target, this.getClass().getName());
-
-        // starts the progress bar upon construction
-        progress.startTime = Instant.now();
-        thread.start();
+        this.target = new ProgressThread(this.progress, renderer, consumer);
+        scheduled = Util.executor.scheduleAtFixedRate(target, 0, updateIntervalMillis, TimeUnit.MILLISECONDS);
     }
 
-    /**
-     * Starts this progress bar.
-     * @deprecated Please use the Java try-with-resource pattern instead.
-     */
-    @Deprecated
-    public ProgressBar start() {
-        progress.startTime = Instant.now();
-        thread.start();
-        return this;
+    private ProgressBar(ProgressState progress, ProgressThread target) {
+        this.progress = progress;
+        this.target = target;
     }
 
     /**
@@ -159,10 +153,10 @@ public class ProgressBar implements AutoCloseable {
      */
     public ProgressBar maxHint(long n) {
         if (n < 0)
-            progress.setAsIndefinite();
+            progress.setIndefinite(true);
         else {
-            progress.setAsDefinite();
-            progress.maxHint(n);
+            progress.setIndefinite(false);
+            progress.setMax(n);
         }
         return this;
     }
@@ -175,8 +169,7 @@ public class ProgressBar implements AutoCloseable {
     public ProgressBar stop() {
         try {
             close();
-        }
-        catch (Exception e) { /* ignored, for backward compatibility */ }
+        } catch (Exception e) { /* ignored, for backward compatibility */ }
         return this;
     }
 
@@ -188,12 +181,13 @@ public class ProgressBar implements AutoCloseable {
      */
     @Override
     public void close() {
-        thread.interrupt();
+        scheduled.cancel(false);
+        target.setActive(false);
         try {
-            thread.join();
-            target.closeConsumer();
+            Util.executor.schedule(target, 0, TimeUnit.NANOSECONDS).get();
+        } catch (InterruptedException | ExecutionException e) {
+            //noop
         }
-        catch (InterruptedException ignored) { }
     }
 
     /**
@@ -205,32 +199,32 @@ public class ProgressBar implements AutoCloseable {
         return this;
     }
 
-	/**
+    /**
      * Returns the current progress.
      */
     public long getCurrent() {
-        return progress.getCurrent();
+        return progress.getState().getCurrent();
     }
 
     /**
      * Returns the maximum value of this progress bar.
      */
     public long getMax() {
-        return progress.getMax();
+        return progress.getState().getMax();
     }
 
     /**
      * Returns the name of this task.
      */
     public String getTask() {
-        return progress.getTask();
+        return progress.getState().getTask();
     }
 
     /**
      * Returns the extra message at the end of the progress bar.
      */
     public String getExtraMessage() {
-        return progress.getExtraMessage();
+        return progress.getState().getExtraMessage();
     }
 
     // STATIC WRAPPER METHODS
@@ -349,4 +343,9 @@ public class ProgressBar implements AutoCloseable {
         return StreamSupport.stream(sp, stream.isParallel());
     }
 
+    public ProgressBar createChild(String task, long initialMax) {
+        ProgressState progress = new ProgressState(task, initialMax);
+        this.progress.addChild(progress);
+        return new ProgressBar(progress, target);
+    }
 }

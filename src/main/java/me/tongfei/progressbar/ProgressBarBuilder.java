@@ -2,6 +2,8 @@ package me.tongfei.progressbar;
 
 import java.text.DecimalFormat;
 
+import static me.tongfei.progressbar.Util.createConsoleConsumer;
+
 /**
  * Builder class for {@link ProgressBar}s.
  * @author Tongfei Chen
@@ -64,7 +66,7 @@ public class ProgressBarBuilder {
 
     public ProgressBar build() {
         if (consumer == null)
-            consumer = new ConsoleProgressBarConsumer();
+            consumer = createConsoleConsumer();
 
         return new ProgressBar(
                 task,

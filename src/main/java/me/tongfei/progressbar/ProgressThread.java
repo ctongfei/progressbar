@@ -1,14 +1,6 @@
 package me.tongfei.progressbar;
 
-import java.io.PrintStream;
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.function.Consumer;
-
-import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
+import java.util.List;
 
 /**
  * @author Tongfei Chen
@@ -18,39 +10,42 @@ class ProgressThread implements Runnable {
 
     private ProgressState progress;
     private ProgressBarRenderer renderer;
-    private long updateInterval;
     private ProgressBarConsumer consumer;
+    private boolean active = true;
 
     ProgressThread(
             ProgressState progress,
             ProgressBarRenderer renderer,
-            long updateInterval,
             ProgressBarConsumer consumer
     ) {
         this.progress = progress;
         this.renderer = renderer;
-        this.updateInterval = updateInterval;
         this.consumer = consumer;
     }
 
     private void refresh() {
-        String rendered = renderer.render(progress, consumer.getMaxProgressLength());
+        List<String> rendered = renderer.render(progress, consumer.getMaxProgressLength());
         consumer.accept(rendered);
     }
 
-    void closeConsumer() {
-        consumer.close();
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
+    @Override
     public void run() {
         try {
-            while (!Thread.interrupted()) {
+            if (!active) {
                 refresh();
-                Thread.sleep(updateInterval);
+                consumer.close();
+                TerminalUtils.closeTerminal();
+                return;
             }
-        } catch (InterruptedException ignored) {
+
             refresh();
-            // force refreshing after being interrupted
+        } catch (Exception e) {
+            //FIXME: ensure exception in renderer/consumer is not swallowed. What to do really??
+            e.printStackTrace();
         }
     }
 
