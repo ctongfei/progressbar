@@ -1,5 +1,7 @@
 package me.tongfei.progressbar;
 
+import java.util.List;
+
 /**
  * Renders a {@link ProgressState} into a string.
  * @author Tongfei Chen
@@ -14,6 +16,6 @@ public interface ProgressBarRenderer {
      * @param maxLength The maximum length as dictated by the consumer
      * @return Rendered string to be consumed by the consumer
      */
-    String render(ProgressState progress, int maxLength);
+    List<String> render(ProgressState progress, int maxLength);
 
 }

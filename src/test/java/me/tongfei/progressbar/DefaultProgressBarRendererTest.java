@@ -19,29 +19,29 @@ public class DefaultProgressBarRendererTest {
         ProgressBarRenderer renderer = new DefaultProgressBarRenderer(style, "", 1, false, null);
 
         state.stepBy(10);
-        state.startTime = Instant.now();
-        String result = renderer.render(state, maxLength);
+        state.setStartTime(Instant.now());
+        String result = renderer.render(state, maxLength).get(0);
 
         String expected = taskName + "  10% [====>                                   ]  10/100 (0:00:00 / 0:00:00)";
         assertEquals(expected, result);
 
         // assert blank extra message
         state.setExtraMessage("   ");
-        state.startTime = Instant.now();
-        result = renderer.render(state, maxLength);
+        state.setStartTime(Instant.now());
+        result = renderer.render(state, maxLength).get(0);
         assertEquals(expected, result);
     }
 
     @Test
     public void withSpeedBasicDecimalFormat() {
-        ProgressState state = new ProgressState(taskName, 10240);
+        ProgressState state = new ProgressState(taskName, 102400);
         ProgressBarRenderer renderer = new DefaultProgressBarRenderer(style, "Mb", 1024, true, new DecimalFormat("#"));
 
-        state.stepBy(2048);
-        state.startTime = Instant.now().minusSeconds(1);
-        String result = renderer.render(state, maxLength);
+        state.stepBy(20480);
+        state.setStartTime(Instant.now().minusSeconds(10));
+        String result = renderer.render(state, maxLength).get(0);
 
-        String expected = taskName + "  20% [======>                           ]  2/10Mb (0:00:01 / 0:00:03) 2Mb/s";
+        String expected = taskName + "  20% [======>                         ]  20/100Mb (0:00:10 / 0:00:39) 2Mb/s";
         assertEquals(expected, result);
     }
 
@@ -52,8 +52,8 @@ public class DefaultProgressBarRendererTest {
 
         state.stepBy(2048);
         state.setExtraMessage("downloading..");
-        state.startTime = Instant.now().minusSeconds(10);
-        String result = renderer.render(state, maxLength);
+        state.setStartTime(Instant.now().minusSeconds(10));
+        String result = renderer.render(state, maxLength).get(0);
 
         String expected = taskName + "  20% [===>              ]  2/10Mb (0:00:10 / 0:00:39) 0.2Mb/s downloading..";
         assertEquals(expected, result);

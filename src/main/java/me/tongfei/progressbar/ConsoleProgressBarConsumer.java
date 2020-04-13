@@ -1,6 +1,7 @@
 package me.tongfei.progressbar;
 
 import java.io.PrintStream;
+import java.util.List;
 
 import static me.tongfei.progressbar.TerminalUtils.MOVE_CURSOR_TO_LINE_START;
 
@@ -26,8 +27,8 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
     }
 
     @Override
-    public void accept(String str) {
-        out.print(MOVE_CURSOR_TO_LINE_START + str);
+    public void accept(List<String> str) {
+        out.print(MOVE_CURSOR_TO_LINE_START + str.get(0));
     }
 
     @Override

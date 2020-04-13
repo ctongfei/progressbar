@@ -1,6 +1,13 @@
 package me.tongfei.progressbar;
 
+import java.time.Duration;
 import java.time.Instant;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Collections.emptyList;
+
 
 /**
  * Encapsulates the internal states of a progress bar.
@@ -9,12 +16,15 @@ import java.time.Instant;
  */
 class ProgressState {
 
-    String task;
-    boolean indefinite = false;
-    long current = 0;
-    long max = 0;
-    Instant startTime = null;
-    String extraMessage = "";
+    private final String task;
+    private boolean indefinite = false;
+    private long current = 0;
+    private long max = 0;
+    private Instant startTime = Instant.now();
+    private String extraMessage = "";
+    private final List<ProgressState> children = new LinkedList<>();
+    private Duration elapsed;
+    private boolean done = false;
 
     ProgressState(String task, long initialMax) {
         this.task = task;
@@ -22,52 +32,49 @@ class ProgressState {
         if (initialMax < 0) indefinite = true;
     }
 
-    synchronized void setAsDefinite() {
-        indefinite = false;
+    synchronized ProgressStateImmutable getState() {
+        List<ProgressStateImmutable> childrenStates = emptyList();
+        if (!children.isEmpty()) {
+            childrenStates = children.stream().map(ProgressState::getState).collect(Collectors.toList());
+            stepTo(childrenStates.stream().filter(ProgressStateImmutable::isDone).count());
+        }
+        if (!done) {
+            elapsed = Duration.between(startTime, Instant.now());
+        }
+        return new ProgressStateImmutable(task, indefinite, current, max, startTime, extraMessage, elapsed, childrenStates);
     }
 
-    synchronized void setAsIndefinite() {
-        indefinite = true;
+    synchronized void addChild(ProgressState child) {
+        children.add(child);
+        max = children.size();
     }
 
-    synchronized void maxHint(long n) {
-        max = n;
+    synchronized void setIndefinite(boolean indefinite) {
+        this.indefinite = indefinite;
     }
 
-    synchronized void stepBy(long n) {
-        current += n;
-        if (current > max) max = current;
-    }
-
-    synchronized void stepTo(long n) {
-        current = n;
-        if (current > max) max = current;
+    synchronized void setMax(long max) {
+        this.max = max;
     }
 
     synchronized void setExtraMessage(String msg) {
         extraMessage = msg.trim();
     }
 
-    String getTask() {
-        return task;
+    synchronized void setStartTime(Instant startTime) {
+        this.startTime = startTime;
     }
 
-    synchronized String getExtraMessage() {
-        return extraMessage;
+    synchronized void stepBy(long n) {
+        stepTo(current + n);
     }
 
-    synchronized long getCurrent() {
-        return current;
+    synchronized void stepTo(long n) {
+        current = n;
+        if (current > max) max = current;
+        if (current == max) {
+            elapsed = Duration.between(startTime, Instant.now());
+            done = true;
+        }
     }
-
-    synchronized long getMax() {
-        return max;
-    }
-
-    // The progress, normalized to range [0, 1].
-    synchronized double getNormalizedProgress() {
-        if (max <= 0) return 0.0;
-        else return ((double)current) / max;
-    }
-
 }

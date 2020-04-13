@@ -1,9 +1,11 @@
 package me.tongfei.progressbar;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
  * Progress bar consumer that delegates the progress bar handling to a custom {@link Consumer}.
+ *
  * @author Alex Peelman
  * @since 0.8.0
  */
@@ -27,8 +29,8 @@ public class DelegatingProgressBarConsumer implements ProgressBarConsumer {
     }
 
     @Override
-    public void accept(String str) {
-        this.consumer.accept(str);
+    public void accept(List<String> strs) {
+        strs.forEach(this.consumer);
     }
 
     @Override
