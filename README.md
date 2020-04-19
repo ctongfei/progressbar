@@ -66,5 +66,8 @@ try (ProgressBar pb = new ProgressBar("Test", 100)) { // name, initial max
 } // progress bar stops automatically after completion of try-with-resource block
 ```
 
+##### Kotlin extensions
+Kotlin DSL-like builders are available at [reimersoftware/progressbar-ktx](https://github.com/reimersoftware/progressbar-ktx).
+
 #### Changelog
 [CHANGELOG](https://github.com/ctongfei/progressbar/blob/master/CHANGELOG.md)
