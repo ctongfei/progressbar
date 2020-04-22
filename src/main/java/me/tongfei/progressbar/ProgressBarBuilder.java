@@ -21,7 +21,7 @@ public class ProgressBarBuilder {
     private boolean showSpeed = false;
     private DecimalFormat speedFormat;
     private ChronoUnit speedUnit = ChronoUnit.SECONDS;
-    private long startFrom = 0;
+    private long processed = 0;
     private Duration elapsed = Duration.ZERO;
 
     public ProgressBarBuilder() { }
@@ -66,36 +66,19 @@ public class ProgressBarBuilder {
         this.speedFormat = speedFormat;
         return this;
     }
-    /**
-     * Speed Unit of eta.
-     *
-     * @param speedUnit supported only second, minutes, hours and days, default
-     * is second.
-     * @return
-     */
+
     public ProgressBarBuilder setSpeedUnit(ChronoUnit speedUnit) {
         this.speedUnit = speedUnit;
         return this;
     }
-    /**
-     * @param startFrom the startFrom to set
-     * @return 
-     */
-    public ProgressBarBuilder setStartFrom(long startFrom) {
-        this.startFrom = startFrom;
-        return this;
-    }
 
     /**
-     * you can set parameters of elapsed duration and number of processed units
-     * if you want to continue a process before started
-     *
+     * Sets elapsed duration and number of processed units.
      * @param startFrom amount of processed units
-     * @param elapsed you can convert from other formats
-     * @return
+     * @param elapsed duration of
      */
-    public ProgressBarBuilder setBeforeProcessed(long startFrom, Duration elapsed) {
-        this.startFrom = startFrom;
+    public ProgressBarBuilder startsFrom(long processed, Duration elapsed) {
+        this.processed = processed;
         this.elapsed = elapsed;
         return this;
     }
@@ -108,7 +91,7 @@ public class ProgressBarBuilder {
                 task,
                 initialMax,
                 updateIntervalMillis,
-                startFrom,
+                processed,
                 elapsed,
                 new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat,speedUnit),
                 consumer

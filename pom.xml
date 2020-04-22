@@ -6,9 +6,9 @@
 
     <groupId>me.tongfei</groupId>
     <artifactId>progressbar</artifactId>
-    <version>0.8.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>progressbar</name>
-    <description>A console-based progress bar for JVM</description>
+    <description>A terminal-based progress bar for JVM</description>
     <url>http://github.com/ctongfei/progressbar</url>
 
     <properties>
@@ -70,25 +70,37 @@
             <id>alexpeelman</id>
             <name>Alex Peelman</name>
         </developer>
+        <developer>
+            <id>kristofarkas</id>
+            <name>Kristof Farkas-Pall</name>
+        </developer>
+        <developer>
+            <id>mordechaim</id>
+            <name>Mordechai Meisels</name>
+        </developer>
+        <developer>
+            <id>mesat</id>
+            <name>Muhammet Sakarya</name>
+        </developer>
     </developers>
 
     <dependencies>
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline</artifactId>
-            <version>3.13.2</version>
+            <version>3.13.3</version>
         </dependency>
 
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline-terminal-jansi</artifactId>
-            <version>3.13.2</version>
+            <version>3.13.3</version>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13</version>
             <scope>test</scope>
         </dependency>
 

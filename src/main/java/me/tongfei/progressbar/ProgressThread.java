@@ -16,10 +16,12 @@ import org.jline.terminal.TerminalBuilder;
  */
 class ProgressThread implements Runnable {
 
-    private ProgressState progress;
-    private ProgressBarRenderer renderer;
+    ProgressState progress;
     private long updateInterval;
+    private ProgressBarRenderer renderer;
     private ProgressBarConsumer consumer;
+
+    private boolean paused;
 
     ProgressThread(
             ProgressState progress,
@@ -31,6 +33,14 @@ class ProgressThread implements Runnable {
         this.renderer = renderer;
         this.updateInterval = updateInterval;
         this.consumer = consumer;
+    }
+
+    void pause() {
+        paused = true;
+    }
+
+    void resume() {
+        paused = false;
     }
 
     private void refresh() {
@@ -45,7 +55,8 @@ class ProgressThread implements Runnable {
     public void run() {
         try {
             while (!Thread.interrupted()) {
-                refresh();
+                if (!paused)
+                    refresh();
                 Thread.sleep(updateInterval);
             }
         } catch (InterruptedException ignored) {

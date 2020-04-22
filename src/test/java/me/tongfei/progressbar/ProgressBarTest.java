@@ -1,6 +1,7 @@
 package me.tongfei.progressbar;
 
 import java.text.DecimalFormat;
+import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import org.junit.Test;
 
@@ -74,7 +75,7 @@ public class ProgressBarTest {
                 .showSpeed(new DecimalFormat("#.##"))
                 .setUnit("k", 1000)
                 .setInitialMax(10000)
-                .setStartFrom(5000)
+                .startsFrom(5000, Duration.ZERO)
                 .setUpdateIntervalMillis(10)
                 .build();
         int x = 5000;

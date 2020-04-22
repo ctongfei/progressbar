@@ -11,7 +11,9 @@ import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Spliterator;
 import java.util.stream.BaseStream;
 import java.util.stream.Stream;
@@ -33,11 +35,11 @@ public class ProgressBar implements AutoCloseable {
      * @param initialMax Initial maximum value
      */
     public ProgressBar(String task, long initialMax) {
-        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null,ChronoUnit.SECONDS, 0L, Duration.ZERO);
+        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
     }
 
     public ProgressBar(String task, long initialMax, ProgressBarStyle style) {
-        this(task, initialMax, 1000, System.err, style, "", 1, false, null,ChronoUnit.SECONDS, 0L, Duration.ZERO);
+        this(task, initialMax, 1000, System.err, style, "", 1, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
     }
 
     public ProgressBar(String task, long initialMax, int updateIntervalMillis) {
@@ -91,7 +93,7 @@ public class ProgressBar implements AutoCloseable {
             Duration elapsed
     ) {
         this(task, initialMax, updateIntervalMillis, startFrom, elapsed,
-                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat,speedUnit),
+                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat, speedUnit),
                 new ConsoleProgressBarConsumer(os)
         );
     }
@@ -116,24 +118,13 @@ public class ProgressBar implements AutoCloseable {
             ProgressBarRenderer renderer,
             ProgressBarConsumer consumer
     ) {
-        this.progress = new ProgressState(task, initialMax,startFrom, elapsed);
+        this.progress = new ProgressState(task, initialMax, startFrom, elapsed);
         this.target = new ProgressThread(progress, renderer, updateIntervalMillis, consumer);
         this.thread = new Thread(target, this.getClass().getName());
 
         // starts the progress bar upon construction
         progress.startTime = Instant.now().minus(elapsed.getSeconds(), ChronoUnit.SECONDS);
         thread.start();
-    }
-
-    /**
-     * Starts this progress bar.
-     * @deprecated Please use the Java try-with-resource pattern instead.
-     */
-    @Deprecated
-    public ProgressBar start() {
-        progress.startTime = Instant.now();
-        thread.start();
-        return this;
     }
 
     /**
@@ -173,6 +164,24 @@ public class ProgressBar implements AutoCloseable {
             progress.setAsDefinite();
             progress.maxHint(n);
         }
+        return this;
+    }
+
+    /**
+     * Pauses this current progress.
+     */
+    public ProgressBar pause() {
+        target.pause();
+        progress.pause();
+        return this;
+    }
+
+    /**
+     * Resumes this current progress.
+     */
+    public ProgressBar resume() {
+        target.resume();
+        progress.resume();
         return this;
     }
 
@@ -356,6 +365,28 @@ public class ProgressBar implements AutoCloseable {
     public static <T, S extends BaseStream<T, S>> Stream<T> wrap(S stream, ProgressBarBuilder pbb) {
         Spliterator<T> sp = wrap(stream.spliterator(), pbb);
         return StreamSupport.stream(sp, stream.isParallel());
+    }
+
+    /**
+     * Wraps an array so that when iterated, a progress bar is shown to track the traversal progress.
+     * @param array Array to be wrapped
+     * @param task Task name
+     * @return Wrapped array, of type {@link Stream}.
+     */
+    public static <T> Stream<T> wrap(T[] array, String task) {
+        ProgressBarBuilder pbb = new ProgressBarBuilder().setTaskName(task).setInitialMax(array.length);
+        return wrap(array, pbb);
+    }
+
+    /**
+     * Wraps an array so that when iterated, a progress bar is shown to track the traversal progress.
+     * For this function the progress bar can be fully customized by using a {@link ProgressBarBuilder}.
+     * @param array Array to be wrapped
+     * @param pbb An instance of a {@link ProgressBarBuilder}
+     * @return Wrapped array, of type {@link Stream}.
+     */
+    public static <T> Stream<T> wrap(T[] array, ProgressBarBuilder pbb) {
+        return wrap(Arrays.stream(array), pbb);
     }
 
 }

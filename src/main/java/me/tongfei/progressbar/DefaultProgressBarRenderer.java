@@ -8,6 +8,7 @@ import java.time.temporal.ChronoUnit;
 /**
  * Default progress bar renderer (see {@link ProgressBarRenderer}).
  * @author Tongfei Chen
+ * @author Muhammet Sakarya
  * @since 0.8.0
  */
 public class DefaultProgressBarRenderer implements ProgressBarRenderer {
@@ -17,7 +18,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
     private long unitSize;
     private boolean isSpeedShown;
     private DecimalFormat speedFormat;
-    private ChronoUnit speedUnit = ChronoUnit.SECONDS;
+    private ChronoUnit speedUnit;
 
     DefaultProgressBarRenderer(
             ProgressBarStyle style,
@@ -26,7 +27,6 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
             boolean isSpeedShown,
             DecimalFormat speedFormat,
             ChronoUnit speedUnit
-            
     ) {
         this.style = style;
         this.unitName = unitName;
@@ -69,31 +69,28 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
     }
 
     private String speed(ProgressState progress, Duration elapsed) {
-        String suffix = null;
-        double elapsedWithUnit = 0;
+        String suffix = "/s";
+        double elapsedSeconds = elapsed.getSeconds();
+        double elapsedInUnit = elapsedSeconds;
         if (null != speedUnit)
             switch (speedUnit) {
                 case MINUTES:
                     suffix = "/min";
-                    elapsedWithUnit = (double) elapsed.getSeconds() / (double) 60;
+                    elapsedInUnit /= 60;
                     break;
                 case HOURS:
                     suffix = "/h";
-                    elapsedWithUnit = (double) elapsed.getSeconds() / (double) (60 * 60);
+                    elapsedInUnit /= (60 * 60);
                     break;
                 case DAYS:
                     suffix = "/d";
-                    elapsedWithUnit = (double) elapsed.getSeconds() / (double) (60 * 60 * 24);
-                    break;
-                default:
-                    suffix = "/s";
-                    elapsedWithUnit = (double) elapsed.getSeconds();
+                    elapsedInUnit /= (60 * 60 * 24);
                     break;
             }
 
-        if (elapsed.getSeconds() == 0)
+        if (elapsedSeconds == 0)
             return "?" + unitName + suffix;
-        double speed = (double) (progress.current - progress.start) / elapsedWithUnit;
+        double speed = (double) (progress.current - progress.start) / elapsedInUnit;
         double speedWithUnit = speed / unitSize;
         return speedFormat.format(speedWithUnit) + unitName + suffix;
     }
