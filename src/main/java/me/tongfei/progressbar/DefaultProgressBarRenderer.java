@@ -3,10 +3,12 @@ package me.tongfei.progressbar;
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Default progress bar renderer (see {@link ProgressBarRenderer}).
  * @author Tongfei Chen
+ * @author Muhammet Sakarya
  * @since 0.8.0
  */
 public class DefaultProgressBarRenderer implements ProgressBarRenderer {
@@ -16,19 +18,22 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
     private long unitSize;
     private boolean isSpeedShown;
     private DecimalFormat speedFormat;
+    private ChronoUnit speedUnit;
 
     DefaultProgressBarRenderer(
             ProgressBarStyle style,
             String unitName,
             long unitSize,
             boolean isSpeedShown,
-            DecimalFormat speedFormat
+            DecimalFormat speedFormat,
+            ChronoUnit speedUnit
     ) {
         this.style = style;
         this.unitName = unitName;
         this.unitSize = unitSize;
         this.isSpeedShown = isSpeedShown;
         this.speedFormat = speedFormat;
+        this.speedUnit = speedUnit;
     }
 
     // Number of full blocks
@@ -44,9 +49,9 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
     private String eta(ProgressState progress, Duration elapsed) {
         if (progress.max <= 0 || progress.indefinite) return "?";
-        else if (progress.current == 0) return "?";
+        else if (progress.current - progress.start == 0) return "?";
         else return Util.formatDuration(
-                    elapsed.dividedBy(progress.current).multipliedBy(progress.max - progress.current)
+                    elapsed.dividedBy(progress.current - progress.start).multipliedBy(progress.max - progress.current)
             );
     }
 
@@ -64,10 +69,30 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
     }
 
     private String speed(ProgressState progress, Duration elapsed) {
-        if (elapsed.getSeconds() == 0) return "?" + unitName + "/s";
-        double speed = (double) progress.current / elapsed.getSeconds();
+        String suffix = "/s";
+        double elapsedSeconds = elapsed.getSeconds();
+        double elapsedInUnit = elapsedSeconds;
+        if (null != speedUnit)
+            switch (speedUnit) {
+                case MINUTES:
+                    suffix = "/min";
+                    elapsedInUnit /= 60;
+                    break;
+                case HOURS:
+                    suffix = "/h";
+                    elapsedInUnit /= (60 * 60);
+                    break;
+                case DAYS:
+                    suffix = "/d";
+                    elapsedInUnit /= (60 * 60 * 24);
+                    break;
+            }
+
+        if (elapsedSeconds == 0)
+            return "?" + unitName + suffix;
+        double speed = (double) (progress.current - progress.start) / elapsedInUnit;
         double speedWithUnit = speed / unitSize;
-        return speedFormat.format(speedWithUnit) + unitName + "/s";
+        return speedFormat.format(speedWithUnit) + unitName + suffix;
     }
 
     public String render(ProgressState progress, int maxLength) {

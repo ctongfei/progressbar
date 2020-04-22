@@ -6,11 +6,13 @@ package me.tongfei.progressbar;
  */
 class ProgressThread implements Runnable {
 
-    private ProgressState progress;
+    ProgressState progress;
+    private long updateInterval;
     private ProgressBarRenderer renderer;
-    long updateInterval;
     private ProgressBarConsumer consumer;
     private boolean active = true;
+
+    private boolean paused;
 
     ProgressThread(
             ProgressState progress,
@@ -24,6 +26,14 @@ class ProgressThread implements Runnable {
         this.consumer = consumer;
     }
 
+    void pause() {
+        paused = true;
+    }
+
+    void resume() {
+        paused = false;
+    }
+
     private void refresh() {
         String rendered = renderer.render(progress, consumer.getMaxProgressLength());
         consumer.accept(rendered);
@@ -35,7 +45,13 @@ class ProgressThread implements Runnable {
 
     @Override
     public void run() {
-        if (!active) {
+        try {
+            while (!Thread.interrupted()) {
+                if (!paused)
+                    refresh();
+                Thread.sleep(updateInterval);
+            }
+        } catch (InterruptedException ignored) {
             refresh();
             consumer.close();
             TerminalUtils.closeTerminal();

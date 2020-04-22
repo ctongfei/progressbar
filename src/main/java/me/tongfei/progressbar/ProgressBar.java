@@ -8,8 +8,12 @@ import me.tongfei.progressbar.wrapped.ProgressBarWrappedSpliterator;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Spliterator;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledFuture;
@@ -36,15 +40,15 @@ public class ProgressBar implements AutoCloseable {
      * @param initialMax Initial maximum value
      */
     public ProgressBar(String task, long initialMax) {
-        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null);
+        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
     }
 
     public ProgressBar(String task, long initialMax, ProgressBarStyle style) {
-        this(task, initialMax, 1000, System.err, style, "", 1, false, null);
+        this(task, initialMax, 1000, System.err, style, "", 1, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
     }
 
     public ProgressBar(String task, long initialMax, int updateIntervalMillis) {
-        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null);
+        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
     }
 
     public ProgressBar(String task,
@@ -54,7 +58,7 @@ public class ProgressBar implements AutoCloseable {
                        ProgressBarStyle style,
                        String unitName,
                        long unitSize) {
-        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, false, null);
+        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
     }
 
     public ProgressBar(
@@ -66,7 +70,7 @@ public class ProgressBar implements AutoCloseable {
             String unitName,
             long unitSize,
             boolean showSpeed) {
-        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, showSpeed, null);
+        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, showSpeed, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
     }
 
     /**
@@ -88,7 +92,10 @@ public class ProgressBar implements AutoCloseable {
             String unitName,
             long unitSize,
             boolean showSpeed,
-            DecimalFormat speedFormat
+            DecimalFormat speedFormat,
+            ChronoUnit speedUnit,
+            long startFrom,
+            Duration elapsed
     ) {
         this(task, initialMax, updateIntervalMillis,
                 new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat),
@@ -102,6 +109,8 @@ public class ProgressBar implements AutoCloseable {
      * @param task Task name
      * @param initialMax Initial maximum value
      * @param updateIntervalMillis Update time interval (default value 1000ms)
+     * @param startFrom Initial completed process value
+     * @param elapsed Initial elapsed second before
      * @param renderer Progress bar renderer
      * @param consumer Progress bar consumer
      */
@@ -109,10 +118,12 @@ public class ProgressBar implements AutoCloseable {
             String task,
             long initialMax,
             int updateIntervalMillis,
+            long startFrom,
+            Duration elapsed,
             ProgressBarRenderer renderer,
             ProgressBarConsumer consumer
     ) {
-        this.progress = new ProgressState(task, initialMax);
+        this.progress = new ProgressState(task, initialMax, startFrom, elapsed);
         this.target = new ProgressThread(progress, renderer, updateIntervalMillis, consumer);
         // starts the progress bar upon construction
         progress.startTime = Instant.now();
@@ -167,6 +178,24 @@ public class ProgressBar implements AutoCloseable {
             progress.setAsDefinite();
             progress.maxHint(n);
         }
+        return this;
+    }
+
+    /**
+     * Pauses this current progress.
+     */
+    public ProgressBar pause() {
+        target.pause();
+        progress.pause();
+        return this;
+    }
+
+    /**
+     * Resumes this current progress.
+     */
+    public ProgressBar resume() {
+        target.resume();
+        progress.resume();
         return this;
     }
 
@@ -351,6 +380,28 @@ public class ProgressBar implements AutoCloseable {
     public static <T, S extends BaseStream<T, S>> Stream<T> wrap(S stream, ProgressBarBuilder pbb) {
         Spliterator<T> sp = wrap(stream.spliterator(), pbb);
         return StreamSupport.stream(sp, stream.isParallel());
+    }
+
+    /**
+     * Wraps an array so that when iterated, a progress bar is shown to track the traversal progress.
+     * @param array Array to be wrapped
+     * @param task Task name
+     * @return Wrapped array, of type {@link Stream}.
+     */
+    public static <T> Stream<T> wrap(T[] array, String task) {
+        ProgressBarBuilder pbb = new ProgressBarBuilder().setTaskName(task).setInitialMax(array.length);
+        return wrap(array, pbb);
+    }
+
+    /**
+     * Wraps an array so that when iterated, a progress bar is shown to track the traversal progress.
+     * For this function the progress bar can be fully customized by using a {@link ProgressBarBuilder}.
+     * @param array Array to be wrapped
+     * @param pbb An instance of a {@link ProgressBarBuilder}
+     * @return Wrapped array, of type {@link Stream}.
+     */
+    public static <T> Stream<T> wrap(T[] array, ProgressBarBuilder pbb) {
+        return wrap(Arrays.stream(array), pbb);
     }
 
 }

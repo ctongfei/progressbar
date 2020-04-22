@@ -1,5 +1,8 @@
 # Changelog
 
+ * `1.0.0`:
+     - Supports pausing and resuming progress bars (PR #63), thereby fixing #17. Thanks @mesat !
+
  * `0.8.1`:
      - Bugfixes:
          - Fixed the bug of possible negative suffix length (PR #58). Thanks @kristofarkas !
