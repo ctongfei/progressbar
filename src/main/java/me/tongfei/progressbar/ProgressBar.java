@@ -13,7 +13,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Spliterator;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledFuture;
@@ -31,11 +30,11 @@ import static me.tongfei.progressbar.Util.createConsoleConsumer;
 public class ProgressBar implements AutoCloseable {
 
     private ProgressState progress;
-    private ProgressThread target;
-    private ScheduledFuture scheduled;
+    private ProgressUpdateAction action;
+    private ScheduledFuture<Void> scheduledTask;
 
     /**
-     * Creates a progress bar with the specific task name and initial maximum value.
+     * Creates a progress bar with the specific taskName name and initial maximum value.
      * @param task Task name
      * @param initialMax Initial maximum value
      */
@@ -43,38 +42,8 @@ public class ProgressBar implements AutoCloseable {
         this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
     }
 
-    public ProgressBar(String task, long initialMax, ProgressBarStyle style) {
-        this(task, initialMax, 1000, System.err, style, "", 1, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
-    }
-
-    public ProgressBar(String task, long initialMax, int updateIntervalMillis) {
-        this(task, initialMax, updateIntervalMillis, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
-    }
-
-    public ProgressBar(String task,
-                       long initialMax,
-                       int updateIntervalMillis,
-                       PrintStream os,
-                       ProgressBarStyle style,
-                       String unitName,
-                       long unitSize) {
-        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
-    }
-
-    public ProgressBar(
-            String task,
-            long initialMax,
-            int updateIntervalMillis,
-            PrintStream os,
-            ProgressBarStyle style,
-            String unitName,
-            long unitSize,
-            boolean showSpeed) {
-        this(task, initialMax, updateIntervalMillis, os, style, unitName, unitSize, showSpeed, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
-    }
-
     /**
-     * Creates a progress bar with the specific task name, initial maximum value,
+     * Creates a progress bar with the specific taskName name, initial maximum value,
      * customized update interval (default 1000 ms), the PrintStream to be used, and output style.
      * @param task Task name
      * @param initialMax Initial maximum value
@@ -94,11 +63,11 @@ public class ProgressBar implements AutoCloseable {
             boolean showSpeed,
             DecimalFormat speedFormat,
             ChronoUnit speedUnit,
-            long startFrom,
+            long processed,
             Duration elapsed
     ) {
-        this(task, initialMax, updateIntervalMillis,
-                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat),
+        this(task, initialMax, updateIntervalMillis, processed, elapsed,
+                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat, speedUnit),
                 createConsoleConsumer(os)
         );
     }
@@ -109,8 +78,8 @@ public class ProgressBar implements AutoCloseable {
      * @param task Task name
      * @param initialMax Initial maximum value
      * @param updateIntervalMillis Update time interval (default value 1000ms)
-     * @param startFrom Initial completed process value
-     * @param elapsed Initial elapsed second before
+     * @param processed Initial completed process value
+     * @param elapsed Initial elapsedBeforeStart second before
      * @param renderer Progress bar renderer
      * @param consumer Progress bar consumer
      */
@@ -118,27 +87,16 @@ public class ProgressBar implements AutoCloseable {
             String task,
             long initialMax,
             int updateIntervalMillis,
-            long startFrom,
+            long processed,
             Duration elapsed,
             ProgressBarRenderer renderer,
             ProgressBarConsumer consumer
     ) {
-        this.progress = new ProgressState(task, initialMax, startFrom, elapsed);
-        this.target = new ProgressThread(progress, renderer, updateIntervalMillis, consumer);
-        // starts the progress bar upon construction
-        progress.startTime = Instant.now();
-        scheduled = Util.executor.scheduleAtFixedRate(target, 0, updateIntervalMillis, TimeUnit.MILLISECONDS);
-    }
-
-    /**
-     * Starts this progress bar.
-     * @deprecated Please use the Java try-with-resource pattern instead.
-     */
-    @Deprecated
-    public ProgressBar start() {
-        progress.startTime = Instant.now();
-        scheduled = Util.executor.scheduleAtFixedRate(target, 0, target.updateInterval, TimeUnit.MILLISECONDS);
-        return this;
+        this.progress = new ProgressState(task, initialMax, processed, elapsed);
+        this.action = new ProgressUpdateAction(progress, renderer, consumer);
+        scheduledTask = (ScheduledFuture<Void>) Util.executor.scheduleAtFixedRate(
+                action, 0, updateIntervalMillis, TimeUnit.MILLISECONDS
+        );
     }
 
     /**
@@ -185,7 +143,6 @@ public class ProgressBar implements AutoCloseable {
      * Pauses this current progress.
      */
     public ProgressBar pause() {
-        target.pause();
         progress.pause();
         return this;
     }
@@ -194,21 +151,7 @@ public class ProgressBar implements AutoCloseable {
      * Resumes this current progress.
      */
     public ProgressBar resume() {
-        target.resume();
         progress.resume();
-        return this;
-    }
-
-    /**
-     * Stops this progress bar.
-     * @deprecated Please use the Java try-with-resource pattern instead.
-     */
-    @Deprecated
-    public ProgressBar stop() {
-        try {
-            close();
-        }
-        catch (Exception e) { /* ignored, for backward compatibility */ }
         return this;
     }
 
@@ -220,13 +163,11 @@ public class ProgressBar implements AutoCloseable {
      */
     @Override
     public void close() {
-        scheduled.cancel(false);
-        target.setActive(false);
+        scheduledTask.cancel(false);
+        progress.kill();
         try {
-            Util.executor.schedule(target, 0, TimeUnit.NANOSECONDS).get();
-        } catch (InterruptedException | ExecutionException e) {
-            //noop
-        }
+            Util.executor.schedule(action, 0, TimeUnit.NANOSECONDS).get();
+        } catch (InterruptedException | ExecutionException e) { /* NOOP */ }
     }
 
     /**
@@ -255,8 +196,8 @@ public class ProgressBar implements AutoCloseable {
     /**
      * Returns the name of this task.
      */
-    public String getTask() {
-        return progress.getTask();
+    public String getTaskName() {
+        return progress.getTaskName();
     }
 
     /**

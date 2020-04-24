@@ -8,15 +8,12 @@ import java.time.Duration;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
-/**
- * @author Tongfei Chen
- * @since 0.5.0
- */
+
 class Util {
 
     static ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1, runnable -> {
         Thread thread = Executors.defaultThreadFactory().newThread(runnable);
-        thread.setName("tongfei.progressbar");
+        thread.setName("ProgressBar");
         thread.setDaemon(true);
         return thread;
     });
@@ -26,10 +23,8 @@ class Util {
     }
 
     static ConsoleProgressBarConsumer createConsoleConsumer(PrintStream out) {
-        if (TerminalUtils.cursorMovementSupport()) {
-            return new InteractiveConsoleProgressBarConsumer(out);
-        }
-        return new ConsoleProgressBarConsumer(out);
+        return TerminalUtils.hasCursorMovementSupport() ?
+                new InteractiveConsoleProgressBarConsumer(out) : new ConsoleProgressBarConsumer(out);
     }
 
     static String repeat(char c, int n) {

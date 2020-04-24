@@ -7,43 +7,34 @@ import java.util.stream.Stream;
 
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
-
-import static org.jline.utils.InfoCmp.Capability.cursor_down;
-import static org.jline.utils.InfoCmp.Capability.cursor_up;
+import org.jline.utils.InfoCmp;
 
 /**
  * @author Martin Vehovsky
- * @since 0.9.0
+ * @since 1.0.0
  */
 public class TerminalUtils {
 
-    public static final char MOVE_CURSOR_TO_LINE_START = '\r';
-    public static final char ESCAPE_CHAR = '\u001b';
-
-    private static final int defaultTerminalWidth = 80;
-    private static Boolean cursorMovementSupported = null;
+    static final char CARRIAGE_RETURN = '\r';
+    static final char ESCAPE_CHAR = '\u001b';
+    static final int DEFAULT_TERMINAL_WIDTH = 80;
 
     private static Terminal terminal = null;
-    public static Queue<ProgressBarConsumer> activeConsumers = new ConcurrentLinkedQueue<>();
+    private static boolean cursorMovementSupported = false;
 
-    synchronized public static int getTerminalWidth() {
+    static Queue<ProgressBarConsumer> activeConsumers = new ConcurrentLinkedQueue<>();
+
+    synchronized static int getTerminalWidth() {
         Terminal terminal = getTerminal();
         int width = terminal.getWidth();
 
         // Workaround for issue #23 under IntelliJ
-        if (width >= 10) {
-            return width;
-        }
-
-        return defaultTerminalWidth;
+        return (width >= 10) ? width : DEFAULT_TERMINAL_WIDTH;
     }
 
-    synchronized public static boolean cursorMovementSupport() {
-        if (cursorMovementSupported == null) {
-            Terminal terminal = getTerminal();
-            cursorMovementSupported = terminal.getStringCapability(cursor_up) != null && terminal.getStringCapability(cursor_down) != null;
-            closeTerminal();
-        }
+    static boolean hasCursorMovementSupport() {
+        if (terminal == null)
+            terminal = getTerminal();
         return cursorMovementSupported;
     }
 
@@ -56,18 +47,18 @@ public class TerminalUtils {
         } catch (IOException ignored) { /* noop */ }
     }
 
-    public static <T extends ProgressBarConsumer> Stream<T> filterActiveConsumers(Class<T> clazz) {
+    static <T extends ProgressBarConsumer> Stream<T> filterActiveConsumers(Class<T> clazz) {
         return activeConsumers.stream()
                 .filter(clazz::isInstance)
                 .map(clazz::cast);
     }
 
-    public static String moveCursorUp(int count) {
-        return String.format(ESCAPE_CHAR + "[%sA", count) + MOVE_CURSOR_TO_LINE_START;
+    static String moveCursorUp(int count) {
+        return ESCAPE_CHAR + "[" + count + "A" + CARRIAGE_RETURN;
     }
 
-    public static String moveCursorDown(int count) {
-        return String.format(ESCAPE_CHAR + "[%sB", count) + MOVE_CURSOR_TO_LINE_START;
+    static String moveCursorDown(int count) {
+        return ESCAPE_CHAR + "[" + count + "B" + CARRIAGE_RETURN;
     }
 
     /**
@@ -82,8 +73,6 @@ public class TerminalUtils {
      *     "dumb". Until previously created terminal will be closed.
      *     </li>
      * </ul>
-     *
-     * @return
      */
     static Terminal getTerminal() {
         if (terminal == null) {
@@ -92,8 +81,12 @@ public class TerminalUtils {
                 // Defaulting to a dumb terminal when a supported terminal can not be correctly created
                 // see https://github.com/jline/jline3/issues/291
                 terminal = TerminalBuilder.builder().dumb(true).build();
+                cursorMovementSupported = (
+                        terminal.getStringCapability(InfoCmp.Capability.cursor_up) != null &&
+                        terminal.getStringCapability(InfoCmp.Capability.cursor_down) != null
+                );
             } catch (IOException e) {
-                throw new RuntimeException("This should never happen! Dump terminal should have been created.");
+                throw new RuntimeException("This should never happen! Dumb terminal should have been created.");
             }
         }
         return terminal;

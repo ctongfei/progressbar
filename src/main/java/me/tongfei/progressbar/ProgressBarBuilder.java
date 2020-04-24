@@ -4,8 +4,6 @@ import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
-import static me.tongfei.progressbar.Util.createConsoleConsumer;
-
 /**
  * Builder class for {@link ProgressBar}s.
  * @author Tongfei Chen
@@ -75,7 +73,7 @@ public class ProgressBarBuilder {
     }
 
     /**
-     * Sets elapsed duration and number of processed units.
+     * Sets elapsedBeforeStart duration and number of processed units.
      * @param startFrom amount of processed units
      * @param elapsed duration of
      */
@@ -86,9 +84,6 @@ public class ProgressBarBuilder {
     }
 
     public ProgressBar build() {
-        if (consumer == null)
-            consumer = createConsoleConsumer();
-
         return new ProgressBar(
                 task,
                 initialMax,
@@ -96,7 +91,7 @@ public class ProgressBarBuilder {
                 processed,
                 elapsed,
                 new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat,speedUnit),
-                consumer
+                consumer == null ? Util.createConsoleConsumer() : consumer
         );
     }
 }

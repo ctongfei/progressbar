@@ -22,7 +22,7 @@ public class DelegatingProgressBarConsumer implements ProgressBarConsumer {
     }
 
     @Override
-    public int getMaxProgressLength() {
+    public int getMaxRenderedLength() {
         return maxProgressLength;
     }
 

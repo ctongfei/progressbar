@@ -2,7 +2,7 @@ package me.tongfei.progressbar;
 
 import java.io.PrintStream;
 
-import static me.tongfei.progressbar.TerminalUtils.MOVE_CURSOR_TO_LINE_START;
+import static me.tongfei.progressbar.TerminalUtils.CARRIAGE_RETURN;
 
 /**
  * Progress bar consumer that prints the progress bar state to console.
@@ -21,13 +21,13 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
     }
 
     @Override
-    public int getMaxProgressLength() {
+    public int getMaxRenderedLength() {
         return TerminalUtils.getTerminalWidth() - consoleRightMargin;
     }
 
     @Override
     public void accept(String str) {
-        out.print(MOVE_CURSOR_TO_LINE_START + str);
+        out.print(CARRIAGE_RETURN + str);
     }
 
     @Override

@@ -6,13 +6,13 @@ import static me.tongfei.progressbar.TerminalUtils.*;
 
 /**
  * Progress bar consumer for terminals supporting moving cursor up/down.
- *
+ * @since 1.0.0
  * @author Martin Vehovsky
  */
 public class InteractiveConsoleProgressBarConsumer extends ConsoleProgressBarConsumer {
 
     private boolean initialized = false;
-    int position = 1;
+    private int position = 1;
 
     public InteractiveConsoleProgressBarConsumer(PrintStream out) {
         super(out);
@@ -23,12 +23,10 @@ public class InteractiveConsoleProgressBarConsumer extends ConsoleProgressBarCon
         if (!initialized) {
             TerminalUtils.filterActiveConsumers(InteractiveConsoleProgressBarConsumer.class).forEach(c -> c.position++);
             TerminalUtils.activeConsumers.add(this);
-            out.println(MOVE_CURSOR_TO_LINE_START + str);
+            out.println(CARRIAGE_RETURN + str);
             initialized = true;
-            return;
         }
-
-        out.print(moveCursorUp(position) + str + moveCursorDown(position));
+        else out.print(moveCursorUp(position) + str + moveCursorDown(position));
     }
 
     @Override

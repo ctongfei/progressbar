@@ -15,7 +15,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <jline.version>3.14.0</jline.version>
     </properties>
 
     <licenses>
@@ -83,19 +82,23 @@
             <id>mesat</id>
             <name>Muhammet Sakarya</name>
         </developer>
+        <developer>
+            <id>vehovsky</id>
+            <name>Martin Vehovsky</name>
+        </developer>
     </developers>
 
     <dependencies>
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline</artifactId>
-            <version>${jline.version}</version>
+            <version>3.14.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline-terminal-jansi</artifactId>
-            <version>${jline.version}</version>
+            <version>3.14.1</version>
         </dependency>
 
         <dependency>
