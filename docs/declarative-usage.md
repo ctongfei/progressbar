@@ -5,7 +5,7 @@ Basically, you wrap an `Iterable`, `Iterator`, `InputStream` (can be seen as an 
 
 This is done by using the static method `ProgressBar.wrap(...)`. The syntax is
 ``` java
-ProgressBar.wrap(collection, <task name>)
+ProgressBar.wrap(collection, <taskName name>)
 ```
 Or, if you want to use the [builder pattern](builder.md) to customize the progress bar, use 
 ``` java

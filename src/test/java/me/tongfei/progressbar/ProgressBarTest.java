@@ -14,7 +14,9 @@ public class ProgressBarTest {
 
     @Test
     public void test() {
-        try (ProgressBar pb = new ProgressBar("Test", 5, 50, System.out, ProgressBarStyle.UNICODE_BLOCK, "K", 1024)) {
+        try (ProgressBar pb = new ProgressBarBuilder()
+             .setTaskName("Test").setInitialMax(5).setUpdateIntervalMillis(50)
+             .setStyle(ProgressBarStyle.UNICODE_BLOCK).setUnit("K", 1024).build()) {
 
             double x = 1.0;
             double y = x * x;

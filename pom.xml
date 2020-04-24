@@ -12,9 +12,9 @@
     <url>http://github.com/ctongfei/progressbar</url>
 
     <properties>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <maven.compiler.target>1.8</maven.compiler.target>
-      <maven.compiler.source>1.8</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
 
     <licenses>
@@ -82,19 +82,23 @@
             <id>mesat</id>
             <name>Muhammet Sakarya</name>
         </developer>
+        <developer>
+            <id>vehovsky</id>
+            <name>Martin Vehovsky</name>
+        </developer>
     </developers>
 
     <dependencies>
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline</artifactId>
-            <version>3.13.3</version>
+            <version>3.14.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline-terminal-jansi</artifactId>
-            <version>3.13.3</version>
+            <version>3.14.1</version>
         </dependency>
 
         <dependency>

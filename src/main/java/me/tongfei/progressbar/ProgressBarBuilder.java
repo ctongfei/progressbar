@@ -12,7 +12,7 @@ import java.time.temporal.ChronoUnit;
 public class ProgressBarBuilder {
 
     private String task = "";
-    private long initialMax = 0;
+    private long initialMax = -1;
     private int updateIntervalMillis = 1000;
     private ProgressBarStyle style = ProgressBarStyle.COLORFUL_UNICODE_BLOCK;
     private ProgressBarConsumer consumer = null;
@@ -73,7 +73,7 @@ public class ProgressBarBuilder {
     }
 
     /**
-     * Sets elapsed duration and number of processed units.
+     * Sets elapsedBeforeStart duration and number of processed units.
      * @param startFrom amount of processed units
      * @param elapsed duration of
      */
@@ -84,9 +84,6 @@ public class ProgressBarBuilder {
     }
 
     public ProgressBar build() {
-        if (consumer == null)
-            consumer = new ConsoleProgressBarConsumer();
-
         return new ProgressBar(
                 task,
                 initialMax,
@@ -94,7 +91,7 @@ public class ProgressBarBuilder {
                 processed,
                 elapsed,
                 new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat,speedUnit),
-                consumer
+                consumer == null ? Util.createConsoleConsumer() : consumer
         );
     }
 }

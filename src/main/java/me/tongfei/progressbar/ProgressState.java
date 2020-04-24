@@ -10,25 +10,54 @@ import java.time.Instant;
  */
 class ProgressState {
 
-    String task;
-    boolean indefinite = false;
-    long current = 0;
-    long max = 0;
-    Instant startTime = null;
+    String taskName;
     String extraMessage = "";
-    long start = 0;
-    Duration elapsed;
+
+    boolean indefinite = false;
 
     //  0             start     current        max
     //  [===============|=========>             ]
+    long start;
+    long current;
+    long max;
 
-    ProgressState(String task, long initialMax, long startFrom, Duration elapsed) {
-        this.task = task;
+    Instant startInstant = null;
+    Duration elapsedBeforeStart = Duration.ZERO;
+
+    volatile boolean alive = true;
+    volatile boolean paused = false;
+
+    ProgressState(String taskName, long initialMax, long startFrom, Duration elapsedBeforeStart) {
+        this.taskName = taskName;
         this.max = initialMax;
         if (initialMax < 0) indefinite = true;
         this.start = startFrom;
         this.current = startFrom;
-        this.elapsed = elapsed;
+        this.elapsedBeforeStart = elapsedBeforeStart;
+        this.startInstant = Instant.now();
+    }
+
+    String getTaskName() {
+        return taskName;
+    }
+
+    synchronized String getExtraMessage() {
+        return extraMessage;
+    }
+
+    synchronized long getCurrent() {
+        return current;
+    }
+
+    synchronized long getMax() {
+        return max;
+    }
+
+    // The progress, normalized to range [0, 1].
+    synchronized double getNormalizedProgress() {
+        if (max <= 0) return 0.0;
+        else if (current > max) return 1.0;
+        else return ((double)current) / max;
     }
 
     synchronized void setAsDefinite() {
@@ -57,36 +86,19 @@ class ProgressState {
         extraMessage = msg;
     }
 
-    String getTask() {
-        return task;
-    }
-
-    synchronized String getExtraMessage() {
-        return extraMessage;
-    }
-
-    synchronized long getCurrent() {
-        return current;
-    }
-
-    synchronized long getMax() {
-        return max;
-    }
-
     synchronized void pause() {
+        paused = true;
         start = current;
-        elapsed = elapsed.plus(Duration.between(startTime, Instant.now()));
+        elapsedBeforeStart = elapsedBeforeStart.plus(Duration.between(startInstant, Instant.now()));
     }
 
     synchronized void resume() {
-        startTime = Instant.now();
+        paused = false;
+        startInstant = Instant.now();
     }
 
-    // The progress, normalized to range [0, 1].
-    synchronized double getNormalizedProgress() {
-        if (max <= 0) return 0.0;
-        else if (current > max) return 1.0;
-        else return ((double)current) / max;
+    synchronized void kill() {
+        alive = false;
     }
 
 }

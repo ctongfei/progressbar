@@ -98,9 +98,9 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
     public String render(ProgressState progress, int maxLength) {
 
         Instant currTime = Instant.now();
-        Duration elapsed = Duration.between(progress.startTime, currTime);
+        Duration elapsed = Duration.between(progress.startInstant, currTime);
 
-        String prefix = progress.task + " " + percentage(progress) + " " + style.leftBracket;
+        String prefix = progress.taskName + " " + percentage(progress) + " " + style.leftBracket;
         int maxSuffixLength = Math.max(maxLength - prefix.length(), 0);
 
         String speedString = isSpeedShown ? speed(progress, elapsed) : "";

@@ -1,7 +1,11 @@
 # Changelog
 
- * `0.9.0`:
-     - Supports pausing and resuming progress bars (PR #63), thereby fixing #17. Thanks @mesat !
+ * `1.0.0`:
+     - Supports pausing and resuming progress bars (PR #63), fixing #17. Thanks @mesat !
+     - Supports the parallel display of multiple progress bars (PR #69), fixing #11. Thanks @vehovsky !
+     - Supports child progress bars for child tasks (PR #70), fixing #66. Thanks @vehovsky ! 
+     - Supports direct wrapping around arrays (#62).
+     - Removes deprecated method since this is a major version update.
 
  * `0.8.1`:
      - Bugfixes:

@@ -4,11 +4,12 @@ import org.junit.Test;
 
 public class PauseResumeTest {
 
-
-    static public void main(String[] args) {
-        try (ProgressBar pb = new ProgressBar("Test", 20, 100)) {
+    @Test
+    public void testPauseResume() {
+        try (ProgressBar pb = new ProgressBarBuilder()
+                .setTaskName("Test").setInitialMax(10).setUpdateIntervalMillis(100).build()) {
             try {
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 5; i++) {
                     Thread.sleep(100);
                     pb.step();
                     Thread.sleep(100);

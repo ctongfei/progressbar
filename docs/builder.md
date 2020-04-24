@@ -8,7 +8,7 @@ All `setXXX()` (also `showSpeed`) clauses below are optional.
 ProgressBarBuilder pbb = new ProgressBarBuilder()
     .setInitialMax(<initial max>)
     .setStyle(ProgressBarStyle.<style>)
-    .setTaskName(<task name>)
+    .setTaskName(<taskName name>)
     .setUnit(<unit name>, <unit size>)
     .setUpdateIntervalMillis(<update interval>)
     .showSpeed();
