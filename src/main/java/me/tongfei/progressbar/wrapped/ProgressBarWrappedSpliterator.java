@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Spliterator;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 /**
@@ -20,7 +21,7 @@ public class ProgressBarWrappedSpliterator<T> implements Spliterator<T>, AutoClo
     private Set<Spliterator<T>> openChildren;
 
     public ProgressBarWrappedSpliterator(Spliterator<T> underlying, ProgressBar pb) {
-        this(underlying, pb, Collections.synchronizedSet(new HashSet<>())); // has to be synchronized
+        this(underlying, pb, ConcurrentHashMap.newKeySet()); // has to be synchronized
     }
 
     private ProgressBarWrappedSpliterator(Spliterator<T> underlying, ProgressBar pb, Set<Spliterator<T>> openChildren) {

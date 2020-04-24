@@ -3,10 +3,11 @@ package me.tongfei.progressbar;
 
 import org.junit.Test;
 
+// cannot be properly tested under JUnit
 public class MultiProgressBarTest {
 
     @Test
-    public static void testMultiProgressBar() throws InterruptedException {
+    public void testMultiProgressBar() throws InterruptedException {
 
         try (
                 ProgressBar pb1 = new ProgressBar("PB1", 100);

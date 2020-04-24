@@ -22,7 +22,14 @@ public enum ProgressBarStyle {
     char space;
     String fractionSymbols;
 
-    ProgressBarStyle(String refreshPrompt, String leftBracket, String rightBracket, char block, char space, String fractionSymbols) {
+    ProgressBarStyle(
+            String refreshPrompt,
+            String leftBracket,
+            String rightBracket,
+            char block,
+            char space,
+            String fractionSymbols
+    ) {
         this.refreshPrompt = refreshPrompt;
         this.leftBracket = leftBracket;
         this.rightBracket = rightBracket;
