@@ -88,12 +88,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jline</groupId>
-            <artifactId>jline-terminal-jansi</artifactId>
-            <version>3.13.3</version>
-        </dependency>
-
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13</version>
