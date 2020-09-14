@@ -74,7 +74,7 @@ public class ProgressBarBuilder {
 
     /**
      * Sets elapsedBeforeStart duration and number of processed units.
-     * @param startFrom amount of processed units
+     * @param processed amount of processed units
      * @param elapsed duration of
      */
     public ProgressBarBuilder startsFrom(long processed, Duration elapsed) {
