@@ -13,7 +13,7 @@ public interface ProgressBarConsumer extends Consumer<String>, Appendable, AutoC
     /**
      * Returns the maximum length allowed for the rendered form of a progress bar.
      */
-    int getMaxProgressLength();
+    int getMaxRenderedLength();
 
     /**
      * Accepts a rendered form of a progress bar, e.g., prints to a specified stream.

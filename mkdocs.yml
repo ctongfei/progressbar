@@ -1,7 +1,7 @@
-site_name: 'Progressbar 0.8.1'
+site_name: 'Progressbar 0.9.0'
 site_description: 'A terminal progress bar for Java/JVM'
 site_author: 'Tongfei Chen'
-copyright: 'Copyright &copy; 2015-2020 Tongfei Chen'
+copyright: 'Copyright &copy; 2015-2020 Tongfei Chen and contributors'
 
 theme:
   name: 'material'
@@ -33,5 +33,6 @@ pages:
   - 'Imperative usage': 'imperative-usage.md'
   - 'Visual styles': 'styles.md'
   - 'Builder pattern': 'builder.md'
+  - 'Kotlin extensions': 'kotlin.md'
   - 'Integrating with loggers': 'loggers.md'
   - 'Changelog': 'changelog.md'

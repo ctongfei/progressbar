@@ -1,5 +1,6 @@
 package me.tongfei.progressbar;
 
+import java.time.Duration;
 import java.time.Instant;
 
 /**
@@ -9,17 +10,54 @@ import java.time.Instant;
  */
 class ProgressState {
 
-    String task;
-    boolean indefinite = false;
-    long current = 0;
-    long max = 0;
-    Instant startTime = null;
+    String taskName;
     String extraMessage = "";
 
-    ProgressState(String task, long initialMax) {
-        this.task = task;
+    boolean indefinite = false;
+
+    //  0             start     current        max
+    //  [===============|=========>             ]
+    long start;
+    long current;
+    long max;
+
+    Instant startInstant = null;
+    Duration elapsedBeforeStart = Duration.ZERO;
+
+    volatile boolean alive = true;
+    volatile boolean paused = false;
+
+    ProgressState(String taskName, long initialMax, long startFrom, Duration elapsedBeforeStart) {
+        this.taskName = taskName;
         this.max = initialMax;
         if (initialMax < 0) indefinite = true;
+        this.start = startFrom;
+        this.current = startFrom;
+        this.elapsedBeforeStart = elapsedBeforeStart;
+        this.startInstant = Instant.now();
+    }
+
+    String getTaskName() {
+        return taskName;
+    }
+
+    synchronized String getExtraMessage() {
+        return extraMessage;
+    }
+
+    synchronized long getCurrent() {
+        return current;
+    }
+
+    synchronized long getMax() {
+        return max;
+    }
+
+    // The progress, normalized to range [0, 1].
+    synchronized double getNormalizedProgress() {
+        if (max <= 0) return 0.0;
+        else if (current > max) return 1.0;
+        else return ((double)current) / max;
     }
 
     synchronized void setAsDefinite() {
@@ -48,26 +86,19 @@ class ProgressState {
         extraMessage = msg;
     }
 
-    String getTask() {
-        return task;
+    synchronized void pause() {
+        paused = true;
+        start = current;
+        elapsedBeforeStart = elapsedBeforeStart.plus(Duration.between(startInstant, Instant.now()));
     }
 
-    synchronized String getExtraMessage() {
-        return extraMessage;
+    synchronized void resume() {
+        paused = false;
+        startInstant = Instant.now();
     }
 
-    synchronized long getCurrent() {
-        return current;
-    }
-
-    synchronized long getMax() {
-        return max;
-    }
-
-    // The progress, normalized to range [0, 1].
-    synchronized double getNormalizedProgress() {
-        if (max <= 0) return 0.0;
-        else return ((double)current) / max;
+    synchronized void kill() {
+        alive = false;
     }
 
 }

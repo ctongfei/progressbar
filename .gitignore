@@ -74,3 +74,6 @@ buildNumber.properties
 .classpath
 .settings
 .project
+
+# MkDocs
+site/

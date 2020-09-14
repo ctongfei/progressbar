@@ -8,7 +8,8 @@ A console progress bar for JVM with minimal runtime overhead.
 Menlo, 
 [Fira Mono](https://github.com/mozilla/Fira), 
 [Source Code Pro](https://github.com/adobe-fonts/source-code-pro),
-[Iosevka](https://github.com/be5invis/Iosevka), or 
+[Iosevka](https://github.com/be5invis/Iosevka),
+[JetBrains Mono](https://www.jetbrains.com/lp/mono/) or 
 [SF Mono](https://developer.apple.com/fonts/) are recommended for optimal visual effects.
 
 For Consolas or Andale Mono fonts, use `ProgressBarStyle.ASCII` because the box-drawing glyphs are not aligned properly in these fonts.
@@ -17,7 +18,7 @@ For Consolas or Andale Mono fonts, use `ProgressBarStyle.ASCII` because the box-
 
 #### Documentation
  - [Documentation](http://ctongfei.github.io/progressbar/)
- - [Javadoc](https://javadoc.io/doc/me.tongfei/progressbar/0.8.0)
+ - [Javadoc](https://javadoc.io/doc/me.tongfei/progressbar/0.9.0)
  
 
 #### Installation
@@ -28,7 +29,7 @@ Maven:
   <dependency>
       <groupId>me.tongfei</groupId>
       <artifactId>progressbar</artifactId>
-      <version>0.8.1</version>
+      <version>0.9.0</version>
   </dependency>
 ```
 
@@ -64,6 +65,15 @@ try (ProgressBar pb = new ProgressBar("Test", 100)) { // name, initial max
   }
 } // progress bar stops automatically after completion of try-with-resource block
 ```
+
+**NEW** in `0.9.0`: You can now use multiple progress bars for parallel jobs:
+```java
+try (ProgressBar pb1 = new ProgressBar("Job1", max1); 
+     ProgressBar pb2 = new ProgressBar("Job2", max2)) { ... }
+```
+
+##### Kotlin extensions
+Kotlin DSL-like builders are available at [reimersoftware/progressbar-ktx](https://github.com/reimersoftware/progressbar-ktx).
 
 #### Changelog
 [CHANGELOG](https://github.com/ctongfei/progressbar/blob/master/CHANGELOG.md)

@@ -1,5 +1,19 @@
 # Changelog
 
+ * `0.9.0`:
+     - New functionalities:
+        - Supports the parallel display of multiple progress bars (PR #69), fixing #11. Thanks @vehovsky !
+        - Supports pausing and resuming progress bars (PR #56, PR #63), fixing #17. Thanks @mesat !
+        - Supports direct wrapping around arrays (#62).
+        - Supports customized max length for progress bars (#71). Thanks @koppor and @cloudnotify !
+     - Bugfixes:
+        - Fixes the bug of dividing-by-zero when extra message is too long on indefinite progress bars (PR #85), fixing #84. Thanks @AndreiNekrasOn and @rharder !
+     - Misc:
+        - Removed redundant `jline-terminal-jansi` dependency (#77). Thanks @zbateson !
+        - Added references to Kotlin extensions (#72). Thanks @heinrichreimer !
+        - Changed the permission level of some methods in `DefaultProgressBarRenderer` to "protected" to make it more extensible (#81). Thanks @ksvladimir !
+        - Dependency version bump.
+
  * `0.8.1`:
      - Bugfixes:
          - Fixed the bug of possible negative suffix length (PR #58). Thanks @kristofarkas !
