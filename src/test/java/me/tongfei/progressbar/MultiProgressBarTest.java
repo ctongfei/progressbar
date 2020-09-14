@@ -6,7 +6,7 @@ import org.junit.Test;
 public class MultiProgressBarTest {
 
     @Test
-    public static void testMultiProgressBar() throws InterruptedException {
+    public void testMultiProgressBar() throws InterruptedException {
 
         try (
                 ProgressBar pb1 = new ProgressBar("PB1", 100);

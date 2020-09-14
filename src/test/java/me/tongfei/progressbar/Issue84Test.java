@@ -5,6 +5,9 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+/**
+ * @author Andrei Nakrasov
+ */
 public class Issue84Test {
     private final static int iterNumber = 100;
     private final static int criticalExtraMsgLen = 38;

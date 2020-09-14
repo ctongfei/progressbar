@@ -14,20 +14,29 @@ import static me.tongfei.progressbar.TerminalUtils.CARRIAGE_RETURN;
 public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
     private static int consoleRightMargin = 2;
+    int predefinedMaxLength = -1;
     final PrintStream out;
 
     public ConsoleProgressBarConsumer(PrintStream out) {
         this.out = out;
     }
 
+    public ConsoleProgressBarConsumer(PrintStream out, int predefinedMaxLength) {
+        this.predefinedMaxLength = predefinedMaxLength;
+        this.out = out;
+    }
+
     @Override
     public int getMaxRenderedLength() {
-        return TerminalUtils.getTerminalWidth() - consoleRightMargin;
+        if (predefinedMaxLength <= 0)
+            return TerminalUtils.getTerminalWidth() - consoleRightMargin;
+        else return predefinedMaxLength;
     }
 
     @Override
     public void accept(String str) {
-        out.print(CARRIAGE_RETURN + str);
+        int acceptedLength = Math.min(str.length(), getMaxRenderedLength());
+        out.print(CARRIAGE_RETURN + str.substring(0, acceptedLength));
     }
 
     @Override

@@ -86,6 +86,10 @@
             <id>vehovsky</id>
             <name>Martin Vehovsky</name>
         </developer>
+        <developer>
+            <id>AndreiNekrasOn</id>
+            <name>Andrei Nekrasov</name>
+        </developer>
     </developers>
 
     <dependencies>
