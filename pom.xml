@@ -90,6 +90,10 @@
             <id>AndreiNekrasOn</id>
             <name>Andrei Nekrasov</name>
         </developer>
+        <developer>
+            <id>zbateson</id>
+            <name>Zaahid Bateson</name>
+        </developer>
     </developers>
 
     <dependencies>
