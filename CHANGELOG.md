@@ -7,6 +7,7 @@
      - Supports customized max length for progress bars (#71). Thanks @koppor !
      - Fixes the bug of dividing-by-zero when extra message is too long on indefinite progress bars (PR #85), fixing #84. Thanks @AndreiNekrasOn and @rharder !
      - Removed redundant `jline-terminal-jansi` dependency (#77). Thanks @zbateson !
+     - Added references to Kotlin extensions (#72). Thanks @heinrichreimer !
 
  * `0.8.1`:
      - Bugfixes:

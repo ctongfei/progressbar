@@ -20,7 +20,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
     private DecimalFormat speedFormat;
     private ChronoUnit speedUnit;
 
-    DefaultProgressBarRenderer(
+    protected DefaultProgressBarRenderer(
             ProgressBarStyle style,
             String unitName,
             long unitSize,
@@ -37,17 +37,17 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
     }
 
     // Number of full blocks
-    private int progressIntegralPart(ProgressState progress, int length) {
+    protected int progressIntegralPart(ProgressState progress, int length) {
         return (int)(progress.getNormalizedProgress() * length);
     }
 
-    private int progressFractionalPart(ProgressState progress, int length) {
+    protected int progressFractionalPart(ProgressState progress, int length) {
         double p = progress.getNormalizedProgress() * length;
         double fraction = (p - Math.floor(p)) * style.fractionSymbols.length();
         return (int) Math.floor(fraction);
     }
 
-    private String eta(ProgressState progress, Duration elapsed) {
+    protected String eta(ProgressState progress, Duration elapsed) {
         if (progress.max <= 0 || progress.indefinite) return "?";
         else if (progress.current - progress.start == 0) return "?";
         else return Util.formatDuration(
@@ -55,20 +55,20 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
             );
     }
 
-    private String percentage(ProgressState progress) {
+    protected String percentage(ProgressState progress) {
         String res;
         if (progress.max <= 0 || progress.indefinite) res = "? %";
         else res = String.valueOf((int) Math.floor(100.0 * progress.current / progress.max)) + "%";
         return Util.repeat(' ', 4 - res.length()) + res;
     }
 
-    private String ratio(ProgressState progress) {
+    protected String ratio(ProgressState progress) {
         String m = progress.indefinite ? "?" : String.valueOf(progress.max / unitSize);
         String c = String.valueOf(progress.current / unitSize);
         return Util.repeat(' ', m.length() - c.length()) + c + "/" + m + unitName;
     }
 
-    private String speed(ProgressState progress, Duration elapsed) {
+    protected String speed(ProgressState progress, Duration elapsed) {
         String suffix = "/s";
         double elapsedSeconds = elapsed.getSeconds();
         double elapsedInUnit = elapsedSeconds;

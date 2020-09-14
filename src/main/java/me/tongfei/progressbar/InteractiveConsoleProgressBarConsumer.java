@@ -6,7 +6,7 @@ import static me.tongfei.progressbar.TerminalUtils.*;
 
 /**
  * Progress bar consumer for terminals supporting moving cursor up/down.
- * @since 1.0.0
+ * @since 0.9.0
  * @author Martin Vehovsky
  */
 public class InteractiveConsoleProgressBarConsumer extends ConsoleProgressBarConsumer {

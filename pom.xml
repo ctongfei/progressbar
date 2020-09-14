@@ -94,6 +94,10 @@
             <id>zbateson</id>
             <name>Zaahid Bateson</name>
         </developer>
+        <developer>
+            <id>heinrichreimer</id>
+            <name>Jan Heinrich Reimer</name>
+        </developer>
     </developers>
 
     <dependencies>
