@@ -8,7 +8,8 @@ A console progress bar for JVM with minimal runtime overhead.
 Menlo, 
 [Fira Mono](https://github.com/mozilla/Fira), 
 [Source Code Pro](https://github.com/adobe-fonts/source-code-pro),
-[Iosevka](https://github.com/be5invis/Iosevka), or 
+[Iosevka](https://github.com/be5invis/Iosevka),
+[JetBrains Mono](https://www.jetbrains.com/lp/mono/) or 
 [SF Mono](https://developer.apple.com/fonts/) are recommended for optimal visual effects.
 
 For Consolas or Andale Mono fonts, use `ProgressBarStyle.ASCII` because the box-drawing glyphs are not aligned properly in these fonts.

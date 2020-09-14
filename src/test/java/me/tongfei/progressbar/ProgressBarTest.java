@@ -1,5 +1,8 @@
 package me.tongfei.progressbar;
 
+import java.text.DecimalFormat;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,7 +14,9 @@ public class ProgressBarTest {
 
     @Test
     public void test() {
-        try (ProgressBar pb = new ProgressBar("Test", 5, 50, System.out, ProgressBarStyle.UNICODE_BLOCK, "K", 1024)) {
+        try (ProgressBar pb = new ProgressBarBuilder()
+             .setTaskName("Test").setInitialMax(5).setUpdateIntervalMillis(50)
+             .setStyle(ProgressBarStyle.UNICODE_BLOCK).setUnit("K", 1024).build()) {
 
             double x = 1.0;
             double y = x * x;
@@ -32,6 +37,57 @@ public class ProgressBarTest {
             }
         }
         System.out.println("Hello");
+    }
+    @Test
+    public void testSpeedFormat() throws InterruptedException {
+        ProgressBar bar = new ProgressBarBuilder()
+                .showSpeed(new DecimalFormat("#.##"))
+                .setUnit("k", 1000)
+                .setInitialMax(10000)
+                .build();
+        int x = 0;
+        while (x < 10000) {
+            bar.step();
+            Thread.sleep(1);
+            x++;
+        }
+
+        bar.close();
+    }
+    @Test
+    public void testSpeedUnit() throws InterruptedException {
+        ProgressBar bar = new ProgressBarBuilder()
+                .showSpeed(new DecimalFormat("#.####"))
+                .setUnit("k", 1000)
+                .setInitialMax(10000)
+                .setSpeedUnit(ChronoUnit.MINUTES)
+                .build();
+        int x = 0;
+        while (x < 10000) {
+            bar.step();
+            Thread.sleep(1);
+            x++;
+        }
+
+        bar.close();
+    }
+    @Test
+    public void testSpeedStartFrom() throws InterruptedException {
+        ProgressBar bar = new ProgressBarBuilder()
+                .showSpeed(new DecimalFormat("#.##"))
+                .setUnit("k", 1000)
+                .setInitialMax(10000)
+                .startsFrom(5000, Duration.ZERO)
+                .setUpdateIntervalMillis(10)
+                .build();
+        int x = 5000;
+        while (x < 10000) {
+            bar.step();
+            Thread.sleep(1);
+            x++;
+        }
+
+        bar.close();
     }
 
 }

@@ -1,6 +1,8 @@
 package me.tongfei.progressbar;
 
 import java.text.DecimalFormat;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Builder class for {@link ProgressBar}s.
@@ -18,6 +20,9 @@ public class ProgressBarBuilder {
     private long unitSize = 1;
     private boolean showSpeed = false;
     private DecimalFormat speedFormat;
+    private ChronoUnit speedUnit = ChronoUnit.SECONDS;
+    private long processed = 0;
+    private Duration elapsed = Duration.ZERO;
 
     public ProgressBarBuilder() { }
 
@@ -62,16 +67,31 @@ public class ProgressBarBuilder {
         return this;
     }
 
-    public ProgressBar build() {
-        if (consumer == null)
-            consumer = new ConsoleProgressBarConsumer();
+    public ProgressBarBuilder setSpeedUnit(ChronoUnit speedUnit) {
+        this.speedUnit = speedUnit;
+        return this;
+    }
 
+    /**
+     * Sets elapsedBeforeStart duration and number of processed units.
+     * @param startFrom amount of processed units
+     * @param elapsed duration of
+     */
+    public ProgressBarBuilder startsFrom(long processed, Duration elapsed) {
+        this.processed = processed;
+        this.elapsed = elapsed;
+        return this;
+    }
+
+    public ProgressBar build() {
         return new ProgressBar(
                 task,
                 initialMax,
                 updateIntervalMillis,
-                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat),
-                consumer
+                processed,
+                elapsed,
+                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat,speedUnit),
+                consumer == null ? Util.createConsoleConsumer() : consumer
         );
     }
 }
