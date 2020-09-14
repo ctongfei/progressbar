@@ -11,6 +11,6 @@ To do this, a specific `DelegatingProgressBarConsumer` is required, with `logger
             .setTaskName("Test")
             .setConsumer(new DelegatingProgressBarConsumer(logger::info))
             .build()) {
-        // your task here
+        // your taskName here
     }
 ```

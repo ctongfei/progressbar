@@ -1,20 +1,31 @@
 package me.tongfei.progressbar;
 
-import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
-
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.time.Duration;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
-/**
- * @author Tongfei Chen
- * @since 0.5.0
- */
+
 class Util {
 
-    private static int defaultTerminalWidth = 80;
+    static ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1, runnable -> {
+        Thread thread = Executors.defaultThreadFactory().newThread(runnable);
+        thread.setName("ProgressBar");
+        thread.setDaemon(true);
+        return thread;
+    });
+
+    static ConsoleProgressBarConsumer createConsoleConsumer() {
+        return createConsoleConsumer(System.err);
+    }
+
+    static ConsoleProgressBarConsumer createConsoleConsumer(PrintStream out) {
+        return TerminalUtils.hasCursorMovementSupport() ?
+                new InteractiveConsoleProgressBarConsumer(out) : new ConsoleProgressBarConsumer(out);
+    }
 
     static String repeat(char c, int n) {
         if (n <= 0) return "";
@@ -32,40 +43,9 @@ class Util {
         try {
             if (is instanceof FileInputStream)
                 return ((FileInputStream) is).getChannel().size();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             return -1;
         }
         return -1;
     }
-
-    static Terminal getTerminal() {
-        Terminal terminal = null;
-        try {
-            // Issue #42
-            // Defaulting to a dumb terminal when a supported terminal can not be correctly created
-            // see https://github.com/jline/jline3/issues/291
-            terminal = TerminalBuilder.builder().dumb(true).build();
-        }
-        catch (IOException ignored) { }
-        return terminal;
-    }
-
-    static int getTerminalWidth(Terminal terminal) {
-        if (terminal != null && terminal.getWidth() >= 10) // Workaround for issue #23 under IntelliJ
-            return terminal.getWidth();
-        else return defaultTerminalWidth;
-    }
-
-    static int getTerminalWidth() {
-        Terminal terminal = getTerminal();
-        int width = getTerminalWidth(terminal);
-        try {
-            if (terminal != null)
-                terminal.close();
-        }
-        catch (IOException ignored) { /* noop */ }
-        return width;
-    }
-
 }

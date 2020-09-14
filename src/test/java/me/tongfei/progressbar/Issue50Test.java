@@ -8,7 +8,8 @@ public class Issue50Test {
         int tenSecondsInMS = 10 * 1000;
         long startTime = System.currentTimeMillis();
 
-        try(ProgressBar pb = new ProgressBar("Foo", 100, tenSecondsInMS)){
+        try(ProgressBar pb = new ProgressBarBuilder()
+                .setTaskName("Foo").setInitialMax(100).setUpdateIntervalMillis(tenSecondsInMS).build()) {
             Thread.sleep(5);
         }
 
