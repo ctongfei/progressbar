@@ -66,6 +66,12 @@ try (ProgressBar pb = new ProgressBar("Test", 100)) { // name, initial max
 } // progress bar stops automatically after completion of try-with-resource block
 ```
 
+**NEW** in `0.9.0`: You can now use multiple progress bars for parallel jobs:
+```java
+try (ProgressBar pb1 = new ProgressBar("Job1", max1); 
+     ProgressBar pb2 = new ProgressBar("Job2", max2)) { ... }
+```
+
 ##### Kotlin extensions
 Kotlin DSL-like builders are available at [reimersoftware/progressbar-ktx](https://github.com/reimersoftware/progressbar-ktx).
 
