@@ -6,17 +6,21 @@
 
 Depending on your build tool, add the following setting.
 
-``` xml fct_label="Maven"
-  <dependency>
-      <groupId>me.tongfei</groupId>
-      <artifactId>progressbar</artifactId>
-      <version>0.9.0</version>
-  </dependency>
-```
+=== "Maven"
 
-``` groovy fct_label="Gradle"
-compile 'me.tongfei:progressbar:0.9.0'
-```
+    ``` xml
+    <dependency>
+        <groupId>me.tongfei</groupId>
+        <artifactId>progressbar</artifactId>
+        <version>0.9.0</version>
+    </dependency>
+    ```
+
+=== "Gradle"
+
+    ``` groovy
+    compile 'me.tongfei:progressbar:0.9.0'
+    ```
 
 #### Getting started
 

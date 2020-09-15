@@ -6,28 +6,24 @@ copyright: 'Copyright &copy; 2015-2020 Tongfei Chen and contributors'
 theme:
   name: 'material'
   palette:
-    primary: 'teal'
-    accent: 'teal'
+    primary: teal
   font:
     text: 'Source Sans Pro'
     code: 'Source Code Pro'
-  logo:
-    icon: data_usage
+  icon:
+    logo: material/chart-donut
   
 markdown_extensions: 
-  - codehilite
-  - extra
-  - markdown_fenced_code_tabs:
-      single_block_as_tab: False
-      active_class: 'active'
-      template: 'default'
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.tabbed
 
 repo_name: 'ctongfei/progressbar'
 repo_url: 'https://github.com/ctongfei/progressbar'
 
-extra_css: ['css/extra.css']
+extra_css: []
 
-pages:
+nav:
   - 'Introduction': 'index.md'
   - 'Declarative usage': 'declarative-usage.md'
   - 'Imperative usage': 'imperative-usage.md'
