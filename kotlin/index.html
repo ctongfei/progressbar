@@ -19,7 +19,7 @@
     
     
       
-        <title>Visual styles - Progressbar 0.9.0</title>
+        <title>Kotlin extensions - Progressbar 0.9.0</title>
       
     
     
@@ -61,6 +61,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#kotlin-extensions" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -85,7 +90,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Visual styles
+              Kotlin extensions
             
           </span>
         </div>
@@ -219,18 +224,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-    <a href="./" title="Visual styles" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../styles/" title="Visual styles" class="md-nav__link">
       Visual styles
     </a>
-    
   </li>
 
     
@@ -250,11 +248,20 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../kotlin/" title="Kotlin extensions" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="Kotlin extensions" class="md-nav__link md-nav__link--active">
       Kotlin extensions
     </a>
+    
   </li>
 
     
@@ -289,12 +296,27 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/ctongfei/progressbar/edit/master/docs/styles.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/ctongfei/progressbar/edit/master/docs/kotlin.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
@@ -302,24 +324,8 @@
                   
                 
                 
-                  <h1>Visual styles</h1>
-                
-                <p>Currently <code>progressbar</code> supports three visual style sets:</p>
-<ul>
-<li>
-<p><code>COLORFUL_UNICODE_BLOCK</code> (default): Rendered using Unicode box drawing symbols with ANSI colors. Good if your font is among Menlo, Fira Mono, Source Code Pro or SF Mono; and your terminal supports ANSI colors.</p>
-</li>
-<li>
-<p><code>UNICODE_BLOCK</code>: Rendered using Unicode box drawing symbols. </p>
-</li>
-<li>
-<p><code>ASCII</code>: Rendered using pure ASCII symbols. This is preferred if your terminal's font is either Consolas or Andale Mono.</p>
-</li>
-</ul>
-<p>To set these, using a progress bar <a href="../builder/">builder</a> with the <code>setStyle</code> method, passing in one of the enum values above.
-<div class="highlight"><pre><span></span><code><span class="n">ProgressBarBuilder</span> <span class="n">pbb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProgressBarBuilder</span><span class="p">()</span>
-    <span class="p">.</span><span class="na">setStyle</span><span class="p">(</span><span class="n">ProgressBarStyle</span><span class="p">.</span><span class="o">&lt;</span><span class="n">STYLE</span><span class="o">&gt;</span><span class="p">);</span>
-</code></pre></div></p>
+                <h1 id="kotlin-extensions">Kotlin extensions</h1>
+<p>Kotlin DSL-like builders are available at <a href="https://github.com/reimersoftware/progressbar-ktx">reimersoftware/progressbar-ktx</a>.</p>
                 
               
               
@@ -338,7 +344,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../imperative-usage/" title="Imperative usage" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../builder/" title="Builder pattern" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -347,19 +353,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Imperative usage
+                Builder pattern
               </div>
             </div>
           </a>
         
         
-          <a href="../builder/" title="Builder pattern" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../loggers/" title="Integrating with loggers" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Builder pattern
+                Integrating with loggers
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
