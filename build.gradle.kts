@@ -112,6 +112,26 @@ publishing {
                         id.set("mordechaim")
                         name.set("Mordechai Meisels")
                     }
+                    developer {
+                        id.set("mesat")
+                        name.set("Muhammet Sakarya")
+                    }
+                    developer {
+                        id.set("vehovsky")
+                        name.set("Martin Vehovsky")
+                    }
+                    developer {
+                        id.set("AndreiNekrasOn")
+                        name.set("Andrei Nekrasov")
+                    }
+                    developer {
+                        id.set("zbateson")
+                        name.set("Zaahid Bateson")
+                    }
+                    developer {
+                        id.set("heinrichreimer")
+                        name.set("Jan Heinrich Reimer")
+                    }
                 }
             }
 
