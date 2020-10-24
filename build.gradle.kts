@@ -24,8 +24,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jline:jline:3.13.3")
-    implementation("org.jline:jline-terminal-jansi:3.13.3")
+    implementation("org.jline:jline:3.16.0")
 
     testImplementation("junit:junit:4.13")
     testImplementation("org.slf4j:slf4j-api:1.7.30")
