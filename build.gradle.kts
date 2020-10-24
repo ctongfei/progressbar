@@ -4,7 +4,7 @@ plugins {
     `java-library`
     `maven-publish`
     signing
-    id("com.github.johnrengelman.shadow") version "5.2.0"
+    id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
 group = "me.tongfei"
@@ -26,7 +26,7 @@ repositories {
 dependencies {
     implementation("org.jline:jline:3.16.0")
 
-    testImplementation("junit:junit:4.13")
+    testImplementation("junit:junit:4.13.1")
     testImplementation("org.slf4j:slf4j-api:1.7.30")
     testImplementation("org.slf4j:slf4j-simple:1.7.30")
 }
