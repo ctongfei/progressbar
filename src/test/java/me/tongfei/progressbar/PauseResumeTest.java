@@ -1,11 +1,11 @@
 package me.tongfei.progressbar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PauseResumeTest {
+class PauseResumeTest {
 
     @Test
-    public void testPauseResume() {
+    void testPauseResume() {
         try (ProgressBar pb = new ProgressBarBuilder()
                 .setTaskName("Test").setInitialMax(10).setUpdateIntervalMillis(100).build()) {
             try {

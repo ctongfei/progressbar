@@ -1,16 +1,16 @@
 package me.tongfei.progressbar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
 /**
  * @author Tongfei Chen
  */
-public class RangeTest {
+class RangeTest {
 
     @Test
-    public void parallelRangeTest() {
+    void parallelRangeTest() {
         ProgressBar.wrap(IntStream.range(1000, 9000).parallel(), "Test parallel").forEach(i -> {
             try {
                 Thread.sleep(10);
@@ -20,7 +20,7 @@ public class RangeTest {
     }
 
     @Test
-    public void sequentialRangeTest() {
+    void sequentialRangeTest() {
         ProgressBar.wrap(IntStream.range(1000, 2000), "Test sequential").forEach(i -> {
             try {
                 Thread.sleep(10);

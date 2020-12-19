@@ -1,6 +1,6 @@
 package me.tongfei.progressbar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -9,10 +9,10 @@ import java.util.Scanner;
 /**
  * @author Tongfei Chen
  */
-public class Issue40Test {
+class Issue40Test {
 
     @Test
-    public void test() throws InterruptedException {
+    void test() throws InterruptedException {
         InputStream input = new ByteArrayInputStream("100 200 300".getBytes());
 
         Scanner sc = new Scanner(input);

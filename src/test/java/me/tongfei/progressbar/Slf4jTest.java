@@ -1,17 +1,17 @@
 package me.tongfei.progressbar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Alex Peelman
  */
-public class Slf4jTest {
+class Slf4jTest {
 
     //Prints progress as new lines without carriage return
     @Test
-    public void printLoggerTest() throws InterruptedException {
+    void printLoggerTest() throws InterruptedException {
         final Logger logger = LoggerFactory.getLogger("Test");
         try (ProgressBar pb = new ProgressBarBuilder()
                 .setInitialMax(100)

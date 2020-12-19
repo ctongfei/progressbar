@@ -1,19 +1,21 @@
 package me.tongfei.progressbar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 /**
  * @author Andrei Nakrasov
  */
-public class Issue84Test {
+class Issue84Test {
     private final static int iterNumber = 100;
     private final static int criticalExtraMsgLen = 38;
 
     @Test
-    public void testLongExtraMessage() {
+    void testLongExtraMessage() {
 
         // redirect all exception messages to a new stream
         // https://stackoverflow.com/a/8708357
@@ -39,6 +41,6 @@ public class Issue84Test {
         String exceptionMsgChecker = baos.toString();
         System.setErr(old);
         // Exception is handled in ProgressThread run, so in test output is checked for exceptions
-        assert (!exceptionMsgChecker.contains("Exception"));
+        assertFalse(exceptionMsgChecker.contains("Exception"));
     }
 }

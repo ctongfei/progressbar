@@ -1,19 +1,20 @@
 package me.tongfei.progressbar;
 
+import org.junit.jupiter.api.Test;
+
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
-import org.junit.Test;
 
 import java.util.ArrayList;
 
 /**
  * @author Tongfei Chen
  */
-public class ProgressBarTest {
+class ProgressBarTest {
 
     @Test
-    public void test() {
+    void test() {
         try (ProgressBar pb = new ProgressBarBuilder()
              .setTaskName("Test").setInitialMax(5).setUpdateIntervalMillis(50)
              .setStyle(ProgressBarStyle.UNICODE_BLOCK).setUnit("K", 1024).build()) {
@@ -39,7 +40,7 @@ public class ProgressBarTest {
         System.out.println("Hello");
     }
     @Test
-    public void testSpeedFormat() throws InterruptedException {
+    void testSpeedFormat() throws InterruptedException {
         ProgressBar bar = new ProgressBarBuilder()
                 .showSpeed(new DecimalFormat("#.##"))
                 .setUnit("k", 1000)
@@ -55,7 +56,7 @@ public class ProgressBarTest {
         bar.close();
     }
     @Test
-    public void testSpeedUnit() throws InterruptedException {
+    void testSpeedUnit() throws InterruptedException {
         ProgressBar bar = new ProgressBarBuilder()
                 .showSpeed(new DecimalFormat("#.####"))
                 .setUnit("k", 1000)
@@ -71,8 +72,9 @@ public class ProgressBarTest {
 
         bar.close();
     }
+
     @Test
-    public void testSpeedStartFrom() throws InterruptedException {
+    void testSpeedStartFrom() throws InterruptedException {
         ProgressBar bar = new ProgressBarBuilder()
                 .showSpeed(new DecimalFormat("#.##"))
                 .setUnit("k", 1000)
