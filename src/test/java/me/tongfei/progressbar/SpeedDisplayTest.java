@@ -1,13 +1,13 @@
 package me.tongfei.progressbar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.text.DecimalFormat;
 
 
-public class SpeedDisplayTest {
+class SpeedDisplayTest {
     @Test
-    public void test() throws InterruptedException {
+    void test() throws InterruptedException {
         ProgressBar bar = new ProgressBarBuilder()
                 .showSpeed()
                 .setUnit("k", 1000)
@@ -24,7 +24,7 @@ public class SpeedDisplayTest {
     }
 
     @Test
-    public void testSpeedFormat() throws InterruptedException {
+    void testSpeedFormat() throws InterruptedException {
         ProgressBar bar = new ProgressBarBuilder()
                 .showSpeed(new DecimalFormat("#.##"))
                 .setUnit("k", 1000)

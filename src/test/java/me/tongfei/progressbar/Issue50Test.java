@@ -1,10 +1,12 @@
 package me.tongfei.progressbar;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class Issue50Test {
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class Issue50Test {
     @Test
-    public void testCloseSpeed() throws Exception {
+    void testCloseSpeed() throws Exception {
         int tenSecondsInMS = 10 * 1000;
         long startTime = System.currentTimeMillis();
 
@@ -15,6 +17,6 @@ public class Issue50Test {
 
         long endTime = System.currentTimeMillis();
 
-        assert((endTime - startTime) < tenSecondsInMS);
+        assertTrue((endTime - startTime) < tenSecondsInMS);
     }
 }

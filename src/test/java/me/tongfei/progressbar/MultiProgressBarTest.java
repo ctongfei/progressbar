@@ -1,12 +1,12 @@
 package me.tongfei.progressbar;
 
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class MultiProgressBarTest {
+class MultiProgressBarTest {
 
     @Test
-    public void testMultiProgressBar() throws InterruptedException {
+    void testMultiProgressBar() throws InterruptedException {
 
         try (
                 ProgressBar pb1 = new ProgressBar("PB1", 100);
