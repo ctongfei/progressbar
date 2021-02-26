@@ -7,7 +7,7 @@ class PauseResumeTest {
     @Test
     void testPauseResume() {
         try (ProgressBar pb = new ProgressBarBuilder()
-                .setTaskName("Test").setInitialMax(10).setUpdateIntervalMillis(100).build()) {
+                .setTaskName("Test").setInitialMax(10).setUpdateIntervalMillis(100).setMaxRenderedLength(60).build()) {
             try {
                 for (int i = 0; i < 5; i++) {
                     Thread.sleep(100);

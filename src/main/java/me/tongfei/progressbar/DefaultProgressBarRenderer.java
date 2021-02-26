@@ -19,7 +19,6 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
     private boolean isSpeedShown;
     private DecimalFormat speedFormat;
     private ChronoUnit speedUnit;
-    private int maxWidth;
 
     protected DefaultProgressBarRenderer(
             ProgressBarStyle style,
@@ -27,8 +26,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
             long unitSize,
             boolean isSpeedShown,
             DecimalFormat speedFormat,
-            ChronoUnit speedUnit,
-            int maxWidth
+            ChronoUnit speedUnit
     ) {
         this.style = style;
         this.unitName = unitName;
@@ -36,7 +34,6 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         this.isSpeedShown = isSpeedShown;
         this.speedFormat = speedFormat;
         this.speedUnit = speedUnit;
-        this.maxWidth = maxWidth;
     }
 
     // Number of full blocks
@@ -100,7 +97,6 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
     public String render(ProgressState progress, int maxLength) {
 
-        maxLength = Math.min(maxLength, this.maxWidth); // should never go beyond the preset max width
         Instant currTime = Instant.now();
         Duration elapsed = Duration.between(progress.startInstant, currTime);
 

@@ -19,14 +19,19 @@ class Util {
         return thread;
     });
 
-    static ConsoleProgressBarConsumer createConsoleConsumer() {
+    static ConsoleProgressBarConsumer createConsoleConsumer(int predefinedWidth) {
         PrintStream real = new PrintStream(new FileOutputStream(FileDescriptor.err));
-        return createConsoleConsumer(real);  // System.err might be overridden by System.setErr
+        return createConsoleConsumer(real, predefinedWidth);  // System.err might be overridden by System.setErr
     }
 
     static ConsoleProgressBarConsumer createConsoleConsumer(PrintStream out) {
-        return TerminalUtils.hasCursorMovementSupport() ?
-                new InteractiveConsoleProgressBarConsumer(out) : new ConsoleProgressBarConsumer(out);
+        return createConsoleConsumer(out, -1);
+    }
+
+    static ConsoleProgressBarConsumer createConsoleConsumer(PrintStream out, int predefinedWidth) {
+        return TerminalUtils.hasCursorMovementSupport()
+                ? new InteractiveConsoleProgressBarConsumer(out, predefinedWidth)
+                : new ConsoleProgressBarConsumer(out, predefinedWidth);
     }
 
     static String repeat(char c, int n) {

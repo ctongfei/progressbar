@@ -18,6 +18,10 @@ public class InteractiveConsoleProgressBarConsumer extends ConsoleProgressBarCon
         super(out);
     }
 
+    public InteractiveConsoleProgressBarConsumer(PrintStream out, int predefinedWidth) {
+        super(out, predefinedWidth);
+    }
+
     @Override
     public void accept(String str) {
         if (!initialized) {

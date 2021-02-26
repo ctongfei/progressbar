@@ -23,7 +23,7 @@ public class ProgressBarBuilder {
     private ChronoUnit speedUnit = ChronoUnit.SECONDS;
     private long processed = 0;
     private Duration elapsed = Duration.ZERO;
-    private int maxWidth = Short.MAX_VALUE;
+    private int maxRenderedLength = -1;
 
     public ProgressBarBuilder() { }
 
@@ -58,8 +58,8 @@ public class ProgressBarBuilder {
         return this;
     }
 
-    public ProgressBarBuilder setMaxWidth(int maxWidth) {
-        this.maxWidth = maxWidth;
+    public ProgressBarBuilder setMaxRenderedLength(int maxRenderedLength) {
+        this.maxRenderedLength = maxRenderedLength;
         return this;
     }
 
@@ -96,8 +96,8 @@ public class ProgressBarBuilder {
                 updateIntervalMillis,
                 processed,
                 elapsed,
-                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat, speedUnit, maxWidth),
-                consumer == null ? Util.createConsoleConsumer() : consumer
+                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat, speedUnit),
+                consumer == null ? Util.createConsoleConsumer(maxRenderedLength) : consumer
         );
     }
 }
