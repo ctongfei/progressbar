@@ -37,7 +37,7 @@ public class ProgressBar implements AutoCloseable {
      * @param initialMax Initial maximum value
      */
     public ProgressBar(String task, long initialMax) {
-        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
+        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO, TerminalUtils.getTerminalWidth());
     }
 
     /**
@@ -62,10 +62,11 @@ public class ProgressBar implements AutoCloseable {
             DecimalFormat speedFormat,
             ChronoUnit speedUnit,
             long processed,
-            Duration elapsed
+            Duration elapsed,
+            int maxWidth
     ) {
         this(task, initialMax, updateIntervalMillis, processed, elapsed,
-                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat, speedUnit),
+                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat, speedUnit, maxWidth),
                 createConsoleConsumer(os)
         );
     }
