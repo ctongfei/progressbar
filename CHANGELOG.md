@@ -2,6 +2,7 @@
 
  * `0.9.1`:
      - Improvements:
+        - Correct rendering of East Asian full-width characters as defined in [Unicode TR11](http://www.unicode.org/reports/tr11/) (#75). Thanks @ImSejin and @fangyuzhong2016 !
         - Only renders the progress bar when progress is made (#91). This improves the performance of progress bars. Thanks @elanzini !
         - Added `setMaxRenderedLength` method to builders (#71). Thanks @koppor !
      - Misc:
