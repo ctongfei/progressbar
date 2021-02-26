@@ -1,6 +1,9 @@
 # Changelog
 
  * `0.9.1`:
+     - Improvements:
+        - Only renders the progress bar when progress is made (#91). This improves the performance of progress bars. Thanks @elanzini !
+        - Added `setMaxRenderedLength` method to builders (#71). Thanks @koppor !
      - Misc:
         - Updates JUnit 4 to JUnit 5 (PR #93). Thanks @michaelsiepmann !
         - Dependency version bump.

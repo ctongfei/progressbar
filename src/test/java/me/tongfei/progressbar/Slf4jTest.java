@@ -17,7 +17,7 @@ class Slf4jTest {
                 .setInitialMax(100)
                 .setTaskName("log.test")
                 .setConsumer(new DelegatingProgressBarConsumer(logger::info))
-                .setUpdateIntervalMillis(100)
+                .setUpdateIntervalMillis(1)
                 .build()) {
             for (int i = 0; i < 100; i++) {
                 pb.step();

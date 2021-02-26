@@ -11,6 +11,7 @@ ProgressBarBuilder pbb = new ProgressBarBuilder()
     .setTaskName(<taskName name>)
     .setUnit(<unit name>, <unit size>)
     .setUpdateIntervalMillis(<update interval>)
+    .setMaxRenderedLength(<max rendered length in terminal>)
     .showSpeed();
   // or .showSpeed(new DecimalFormat("#.##")) to customize speed display
 
