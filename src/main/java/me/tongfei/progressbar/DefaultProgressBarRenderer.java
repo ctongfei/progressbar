@@ -5,6 +5,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+import static me.tongfei.progressbar.StringDisplayUtils.*;
+
 /**
  * Default progress bar renderer (see {@link ProgressBarRenderer}).
  * @author Tongfei Chen
@@ -101,22 +103,28 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         Duration elapsed = Duration.between(progress.startInstant, currTime);
 
         String prefix = progress.taskName + " " + percentage(progress) + " " + style.leftBracket;
+        int prefixLength = getStringDisplayLength(prefix);
 
-        if (prefix.length() > maxLength)
-            prefix = prefix.substring(0, maxLength - 1);
+        if (prefixLength > maxLength) {
+            prefix = trimDisplayLength(prefix, maxLength - 1);
+            prefixLength = maxLength - 1;
+        }
 
         // length of progress should be at least 1
-        int maxSuffixLength = Math.max(maxLength - prefix.length() - 1, 0);
+        int maxSuffixLength = Math.max(maxLength - prefixLength - 1, 0);
 
         String speedString = isSpeedShown ? speed(progress, elapsed) : "";
         String suffix = style.rightBracket + " " + ratio(progress) + " ("
                 + Util.formatDuration(elapsed) + " / " + eta(progress, elapsed) + ") "
                 + speedString + progress.extraMessage;
+        int suffixLength = getStringDisplayLength(suffix);
         // trim excessive suffix
-        if (suffix.length() > maxSuffixLength)
-            suffix = suffix.substring(0, maxSuffixLength);
+        if (suffixLength > maxSuffixLength) {
+            suffix = trimDisplayLength(suffix, maxSuffixLength);
+            suffixLength = maxSuffixLength;
+        }
 
-        int length = maxLength - prefix.length() - suffix.length();
+        int length = maxLength - prefixLength - suffixLength;
 
         StringBuilder sb = new StringBuilder();
         sb.append(prefix);

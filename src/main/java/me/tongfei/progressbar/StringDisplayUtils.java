@@ -1,0 +1,269 @@
+package me.tongfei.progressbar;
+
+import java.util.Arrays;
+
+class StringDisplayUtils {
+
+    /**
+     * Returns the display width of a Unicode character on terminal.
+     * This function relies on the Unicode "Eastern Asian Width" property Wide (W) and Fullwidth (F):
+     * "Eastern Asian Ambiguous" (A) are considered as taking width 1 instead of 2.
+     *
+     * Characters beyond the Basic Multilingual Plane (0) are ignored for now.
+     * Diacritics, control characters, and various spacing characters are ignored for now.
+     *
+     * References:
+     *  - http://www.unicode.org/reports/tr11/
+     * @param c Unicode character
+     * @return Width it takes when displayed on terminal
+     */
+    static int getCharDisplayLength(char c) {
+        return eastAsianFullWidthChars.contains(c) ? 2 : 1;
+    }
+
+    static int getStringDisplayLength(String s) {
+        int displayWidth = 0;
+        for (int i = 0; i < s.length(); i++)
+            displayWidth += getCharDisplayLength(s.charAt(i));
+        return displayWidth;
+    }
+
+    static String trimDisplayLength(String s, int maxDisplayLength) {
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        int totalLength = 0;
+        while (totalLength < maxDisplayLength) {
+            char c = s.charAt(i);
+            totalLength += getCharDisplayLength(c);
+            if (totalLength > maxDisplayLength) break;
+            i++;
+            sb.append(c);
+        }
+        return sb.toString();
+    }
+
+    private static class RangeSet {
+        private final int[] left;
+        private final int[] right;
+
+        RangeSet(int[][] ranges) {
+            int n = ranges.length;
+            this.left = new int[n];
+            this.right = new int[n];
+            for (int i = 0; i < n; i++) {
+                this.left[i] = ranges[i][0];
+                this.right[i] = ranges[i][1];
+            }
+        }
+
+        boolean contains(int x) {
+            int i = Arrays.binarySearch(left, x);
+            if (i < 0) i = ~i - 1;
+            return i >= 0 && i < left.length && x <= right[i];
+        }
+    }
+
+    // https://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt
+    static RangeSet eastAsianFullWidthChars = new RangeSet(new int[][] {
+            {0x1100, 0x115F},  // HANGUL CHOSEONG KIYEOK..HANGUL CHOSEONG FILLER
+            {0x231A, 0x231B},  // WATCH..HOURGLASS
+            {0x2329, 0x2329},  // LEFT-POINTING ANGLE BRACKET
+            {0x232A, 0x232A},  // RIGHT-POINTING ANGLE BRACKET
+            {0x23E9, 0x23EC},  // BLACK RIGHT-POINTING DOUBLE TRIANGLE..BLACK DOWN-POINTING DOUBLE TRIANGLE
+            {0x23F0, 0x23F0},  // ALARM CLOCK
+            {0x23F3, 0x23F3},  // HOURGLASS WITH FLOWING SAND
+            {0x25FD, 0x25FE},  // WHITE MEDIUM SMALL SQUARE..BLACK MEDIUM SMALL SQUARE
+            {0x2614, 0x2615},  // UMBRELLA WITH RAIN DROPS..HOT BEVERAGE
+            {0x2648, 0x2653},  // ARIES..PISCES
+            {0x267F, 0x267F},  // WHEELCHAIR SYMBOL
+            {0x2693, 0x2693},  // ANCHOR
+            {0x26A1, 0x26A1},  // HIGH VOLTAGE SIGN
+            {0x26AA, 0x26AB},  // MEDIUM WHITE CIRCLE..MEDIUM BLACK CIRCLE
+            {0x26BD, 0x26BE},  // SOCCER BALL..BASEBALL
+            {0x26C4, 0x26C5},  // SNOWMAN WITHOUT SNOW..SUN BEHIND CLOUD
+            {0x26CE, 0x26CE},  // OPHIUCHUS
+            {0x26D4, 0x26D4},  // NO ENTRY
+            {0x26EA, 0x26EA},  // CHURCH
+            {0x26F2, 0x26F3},  // FOUNTAIN..FLAG IN HOLE
+            {0x26F5, 0x26F5},  // SAILBOAT
+            {0x26FA, 0x26FA},  // TENT
+            {0x26FD, 0x26FD},  // FUEL PUMP
+            {0x2705, 0x2705},  // WHITE HEAVY CHECK MARK
+            {0x270A, 0x270B},  // RAISED FIST..RAISED HAND
+            {0x2728, 0x2728},  // SPARKLES
+            {0x274C, 0x274C},  // CROSS MARK
+            {0x274E, 0x274E},  // NEGATIVE SQUARED CROSS MARK
+            {0x2753, 0x2755},  // BLACK QUESTION MARK ORNAMENT..WHITE EXCLAMATION MARK ORNAMENT
+            {0x2757, 0x2757},  // HEAVY EXCLAMATION MARK SYMBOL
+            {0x2795, 0x2797},  // HEAVY PLUS SIGN..HEAVY DIVISION SIGN
+            {0x27B0, 0x27B0},  // CURLY LOOP
+            {0x27BF, 0x27BF},  // DOUBLE CURLY LOOP
+            {0x2B1B, 0x2B1C},  // BLACK LARGE SQUARE..WHITE LARGE SQUARE
+            {0x2B50, 0x2B50},  // WHITE MEDIUM STAR
+            {0x2B55, 0x2B55},  // HEAVY LARGE CIRCLE
+            {0x2E80, 0x2E99},  // CJK RADICAL REPEAT..CJK RADICAL RAP
+            {0x2E9B, 0x2EF3},  // CJK RADICAL CHOKE..CJK RADICAL C-SIMPLIFIED TURTLE
+            {0x2F00, 0x2FD5},  // KANGXI RADICAL ONE..KANGXI RADICAL FLUTE
+            {0x2FF0, 0x2FFB},  // IDEOGRAPHIC DESCRIPTION CHARACTER LEFT TO RIGHT..IDEOGRAPHIC DESCRIPTION CHARACTER OVERLAID
+            {0x3000, 0x3000},  // IDEOGRAPHIC SPACE
+            {0x3001, 0x3003},  // IDEOGRAPHIC COMMA..DITTO MARK
+            {0x3004, 0x3004},  // JAPANESE INDUSTRIAL STANDARD SYMBOL
+            {0x3005, 0x3005},  // IDEOGRAPHIC ITERATION MARK
+            {0x3006, 0x3006},  // IDEOGRAPHIC CLOSING MARK
+            {0x3007, 0x3007},  // IDEOGRAPHIC NUMBER ZERO
+            {0x3008, 0x3008},  // LEFT ANGLE BRACKET
+            {0x3009, 0x3009},  // RIGHT ANGLE BRACKET
+            {0x300A, 0x300A},  // LEFT DOUBLE ANGLE BRACKET
+            {0x300B, 0x300B},  // RIGHT DOUBLE ANGLE BRACKET
+            {0x300C, 0x300C},  // LEFT CORNER BRACKET
+            {0x300D, 0x300D},  // RIGHT CORNER BRACKET
+            {0x300E, 0x300E},  // LEFT WHITE CORNER BRACKET
+            {0x300F, 0x300F},  // RIGHT WHITE CORNER BRACKET
+            {0x3010, 0x3010},  // LEFT BLACK LENTICULAR BRACKET
+            {0x3011, 0x3011},  // RIGHT BLACK LENTICULAR BRACKET
+            {0x3012, 0x3013},  // POSTAL MARK..GETA MARK
+            {0x3014, 0x3014},  // LEFT TORTOISE SHELL BRACKET
+            {0x3015, 0x3015},  // RIGHT TORTOISE SHELL BRACKET
+            {0x3016, 0x3016},  // LEFT WHITE LENTICULAR BRACKET
+            {0x3017, 0x3017},  // RIGHT WHITE LENTICULAR BRACKET
+            {0x3018, 0x3018},  // LEFT WHITE TORTOISE SHELL BRACKET
+            {0x3019, 0x3019},  // RIGHT WHITE TORTOISE SHELL BRACKET
+            {0x301A, 0x301A},  // LEFT WHITE SQUARE BRACKET
+            {0x301B, 0x301B},  // RIGHT WHITE SQUARE BRACKET
+            {0x301C, 0x301C},  // WAVE DASH
+            {0x301D, 0x301D},  // REVERSED DOUBLE PRIME QUOTATION MARK
+            {0x301E, 0x301F},  // DOUBLE PRIME QUOTATION MARK..LOW DOUBLE PRIME QUOTATION MARK
+            {0x3020, 0x3020},  // POSTAL MARK FACE
+            {0x3021, 0x3029},  // HANGZHOU NUMERAL ONE..HANGZHOU NUMERAL NINE
+            {0x302A, 0x302D},  // IDEOGRAPHIC LEVEL TONE MARK..IDEOGRAPHIC ENTERING TONE MARK
+            {0x302E, 0x302F},  // HANGUL SINGLE DOT TONE MARK..HANGUL DOUBLE DOT TONE MARK
+            {0x3030, 0x3030},  // WAVY DASH
+            {0x3031, 0x3035},  // VERTICAL KANA REPEAT MARK..VERTICAL KANA REPEAT MARK LOWER HALF
+            {0x3036, 0x3037},  // CIRCLED POSTAL MARK..IDEOGRAPHIC TELEGRAPH LINE FEED SEPARATOR SYMBOL
+            {0x3038, 0x303A},  // HANGZHOU NUMERAL TEN..HANGZHOU NUMERAL THIRTY
+            {0x303B, 0x303B},  // VERTICAL IDEOGRAPHIC ITERATION MARK
+            {0x303C, 0x303C},  // MASU MARK
+            {0x303D, 0x303D},  // PART ALTERNATION MARK
+            {0x303E, 0x303E},  // IDEOGRAPHIC VARIATION INDICATOR
+            {0x3041, 0x3096},  // HIRAGANA LETTER SMALL A..HIRAGANA LETTER SMALL KE
+            {0x3099, 0x309A},  // COMBINING KATAKANA-HIRAGANA VOICED SOUND MARK..COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK
+            {0x309B, 0x309C},  // KATAKANA-HIRAGANA VOICED SOUND MARK..KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK
+            {0x309D, 0x309E},  // HIRAGANA ITERATION MARK..HIRAGANA VOICED ITERATION MARK
+            {0x309F, 0x309F},  // HIRAGANA DIGRAPH YORI
+            {0x30A0, 0x30A0},  // KATAKANA-HIRAGANA DOUBLE HYPHEN
+            {0x30A1, 0x30FA},  // KATAKANA LETTER SMALL A..KATAKANA LETTER VO
+            {0x30FB, 0x30FB},  // KATAKANA MIDDLE DOT
+            {0x30FC, 0x30FE},  // KATAKANA-HIRAGANA PROLONGED SOUND MARK..KATAKANA VOICED ITERATION MARK
+            {0x30FF, 0x30FF},  // KATAKANA DIGRAPH KOTO
+            {0x3105, 0x312F},  // BOPOMOFO LETTER B..BOPOMOFO LETTER NN
+            {0x3131, 0x318E},  // HANGUL LETTER KIYEOK..HANGUL LETTER ARAEAE
+            {0x3190, 0x3191},  // IDEOGRAPHIC ANNOTATION LINKING MARK..IDEOGRAPHIC ANNOTATION REVERSE MARK
+            {0x3192, 0x3195},  // IDEOGRAPHIC ANNOTATION ONE MARK..IDEOGRAPHIC ANNOTATION FOUR MARK
+            {0x3196, 0x319F},  // IDEOGRAPHIC ANNOTATION TOP MARK..IDEOGRAPHIC ANNOTATION MAN MARK
+            {0x31A0, 0x31BF},  // BOPOMOFO LETTER BU..BOPOMOFO LETTER AH
+            {0x31C0, 0x31E3},  // CJK STROKE T..CJK STROKE Q
+            {0x31F0, 0x31FF},  // KATAKANA LETTER SMALL KU..KATAKANA LETTER SMALL RO
+            {0x3200, 0x321E},  // PARENTHESIZED HANGUL KIYEOK..PARENTHESIZED KOREAN CHARACTER O HU
+            {0x3220, 0x3229},  // PARENTHESIZED IDEOGRAPH ONE..PARENTHESIZED IDEOGRAPH TEN
+            {0x322A, 0x3247},  // PARENTHESIZED IDEOGRAPH MOON..CIRCLED IDEOGRAPH KOTO
+            {0x3250, 0x3250},  // PARTNERSHIP SIGN
+            {0x3251, 0x325F},  // CIRCLED NUMBER TWENTY ONE..CIRCLED NUMBER THIRTY FIVE
+            {0x3260, 0x327F},  // CIRCLED HANGUL KIYEOK..KOREAN STANDARD SYMBOL
+            {0x3280, 0x3289},  // CIRCLED IDEOGRAPH ONE..CIRCLED IDEOGRAPH TEN
+            {0x328A, 0x32B0},  // CIRCLED IDEOGRAPH MOON..CIRCLED IDEOGRAPH NIGHT
+            {0x32B1, 0x32BF},  // CIRCLED NUMBER THIRTY SIX..CIRCLED NUMBER FIFTY
+            {0x32C0, 0x32FF},  // IDEOGRAPHIC TELEGRAPH SYMBOL FOR JANUARY..SQUARE ERA NAME REIWA
+            {0x3300, 0x33FF},  // SQUARE APAATO..SQUARE GAL
+            {0x3400, 0x4DBF},  // CJK UNIFIED IDEOGRAPH-3400..CJK UNIFIED IDEOGRAPH-4DBF
+            {0x4E00, 0x9FFC},  // CJK UNIFIED IDEOGRAPH-4E00..CJK UNIFIED IDEOGRAPH-9FFC
+            {0x9FFD, 0x9FFF},  // <reserved-9FFD>..<reserved-9FFF>
+            {0xA000, 0xA014},  // YI SYLLABLE IT..YI SYLLABLE E
+            {0xA015, 0xA015},  // YI SYLLABLE WU
+            {0xA016, 0xA48C},  // YI SYLLABLE BIT..YI SYLLABLE YYR
+            {0xA490, 0xA4C6},  // YI RADICAL QOT..YI RADICAL KE
+            {0xA960, 0xA97C},  // HANGUL CHOSEONG TIKEUT-MIEUM..HANGUL CHOSEONG SSANGYEORINHIEUH
+            {0xAC00, 0xD7A3},  // HANGUL SYLLABLE GA..HANGUL SYLLABLE HIH
+            {0xF900, 0xFA6D},  // CJK COMPATIBILITY IDEOGRAPH-F900..CJK COMPATIBILITY IDEOGRAPH-FA6D
+            {0xFA6E, 0xFA6F},  // <reserved-FA6E>..<reserved-FA6F>
+            {0xFA70, 0xFAD9},  // CJK COMPATIBILITY IDEOGRAPH-FA70..CJK COMPATIBILITY IDEOGRAPH-FAD9
+            {0xFADA, 0xFAFF},  // <reserved-FADA>..<reserved-FAFF>
+            {0xFE10, 0xFE16},  // PRESENTATION FORM FOR VERTICAL COMMA..PRESENTATION FORM FOR VERTICAL QUESTION MARK
+            {0xFE17, 0xFE17},  // PRESENTATION FORM FOR VERTICAL LEFT WHITE LENTICULAR BRACKET
+            {0xFE18, 0xFE18},  // PRESENTATION FORM FOR VERTICAL RIGHT WHITE LENTICULAR BRAKCET
+            {0xFE19, 0xFE19},  // PRESENTATION FORM FOR VERTICAL HORIZONTAL ELLIPSIS
+            {0xFE30, 0xFE30},  // PRESENTATION FORM FOR VERTICAL TWO DOT LEADER
+            {0xFE31, 0xFE32},  // PRESENTATION FORM FOR VERTICAL EM DASH..PRESENTATION FORM FOR VERTICAL EN DASH
+            {0xFE33, 0xFE34},  // PRESENTATION FORM FOR VERTICAL LOW LINE..PRESENTATION FORM FOR VERTICAL WAVY LOW LINE
+            {0xFE35, 0xFE35},  // PRESENTATION FORM FOR VERTICAL LEFT PARENTHESIS
+            {0xFE36, 0xFE36},  // PRESENTATION FORM FOR VERTICAL RIGHT PARENTHESIS
+            {0xFE37, 0xFE37},  // PRESENTATION FORM FOR VERTICAL LEFT CURLY BRACKET
+            {0xFE38, 0xFE38},  // PRESENTATION FORM FOR VERTICAL RIGHT CURLY BRACKET
+            {0xFE39, 0xFE39},  // PRESENTATION FORM FOR VERTICAL LEFT TORTOISE SHELL BRACKET
+            {0xFE3A, 0xFE3A},  // PRESENTATION FORM FOR VERTICAL RIGHT TORTOISE SHELL BRACKET
+            {0xFE3B, 0xFE3B},  // PRESENTATION FORM FOR VERTICAL LEFT BLACK LENTICULAR BRACKET
+            {0xFE3C, 0xFE3C},  // PRESENTATION FORM FOR VERTICAL RIGHT BLACK LENTICULAR BRACKET
+            {0xFE3D, 0xFE3D},  // PRESENTATION FORM FOR VERTICAL LEFT DOUBLE ANGLE BRACKET
+            {0xFE3E, 0xFE3E},  // PRESENTATION FORM FOR VERTICAL RIGHT DOUBLE ANGLE BRACKET
+            {0xFE3F, 0xFE3F},  // PRESENTATION FORM FOR VERTICAL LEFT ANGLE BRACKET
+            {0xFE40, 0xFE40},  // PRESENTATION FORM FOR VERTICAL RIGHT ANGLE BRACKET
+            {0xFE41, 0xFE41},  // PRESENTATION FORM FOR VERTICAL LEFT CORNER BRACKET
+            {0xFE42, 0xFE42},  // PRESENTATION FORM FOR VERTICAL RIGHT CORNER BRACKET
+            {0xFE43, 0xFE43},  // PRESENTATION FORM FOR VERTICAL LEFT WHITE CORNER BRACKET
+            {0xFE44, 0xFE44},  // PRESENTATION FORM FOR VERTICAL RIGHT WHITE CORNER BRACKET
+            {0xFE45, 0xFE46},  // SESAME DOT..WHITE SESAME DOT
+            {0xFE47, 0xFE47},  // PRESENTATION FORM FOR VERTICAL LEFT SQUARE BRACKET
+            {0xFE48, 0xFE48},  // PRESENTATION FORM FOR VERTICAL RIGHT SQUARE BRACKET
+            {0xFE49, 0xFE4C},  // DASHED OVERLINE..DOUBLE WAVY OVERLINE
+            {0xFE4D, 0xFE4F},  // DASHED LOW LINE..WAVY LOW LINE
+            {0xFE50, 0xFE52},  // SMALL COMMA..SMALL FULL STOP
+            {0xFE54, 0xFE57},  // SMALL SEMICOLON..SMALL EXCLAMATION MARK
+            {0xFE58, 0xFE58},  // SMALL EM DASH
+            {0xFE59, 0xFE59},  // SMALL LEFT PARENTHESIS
+            {0xFE5A, 0xFE5A},  // SMALL RIGHT PARENTHESIS
+            {0xFE5B, 0xFE5B},  // SMALL LEFT CURLY BRACKET
+            {0xFE5C, 0xFE5C},  // SMALL RIGHT CURLY BRACKET
+            {0xFE5D, 0xFE5D},  // SMALL LEFT TORTOISE SHELL BRACKET
+            {0xFE5E, 0xFE5E},  // SMALL RIGHT TORTOISE SHELL BRACKET
+            {0xFE5F, 0xFE61},  // SMALL NUMBER SIGN..SMALL ASTERISK
+            {0xFE62, 0xFE62},  // SMALL PLUS SIGN
+            {0xFE63, 0xFE63},  // SMALL HYPHEN-MINUS
+            {0xFE64, 0xFE66},  // SMALL LESS-THAN SIGN..SMALL EQUALS SIGN
+            {0xFE68, 0xFE68},  // SMALL REVERSE SOLIDUS
+            {0xFE69, 0xFE69},  // SMALL DOLLAR SIGN
+            {0xFE6A, 0xFE6B},  // SMALL PERCENT SIGN..SMALL COMMERCIAL AT
+            {0xFF01, 0xFF03},  // FULLWIDTH EXCLAMATION MARK..FULLWIDTH NUMBER SIGN
+            {0xFF04, 0xFF04},  // FULLWIDTH DOLLAR SIGN
+            {0xFF05, 0xFF07},  // FULLWIDTH PERCENT SIGN..FULLWIDTH APOSTROPHE
+            {0xFF08, 0xFF08},  // FULLWIDTH LEFT PARENTHESIS
+            {0xFF09, 0xFF09},  // FULLWIDTH RIGHT PARENTHESIS
+            {0xFF0A, 0xFF0A},  // FULLWIDTH ASTERISK
+            {0xFF0B, 0xFF0B},  // FULLWIDTH PLUS SIGN
+            {0xFF0C, 0xFF0C},  // FULLWIDTH COMMA
+            {0xFF0D, 0xFF0D},  // FULLWIDTH HYPHEN-MINUS
+            {0xFF0E, 0xFF0F},  // FULLWIDTH FULL STOP..FULLWIDTH SOLIDUS
+            {0xFF10, 0xFF19},  // FULLWIDTH DIGIT ZERO..FULLWIDTH DIGIT NINE
+            {0xFF1A, 0xFF1B},  // FULLWIDTH COLON..FULLWIDTH SEMICOLON
+            {0xFF1C, 0xFF1E},  // FULLWIDTH LESS-THAN SIGN..FULLWIDTH GREATER-THAN SIGN
+            {0xFF1F, 0xFF20},  // FULLWIDTH QUESTION MARK..FULLWIDTH COMMERCIAL AT
+            {0xFF21, 0xFF3A},  // FULLWIDTH LATIN CAPITAL LETTER A..FULLWIDTH LATIN CAPITAL LETTER Z
+            {0xFF3B, 0xFF3B},  // FULLWIDTH LEFT SQUARE BRACKET
+            {0xFF3C, 0xFF3C},  // FULLWIDTH REVERSE SOLIDUS
+            {0xFF3D, 0xFF3D},  // FULLWIDTH RIGHT SQUARE BRACKET
+            {0xFF3E, 0xFF3E},  // FULLWIDTH CIRCUMFLEX ACCENT
+            {0xFF3F, 0xFF3F},  // FULLWIDTH LOW LINE
+            {0xFF40, 0xFF40},  // FULLWIDTH GRAVE ACCENT
+            {0xFF41, 0xFF5A},  // FULLWIDTH LATIN SMALL LETTER A..FULLWIDTH LATIN SMALL LETTER Z
+            {0xFF5B, 0xFF5B},  // FULLWIDTH LEFT CURLY BRACKET
+            {0xFF5C, 0xFF5C},  // FULLWIDTH VERTICAL LINE
+            {0xFF5D, 0xFF5D},  // FULLWIDTH RIGHT CURLY BRACKET
+            {0xFF5E, 0xFF5E},  // FULLWIDTH TILDE
+            {0xFF5F, 0xFF5F},  // FULLWIDTH LEFT WHITE PARENTHESIS
+            {0xFF60, 0xFF60},  // FULLWIDTH RIGHT WHITE PARENTHESIS
+            {0xFFE0, 0xFFE1},  // FULLWIDTH CENT SIGN..FULLWIDTH POUND SIGN
+            {0xFFE2, 0xFFE2},  // FULLWIDTH NOT SIGN
+            {0xFFE3, 0xFFE3},  // FULLWIDTH MACRON
+            {0xFFE4, 0xFFE4},  // FULLWIDTH BROKEN BAR
+            {0xFFE5, 0xFFE6},  // FULLWIDTH YEN SIGN..FULLWIDTH WON SIGN
+    });
+
+}
