@@ -5,6 +5,7 @@ import me.tongfei.progressbar.ProgressBar;
 import java.util.Iterator;
 
 /**
+ * Any iterator whose iteration is tracked by a progress bar.
  * @author Tongfei Chen
  * @since 0.6.0
  */

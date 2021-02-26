@@ -90,7 +90,7 @@ public class ProgressBarBuilder {
                 updateIntervalMillis,
                 processed,
                 elapsed,
-                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat,speedUnit),
+                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat, speedUnit),
                 consumer == null ? Util.createConsoleConsumer() : consumer
         );
     }

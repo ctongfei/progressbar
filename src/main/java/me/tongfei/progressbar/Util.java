@@ -1,12 +1,13 @@
 package me.tongfei.progressbar;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.time.Duration;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 class Util {
@@ -19,7 +20,8 @@ class Util {
     });
 
     static ConsoleProgressBarConsumer createConsoleConsumer() {
-        return createConsoleConsumer(System.err);
+        PrintStream real = new PrintStream(new FileOutputStream(FileDescriptor.err));
+        return createConsoleConsumer(real);  // System.err might be overridden by System.setErr
     }
 
     static ConsoleProgressBarConsumer createConsoleConsumer(PrintStream out) {

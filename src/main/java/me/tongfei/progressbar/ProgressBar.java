@@ -4,12 +4,12 @@ import me.tongfei.progressbar.wrapped.ProgressBarWrappedInputStream;
 import me.tongfei.progressbar.wrapped.ProgressBarWrappedIterable;
 import me.tongfei.progressbar.wrapped.ProgressBarWrappedIterator;
 import me.tongfei.progressbar.wrapped.ProgressBarWrappedSpliterator;
+import static me.tongfei.progressbar.Util.createConsoleConsumer;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.time.Duration;
-import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -21,8 +21,6 @@ import java.util.stream.BaseStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static me.tongfei.progressbar.Util.createConsoleConsumer;
-
 /**
  * A console-based progress bar with minimal runtime overhead.
  * @author Tongfei Chen
@@ -31,7 +29,7 @@ public class ProgressBar implements AutoCloseable {
 
     private ProgressState progress;
     private ProgressUpdateAction action;
-    private ScheduledFuture<Void> scheduledTask;
+    private ScheduledFuture<?> scheduledTask;
 
     /**
      * Creates a progress bar with the specific taskName name and initial maximum value.
@@ -94,7 +92,7 @@ public class ProgressBar implements AutoCloseable {
     ) {
         this.progress = new ProgressState(task, initialMax, processed, elapsed);
         this.action = new ProgressUpdateAction(progress, renderer, consumer);
-        scheduledTask = (ScheduledFuture<Void>) Util.executor.scheduleAtFixedRate(
+        scheduledTask = Util.executor.scheduleAtFixedRate(
                 action, 0, updateIntervalMillis, TimeUnit.MILLISECONDS
         );
     }
@@ -127,7 +125,7 @@ public class ProgressBar implements AutoCloseable {
 
     /**
      * Gives a hint to the maximum value of the progress bar.
-     * @param n Hint of the maximum value
+     * @param n Hint of the maximum value. A value of -1 indicates that the progress bar is indefinite.
      */
     public ProgressBar maxHint(long n) {
         if (n < 0)

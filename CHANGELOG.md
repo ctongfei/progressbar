@@ -1,5 +1,10 @@
 # Changelog
 
+ * `0.9.1`:
+     - Misc:
+        - Updates JUnit 4 to JUnit 5 (PR #93). Thanks @michaelsiepmann !
+        - Dependency version bump.
+
  * `0.9.0`:
      - New functionalities:
         - Supports the parallel display of multiple progress bars (PR #69), fixing #11. Thanks @vehovsky !

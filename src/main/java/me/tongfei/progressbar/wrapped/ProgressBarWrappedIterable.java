@@ -5,6 +5,7 @@ import me.tongfei.progressbar.ProgressBarBuilder;
 import java.util.Iterator;
 
 /**
+ * Any iterable, when being iterated over, is tracked by a progress bar.
  * @author Tongfei Chen
  * @since 0.6.0
  */
@@ -23,7 +24,7 @@ public class ProgressBarWrappedIterable<T> implements Iterable<T> {
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public ProgressBarWrappedIterator<T> iterator() {
         Iterator<T> it = underlying.iterator();
         return new ProgressBarWrappedIterator<>(
                 it,

@@ -21,7 +21,7 @@ class Slf4jTest {
                 .build()) {
             for (int i = 0; i < 100; i++) {
                 pb.step();
-                Thread.sleep(100);
+                Thread.sleep(10);
             }
         }
     }

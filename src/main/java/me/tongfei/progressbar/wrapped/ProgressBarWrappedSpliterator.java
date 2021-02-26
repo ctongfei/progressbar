@@ -10,6 +10,7 @@ import java.util.Spliterator;
 import java.util.function.Consumer;
 
 /**
+ * Any spliterator whose parallel iteration is tracked by a multi-threaded progress bar.
  * @author Tongfei Chen
  * @since 0.7.2
  */

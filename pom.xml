@@ -98,26 +98,30 @@
             <id>heinrichreimer</id>
             <name>Jan Heinrich Reimer</name>
         </developer>
+        <developer>
+            <id>michaelsiepmann</id>
+            <name>Michael Siepmann</name>
+        </developer>
     </developers>
 
     <dependencies>
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline</artifactId>
-            <version>3.16.0</version>
+            <version>3.19.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.0</version>
+            <version>5.7.1</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.7.0</version>
+            <version>5.7.1</version>
             <scope>test</scope>
         </dependency>
 
