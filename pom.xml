@@ -102,6 +102,10 @@
             <id>michaelsiepmann</id>
             <name>Michael Siepmann</name>
         </developer>
+        <developer>
+            <id>seanf</id>
+            <name>Sean Flanigan</name>
+        </developer>
     </developers>
 
     <dependencies>

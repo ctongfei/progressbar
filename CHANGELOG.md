@@ -1,5 +1,9 @@
 # Changelog
 
+ * Next unreleased version:
+     - Improvements:
+        - Size now known when wrapping an array (PR #101). Thanks @seanf !
+
  * `0.9.1`:
      - Improvements:
         - Correct rendering of East Asian full-width characters as defined in [Unicode TR11](http://www.unicode.org/reports/tr11/) (#75). Thanks @ImSejin and @fangyuzhong2016 !
