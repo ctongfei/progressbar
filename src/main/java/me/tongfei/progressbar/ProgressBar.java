@@ -328,7 +328,7 @@ public class ProgressBar implements AutoCloseable {
      * @return Wrapped array, of type {@link Stream}.
      */
     public static <T> Stream<T> wrap(T[] array, String task) {
-        ProgressBarBuilder pbb = new ProgressBarBuilder().setTaskName(task).setInitialMax(array.length);
+        ProgressBarBuilder pbb = new ProgressBarBuilder().setTaskName(task);
         return wrap(array, pbb);
     }
 
@@ -340,6 +340,7 @@ public class ProgressBar implements AutoCloseable {
      * @return Wrapped array, of type {@link Stream}.
      */
     public static <T> Stream<T> wrap(T[] array, ProgressBarBuilder pbb) {
+        pbb.setInitialMax(array.length);
         return wrap(Arrays.stream(array), pbb);
     }
 
