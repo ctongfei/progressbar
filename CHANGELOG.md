@@ -1,8 +1,11 @@
 # Changelog
 
- * Next unreleased version:
+ * `0.9.2` (Unreleased):
+     - New functionalities;
+        - Supports for wrapping around `java.io.Reader`s.
      - Improvements:
         - Size now known when wrapping an array (PR #101). Thanks @seanf !
+        - Better estimation of initial max for spliterators (#102).
 
  * `0.9.1`:
      - Improvements:
