@@ -1,3 +1,5 @@
+#### Selecting a visual style
+
 Currently `progressbar` supports three visual style sets:
 
  - `COLORFUL_UNICODE_BLOCK` (default): Rendered using Unicode box drawing symbols with ANSI colors. Good if your font is among Menlo, Fira Mono, Source Code Pro or SF Mono; and your terminal supports ANSI colors.
@@ -11,3 +13,4 @@ To set these, using a progress bar [builder](builder.md) with the `setStyle` met
 ProgressBarBuilder pbb = new ProgressBarBuilder()
     .setStyle(ProgressBarStyle.<STYLE>);
 ```
+

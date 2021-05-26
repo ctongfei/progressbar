@@ -32,6 +32,10 @@ public class ProgressBarBuilder {
         return this;
     }
 
+    boolean initialMaxIsSet() {
+        return this.initialMax != -1;
+    }
+
     public ProgressBarBuilder setInitialMax(long initialMax) {
         this.initialMax = initialMax;
         return this;

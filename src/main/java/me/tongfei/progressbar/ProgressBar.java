@@ -1,13 +1,12 @@
 package me.tongfei.progressbar;
 
-import me.tongfei.progressbar.wrapped.ProgressBarWrappedInputStream;
-import me.tongfei.progressbar.wrapped.ProgressBarWrappedIterable;
-import me.tongfei.progressbar.wrapped.ProgressBarWrappedIterator;
-import me.tongfei.progressbar.wrapped.ProgressBarWrappedSpliterator;
+import me.tongfei.progressbar.wrapped.*;
+
 import static me.tongfei.progressbar.Util.createConsoleConsumer;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.io.Reader;
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -248,8 +247,8 @@ public class ProgressBar implements AutoCloseable {
      * @param pbb An instance of a {@link ProgressBarBuilder}
      */
     public static <T> Iterable<T> wrap(Iterable<T> ts, ProgressBarBuilder pbb) {
-        long size = ts.spliterator().getExactSizeIfKnown();
-        if (size != -1)
+        long size = ts.spliterator().estimateSize();
+        if (size != Long.MAX_VALUE)
             pbb.setInitialMax(size);
         return new ProgressBarWrappedIterable<>(ts, pbb);
     }
@@ -260,7 +259,7 @@ public class ProgressBar implements AutoCloseable {
      * @param task Name of the progress
      */
     public static InputStream wrap(InputStream is, String task) {
-        ProgressBarBuilder pbb = new ProgressBarBuilder().setTaskName(task).setInitialMax(Util.getInputStreamSize(is));
+        ProgressBarBuilder pbb = new ProgressBarBuilder().setTaskName(task);
         return wrap(is, pbb);
     }
 
@@ -272,9 +271,29 @@ public class ProgressBar implements AutoCloseable {
      */
     public static InputStream wrap(InputStream is, ProgressBarBuilder pbb) {
         long size = Util.getInputStreamSize(is);
-        if (size != -1)
+        if (size != -1 && pbb.initialMaxIsSet())
             pbb.setInitialMax(size);
         return new ProgressBarWrappedInputStream(is, pbb.build());
+    }
+
+    /**
+     * Wraps a {@link Reader} so that when read, a progress bar is shown to track the reading progress.
+     * @param reader Reader to be wrapped
+     * @param task Name of the progress
+     */
+    public static Reader wrap(Reader reader, String task) {
+        ProgressBarBuilder pbb = new ProgressBarBuilder().setTaskName(task);
+        return wrap(reader, pbb);
+    }
+
+    /**
+     * Wraps a {@link Reader} so that when read, a progress bar is shown to track the reading progress.
+     * For this function the progress bar can be fully customized by using a {@link ProgressBarBuilder}.
+     * @param reader Reader to be wrapped
+     * @param pbb An instance of a {@link ProgressBarBuilder}
+     */
+    public static Reader wrap(Reader reader, ProgressBarBuilder pbb) {
+        return new ProgressBarWrappedReader(reader, pbb.build());
     }
 
     /**
@@ -294,8 +313,8 @@ public class ProgressBar implements AutoCloseable {
      * @param pbb An instance of a {@link ProgressBarBuilder}
      */
     public static <T> Spliterator<T> wrap(Spliterator<T> sp, ProgressBarBuilder pbb) {
-        long size = sp.getExactSizeIfKnown();
-        if (size != -1)
+        long size = sp.estimateSize();
+        if (size != Long.MAX_VALUE)
             pbb.setInitialMax(size);
         return new ProgressBarWrappedSpliterator<>(sp, pbb.build());
     }

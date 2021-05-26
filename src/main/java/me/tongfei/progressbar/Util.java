@@ -50,9 +50,11 @@ class Util {
         try {
             if (is instanceof FileInputStream)
                 return ((FileInputStream) is).getChannel().size();
-        } catch (IOException e) {
-            return -1;
-        }
+
+            // estimate input stream size with InputStream::available
+            int available = is.available();
+            if (available > 0) return available;
+        } catch (IOException ignored) { }
         return -1;
     }
 }

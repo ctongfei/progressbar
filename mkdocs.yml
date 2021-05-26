@@ -6,14 +6,17 @@ copyright: 'Copyright &copy; 2015-2021 Tongfei Chen and contributors'
 theme:
   name: 'material'
   palette:
-    primary: teal
+    primary: green
+    accent: indigo
   font:
     text: 'Source Sans Pro'
     code: 'Source Code Pro'
   icon:
     logo: material/chart-donut
   
-markdown_extensions: 
+markdown_extensions:
+  - toc:
+      permalink: true
   - pymdownx.superfences
   - pymdownx.highlight
   - pymdownx.tabbed
