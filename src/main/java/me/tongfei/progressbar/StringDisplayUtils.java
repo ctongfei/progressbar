@@ -29,17 +29,18 @@ class StringDisplayUtils {
     }
 
     static String trimDisplayLength(String s, int maxDisplayLength) {
-        StringBuilder sb = new StringBuilder();
-        int i = 0;
-        int totalLength = 0;
-        while (totalLength < maxDisplayLength) {
-            char c = s.charAt(i);
-            totalLength += getCharDisplayLength(c);
-            if (totalLength > maxDisplayLength) break;
-            i++;
-            sb.append(c);
+        if (maxDisplayLength <= 0) {
+            return "";
         }
-        return sb.toString();
+
+        int totalLength = 0;
+        for (int i = 0; i < s.length(); i++) {
+            totalLength += getCharDisplayLength(s.charAt(i));
+            if (totalLength > maxDisplayLength) {
+                return s.substring(0, i);
+            }
+        }
+        return s;
     }
 
 }
