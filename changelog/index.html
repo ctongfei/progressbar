@@ -19,7 +19,7 @@
     
     
       
-        <title>Changelog - Progressbar 0.9.1</title>
+        <title>Changelog - Progressbar 0.9.2</title>
       
     
     
@@ -30,7 +30,7 @@
       
         
         
-        <meta name="theme-color" content="#009485">
+        <meta name="theme-color" content="#4cae4f">
       
     
     
@@ -53,7 +53,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -73,7 +73,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
-    <a href=".." title="Progressbar 0.9.1" class="md-header-nav__button md-logo" aria-label="Progressbar 0.9.1">
+    <a href=".." title="Progressbar 0.9.2" class="md-header-nav__button md-logo" aria-label="Progressbar 0.9.2">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.5 2.54l2.62 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95M12 19a7 7 0 01-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95a10 10 0 0010 10c3.3 0 6.23-1.61 8.05-4.09l-2.6-1.53A6.89 6.89 0 0112 19z"/></svg>
@@ -86,7 +86,7 @@
       
         <div class="md-header-nav__ellipsis">
           <span class="md-header-nav__topic md-ellipsis">
-            Progressbar 0.9.1
+            Progressbar 0.9.2
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
@@ -160,13 +160,13 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Progressbar 0.9.1" class="md-nav__button md-logo" aria-label="Progressbar 0.9.1">
+    <a href=".." title="Progressbar 0.9.2" class="md-nav__button md-logo" aria-label="Progressbar 0.9.2">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.5 2.54l2.62 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95M12 19a7 7 0 01-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95a10 10 0 0010 10c3.3 0 6.23-1.61 8.05-4.09l-2.6-1.53A6.89 6.89 0 0112 19z"/></svg>
 
     </a>
-    Progressbar 0.9.1
+    Progressbar 0.9.2
   </label>
   
     <div class="md-nav__source">
@@ -324,8 +324,30 @@
                   
                 
                 
-                <h1 id="changelog">Changelog</h1>
+                <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
 <ul>
+<li>
+<p><code>0.9.2</code>:</p>
+<ul>
+<li>New functionalities;<ul>
+<li>Supports for wrapping around <code>java.io.Reader</code>s.</li>
+</ul>
+</li>
+<li>Bugfix:<ul>
+<li>Fixed potential <code>StringIndexOutOfBoundsException</code> and improved performance in <code>trimDisplayLength</code> (PR #104). Thanks @heroesleo65 !</li>
+</ul>
+</li>
+<li>Improvements:<ul>
+<li>Size now known when wrapping an array (PR #101). Thanks @seanf !</li>
+<li>Better estimation of initial max for spliterators (#102).</li>
+</ul>
+</li>
+<li>Misc:<ul>
+<li>Dependency version bump.</li>
+</ul>
+</li>
+</ul>
+</li>
 <li>
 <p><code>0.9.1</code>:</p>
 <ul>
