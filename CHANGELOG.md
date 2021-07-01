@@ -1,11 +1,15 @@
 # Changelog
 
- * `0.9.2` (Unreleased):
+ * `0.9.2`:
      - New functionalities;
         - Supports for wrapping around `java.io.Reader`s.
+     - Bugfix:
+        - Fixed potential `StringIndexOutOfBoundsException` and improved performance in `trimDisplayLength` (PR #104). Thanks @heroesleo65 !
      - Improvements:
         - Size now known when wrapping an array (PR #101). Thanks @seanf !
         - Better estimation of initial max for spliterators (#102).
+     - Misc:
+        - Dependency version bump.
 
  * `0.9.1`:
      - Improvements:
