@@ -24,13 +24,14 @@ public class InteractiveConsoleProgressBarConsumer extends ConsoleProgressBarCon
 
     @Override
     public void accept(String str) {
+        String s = StringDisplayUtils.trimDisplayLength(str, getMaxRenderedLength());
         if (!initialized) {
             TerminalUtils.filterActiveConsumers(InteractiveConsoleProgressBarConsumer.class).forEach(c -> c.position++);
             TerminalUtils.activeConsumers.add(this);
-            out.println(CARRIAGE_RETURN + str);
+            out.println(CARRIAGE_RETURN + s);
             initialized = true;
         }
-        else out.print(moveCursorUp(position) + str + moveCursorDown(position));
+        else out.print(moveCursorUp(position) + s + moveCursorDown(position));
     }
 
     @Override

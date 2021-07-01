@@ -13,7 +13,7 @@ import static me.tongfei.progressbar.TerminalUtils.CARRIAGE_RETURN;
  */
 public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
-    private static int consoleRightMargin = 2;
+    private static int consoleRightMargin = 1;
     int maxRenderedLength = -1;
     final PrintStream out;
 
@@ -35,8 +35,9 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
     @Override
     public void accept(String str) {
-        int acceptedLength = Math.min(str.length(), getMaxRenderedLength());
-        out.print(CARRIAGE_RETURN + str.substring(0, acceptedLength));
+        int displayLength = StringDisplayUtils.getStringDisplayLength(str);
+        int acceptedLength = Math.min(displayLength, getMaxRenderedLength());
+        out.print(CARRIAGE_RETURN + StringDisplayUtils.trimDisplayLength(str, acceptedLength));
     }
 
     @Override

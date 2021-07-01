@@ -7,7 +7,6 @@ class MultiProgressBarTest {
 
     @Test
     void testMultiProgressBar() throws InterruptedException {
-
         try (
                 ProgressBar pb1 = new ProgressBar("PB1", 100);
                 ProgressBar pb2 = new ProgressBar("PB2", 100)
