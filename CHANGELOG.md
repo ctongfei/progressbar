@@ -1,4 +1,8 @@
 # Changelog
+ * `0.9.3`:
+     - Performance improvements:
+        - Improved performance in rendered string building (PR #107). Thanks @heroesleo65 !
+        - Improved performance in `ConsoleProgressBarConsumer::accept` (PR #106). Thanks @heroesleo65 !
 
  * `0.9.2`:
      - New functionalities:
