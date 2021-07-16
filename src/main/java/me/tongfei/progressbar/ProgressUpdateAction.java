@@ -30,6 +30,10 @@ class ProgressUpdateAction implements Runnable {
         // else do nothing: only print when actual progress is made (#91).
     }
 
+    public void setForceRefresh() {
+        last = -1;
+    }
+    
     public void run() {
         if (!progress.paused) refresh();
         if (!progress.alive) {
