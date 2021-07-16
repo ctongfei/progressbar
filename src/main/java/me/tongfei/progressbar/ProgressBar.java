@@ -163,6 +163,7 @@ public class ProgressBar implements AutoCloseable {
         scheduledTask.cancel(false);
         progress.kill();
         try {
+            action.setForceRefresh();
             Util.executor.schedule(action, 0, TimeUnit.NANOSECONDS).get();
         } catch (InterruptedException | ExecutionException e) { /* NOOP */ }
     }
