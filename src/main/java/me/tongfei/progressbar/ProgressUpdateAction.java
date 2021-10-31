@@ -8,8 +8,8 @@ class ProgressUpdateAction implements Runnable {
     ProgressState progress;
     private ProgressBarRenderer renderer;
     private ProgressBarConsumer consumer;
-    private long last;
-    private boolean forceRefresh = false;
+    volatile private long last;
+    volatile private boolean first;
 
     ProgressUpdateAction(
             ProgressState progress,
@@ -20,26 +20,32 @@ class ProgressUpdateAction implements Runnable {
         this.renderer = renderer;
         this.consumer = consumer;
         this.last = progress.start;
+        this.first = true;
     }
 
     private void refresh() {
-        if (forceRefresh || progress.current > last) {
-            String rendered = renderer.render(progress, consumer.getMaxRenderedLength());
-            consumer.accept(rendered);
-            last = progress.current;
-        }
+        if (progress.current > last) forceRefresh();
         // else do nothing: only print when actual progress is made (#91).
     }
 
-    public void setForceRefresh() {
-        forceRefresh = true;
+    public void forceRefresh() {
+        String rendered = renderer.render(progress, consumer.getMaxRenderedLength());
+        consumer.accept(rendered);
+        last = progress.current;
     }
     
     public void run() {
-        if (!progress.paused) refresh();
-        if (!progress.alive) {
-            consumer.close();
-            TerminalUtils.closeTerminal();
+        if (first) {
+            forceRefresh();
+            first = false;
+        }
+        else {
+            if (!progress.paused) refresh();
+            if (!progress.alive) {
+                forceRefresh();
+                consumer.close();
+                TerminalUtils.closeTerminal();
+            }
         }
     }
 
