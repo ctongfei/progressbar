@@ -9,6 +9,7 @@ class ProgressUpdateAction implements Runnable {
     private ProgressBarRenderer renderer;
     private ProgressBarConsumer consumer;
     private long last;
+    private boolean forceRefresh = false;
 
     ProgressUpdateAction(
             ProgressState progress,
@@ -22,7 +23,7 @@ class ProgressUpdateAction implements Runnable {
     }
 
     private void refresh() {
-        if (progress.current > last) {
+        if (forceRefresh || progress.current > last) {
             String rendered = renderer.render(progress, consumer.getMaxRenderedLength());
             consumer.accept(rendered);
             last = progress.current;
@@ -31,7 +32,7 @@ class ProgressUpdateAction implements Runnable {
     }
 
     public void setForceRefresh() {
-        last = -1;
+        forceRefresh = true;
     }
     
     public void run() {

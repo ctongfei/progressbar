@@ -3,6 +3,8 @@
      - Performance improvements:
         - Improved performance in rendered string building (PR #107). Thanks @heroesleo65 !
         - Improved performance in `ConsoleProgressBarConsumer::accept` (PR #106). Thanks @heroesleo65 !
+     - Bugfixes:
+        - Closing a progress bar will now force the progress bar to refresh (PR #110). Thanks @kmtong !
 
  * `0.9.2`:
      - New functionalities:
