@@ -9,20 +9,23 @@ class ProgressUpdateAction implements Runnable {
     private ProgressBarRenderer renderer;
     private ProgressBarConsumer consumer;
     private long last;
+    private boolean continuousUpdate;
 
     ProgressUpdateAction(
             ProgressState progress,
             ProgressBarRenderer renderer,
-            ProgressBarConsumer consumer
+            ProgressBarConsumer consumer,
+            boolean continuousUpdate
     ) {
         this.progress = progress;
         this.renderer = renderer;
         this.consumer = consumer;
+        this.continuousUpdate = continuousUpdate;
         this.last = progress.start;
     }
 
     private void refresh() {
-        if (progress.current > last) {
+        if (progress.current > last || continuousUpdate) {
             String rendered = renderer.render(progress, consumer.getMaxRenderedLength());
             consumer.accept(rendered);
             last = progress.current;
