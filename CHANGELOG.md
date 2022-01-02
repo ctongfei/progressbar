@@ -1,5 +1,7 @@
 # Changelog
  * `0.9.3`:
+     - New functionalities:
+        - Supports for wrapping around `java.io.OutputStream`s and `java.io.Writer`s (#114). Thanks @azachar !
      - Performance improvements:
         - Improved performance in rendered string building (PR #107). Thanks @heroesleo65 !
         - Improved performance in `ConsoleProgressBarConsumer::accept` (PR #106). Thanks @heroesleo65 !
