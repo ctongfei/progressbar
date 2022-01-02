@@ -38,7 +38,7 @@ public class ProgressBar implements AutoCloseable {
      * @param initialMax Initial maximum value
      */
     public ProgressBar(String task, long initialMax) {
-        this(task, initialMax, 1000, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
+        this(task, initialMax, 1000, false, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
     }
 
     /**
@@ -47,6 +47,7 @@ public class ProgressBar implements AutoCloseable {
      * @param task Task name
      * @param initialMax Initial maximum value
      * @param updateIntervalMillis Update interval (default value 1000 ms)
+     * @param continuousUpdate Rerender every time the update interval happens regardless of progress count.
      * @param style Output style (default value ProgressBarStyle.UNICODE_BLOCK)
      * @param showSpeed Should the calculated speed be displayed
      * @param speedFormat Speed number format
@@ -56,6 +57,7 @@ public class ProgressBar implements AutoCloseable {
             String task,
             long initialMax,
             int updateIntervalMillis,
+            boolean continuousUpdate,
             PrintStream os,
             ProgressBarStyle style,
             String unitName,
@@ -66,7 +68,7 @@ public class ProgressBar implements AutoCloseable {
             long processed,
             Duration elapsed
     ) {
-        this(task, initialMax, updateIntervalMillis, processed, elapsed,
+        this(task, initialMax, updateIntervalMillis, continuousUpdate, processed, elapsed,
                 new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat, speedUnit),
                 createConsoleConsumer(os)
         );
@@ -78,6 +80,7 @@ public class ProgressBar implements AutoCloseable {
      * @param task Task name
      * @param initialMax Initial maximum value
      * @param updateIntervalMillis Update time interval (default value 1000ms)
+     * @param continuousUpdate Rerender every time the update interval happens regardless of progress count.
      * @param processed Initial completed process value
      * @param elapsed Initial elapsedBeforeStart second before
      * @param renderer Progress bar renderer
@@ -88,13 +91,14 @@ public class ProgressBar implements AutoCloseable {
             String task,
             long initialMax,
             int updateIntervalMillis,
+            boolean continuousUpdate,
             long processed,
             Duration elapsed,
             ProgressBarRenderer renderer,
             ProgressBarConsumer consumer
     ) {
         this.progress = new ProgressState(task, initialMax, processed, elapsed);
-        this.action = new ProgressUpdateAction(progress, renderer, consumer);
+        this.action = new ProgressUpdateAction(progress, renderer, consumer, continuousUpdate);
         scheduledTask = Util.executor.scheduleAtFixedRate(
                 action, 0, updateIntervalMillis, TimeUnit.MILLISECONDS
         );

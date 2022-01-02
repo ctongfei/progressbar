@@ -8,23 +8,27 @@ class ProgressUpdateAction implements Runnable {
     ProgressState progress;
     private ProgressBarRenderer renderer;
     private ProgressBarConsumer consumer;
+    private boolean continuousUpdate;
     volatile private long last;
     volatile private boolean first;
 
     ProgressUpdateAction(
             ProgressState progress,
             ProgressBarRenderer renderer,
-            ProgressBarConsumer consumer
+            ProgressBarConsumer consumer,
+            boolean continuousUpdate
     ) {
         this.progress = progress;
         this.renderer = renderer;
         this.consumer = consumer;
+        this.continuousUpdate = continuousUpdate;
         this.last = progress.start;
         this.first = true;
     }
 
     void refresh() {
-        if (progress.current > last) forceRefresh();
+        if (continuousUpdate || (progress.current > last))
+            forceRefresh();
         // else do nothing: only print when actual progress is made (#91).
     }
 
@@ -33,7 +37,7 @@ class ProgressUpdateAction implements Runnable {
         consumer.accept(rendered);
         last = progress.current;
     }
-    
+
     public void run() {
         if (first) {
             forceRefresh();

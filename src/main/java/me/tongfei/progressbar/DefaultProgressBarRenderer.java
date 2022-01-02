@@ -34,7 +34,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         this.unitName = unitName;
         this.unitSize = unitSize;
         this.isSpeedShown = isSpeedShown;
-        this.speedFormat = speedFormat;
+        this.speedFormat = isSpeedShown && speedFormat == null ? new DecimalFormat() : speedFormat;
         this.speedUnit = speedUnit;
     }
 
