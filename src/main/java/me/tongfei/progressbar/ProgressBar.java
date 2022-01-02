@@ -50,6 +50,7 @@ public class ProgressBar implements AutoCloseable {
      * @param style Output style (default value ProgressBarStyle.UNICODE_BLOCK)
      * @param showSpeed Should the calculated speed be displayed
      * @param speedFormat Speed number format
+     * @deprecated Use {@link ProgressBarBuilder} instead.
      */
     public ProgressBar(
             String task,
@@ -81,6 +82,7 @@ public class ProgressBar implements AutoCloseable {
      * @param elapsed Initial elapsedBeforeStart second before
      * @param renderer Progress bar renderer
      * @param consumer Progress bar consumer
+     * @deprecated Use {@link ProgressBarBuilder} instead. Will be private in future versions.
      */
     public ProgressBar(
             String task,
@@ -151,6 +153,12 @@ public class ProgressBar implements AutoCloseable {
      */
     public ProgressBar resume() {
         progress.resume();
+        return this;
+    }
+
+    /** Resets the progress bar to its initial state (where progress equals to 0). */
+    public ProgressBar reset() {
+        progress.reset();
         return this;
     }
 
