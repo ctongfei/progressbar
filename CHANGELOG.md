@@ -8,7 +8,8 @@
      - Bugfixes:
         - Displays a progress bar immediately after it starts, regardless of whether it has made any progress (#117). Thanks @azachar !
         - Closing a progress bar will now force the progress bar to refresh (PR #110). Thanks @kmtong !
-     - Dependency bump.
+     - Dependency bump. Specifically:
+        - Supports Apple M1 due to https://github.com/jline/jline3/issues/688 (PR #119). Thanks @snuyanzin !
  
  * `0.9.2`:
      - New functionalities:

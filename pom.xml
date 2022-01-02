@@ -114,6 +114,10 @@
             <id>kmtong</id>
             <name>KM Tong</name>
         </developer>
+        <developer>
+            <id>snuyanzin</id>
+            <name>Sergey Nuyanzin</name>
+        </developer>
     </developers>
 
     <dependencies>
