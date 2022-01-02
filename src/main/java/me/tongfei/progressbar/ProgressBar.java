@@ -4,11 +4,7 @@ import me.tongfei.progressbar.wrapped.*;
 
 import static me.tongfei.progressbar.Util.createConsoleConsumer;
 
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;

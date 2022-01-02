@@ -1,9 +1,11 @@
 package me.tongfei.progressbar;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ExtendWith(StreamSetupExtension.class)
 class Issue50Test {
     @Test
     void testCloseSpeed() throws Exception {
