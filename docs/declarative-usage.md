@@ -1,13 +1,15 @@
 Since Progressbar `0.6.0`, declarative usage is the preferred way of using a progress bar.
 
-Basically, one can wrap a stream/collection with `ProgressBar.wrap(...)` so that when iterating over it, a progress bar automatically tracks its progress. The type of your collection does not change after wrapped with a progress bar.
-The collection types supported are:
+Basically, one can wrap a stream/collection with `ProgressBar.wrap(...)` so that when iterating/reading/writing over it, a progress bar automatically tracks its progress. The type of your collection/stream does not change after wrapped with a progress bar.
+The collection/stream types supported are:
 
  - `T[]`;
  - `java.lang.Iterable<T>`;
  - `java.util.Iterator<T>`;
  - `java.io.InputStream` (can be regarded as an `Iterator<Byte>`);
  - `java.io.Reader` (can be regarded as an `Iterator<Char>`);
+ - `java.io.OutputStream` (dual of `InputStream`);
+ - `java.io.Writer` (dual of `Reader`);
  - `java.util.Spliterator<T>`;
  - `java.util.Stream<T>` (actually any `S` such that `S extends BaseStream<T, S>`. When wrapping over a primitive stream, boxing overhead may be incurred).
 

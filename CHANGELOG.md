@@ -1,4 +1,17 @@
 # Changelog
+ * `0.9.3`:
+     - New functionalities:
+        - Supports for wrapping around `java.io.OutputStream`s and `java.io.Writer`s (#114). Thanks @azachar !
+        - Added `continuousUpdate` boolean parameter to various constructors and the `ProgressUpdateAction` so that long-running processes don't take forever to print something (#121, PR #120). Thanks @gaoagong !
+     - Performance improvements:
+        - Improved performance in rendered string building (PR #107). Thanks @heroesleo65 !
+        - Improved performance in `ConsoleProgressBarConsumer::accept` (PR #106). Thanks @heroesleo65 !
+     - Bugfixes:
+        - Displays a progress bar immediately after it starts, regardless of whether it has made any progress (#117). Thanks @azachar !
+        - Closing a progress bar will now force the progress bar to refresh (PR #110). Thanks @kmtong !
+        - Using a default `DecimalFormat` object if `isSpeedShown` is true as it will otherwise throw a `NullPointerException` during rendering (#121, PR #120). Thanks @gaoagong !
+     - Dependency bump. Specifically:
+        - Supports Apple M1 due to https://github.com/jline/jline3/issues/688 (PR #119). Thanks @snuyanzin !
 
  * `0.9.3`:
      - New functionalities:

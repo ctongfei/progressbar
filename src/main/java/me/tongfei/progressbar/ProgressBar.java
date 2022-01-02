@@ -4,9 +4,7 @@ import me.tongfei.progressbar.wrapped.*;
 
 import static me.tongfei.progressbar.Util.createConsoleConsumer;
 
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.io.Reader;
+import java.io.*;
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -49,6 +47,7 @@ public class ProgressBar implements AutoCloseable {
      * @param style Output style (default value ProgressBarStyle.UNICODE_BLOCK)
      * @param showSpeed Should the calculated speed be displayed
      * @param speedFormat Speed number format
+     * @deprecated Use {@link ProgressBarBuilder} instead.
      */
     public ProgressBar(
             String task,
@@ -82,6 +81,7 @@ public class ProgressBar implements AutoCloseable {
      * @param elapsed Initial elapsedBeforeStart second before
      * @param renderer Progress bar renderer
      * @param consumer Progress bar consumer
+     * @deprecated Use {@link ProgressBarBuilder} instead. Will be private in future versions.
      */
     public ProgressBar(
             String task,
@@ -156,6 +156,12 @@ public class ProgressBar implements AutoCloseable {
         return this;
     }
 
+    /** Resets the progress bar to its initial state (where progress equals to 0). */
+    public ProgressBar reset() {
+        progress.reset();
+        return this;
+    }
+
     /**
      * <p>Stops this progress bar, effectively stops tracking the underlying process.</p>
      * <p>Implements the {@link AutoCloseable} interface which enables the try-with-resource
@@ -206,6 +212,13 @@ public class ProgressBar implements AutoCloseable {
      */
     public String getExtraMessage() {
         return progress.getExtraMessage();
+    }
+
+    /**
+     * Prompts the progress bar to refresh. Normally a user should not call this function.
+     */
+    public void refresh() {
+        action.refresh();
     }
 
     // STATIC WRAPPER METHODS
@@ -281,6 +294,26 @@ public class ProgressBar implements AutoCloseable {
     }
 
     /**
+     * Wraps an {@link OutputStream} so that when written, a progress bar is shown to track the writing progress.
+     * @param os Output stream to be wrapped
+     * @param task Name of the progress
+     */
+    public static OutputStream wrap(OutputStream os, String task) {
+        ProgressBarBuilder pbb = new ProgressBarBuilder().setTaskName(task);
+        return wrap(os, pbb);
+    }
+
+    /**
+     * Wraps an {@link OutputStream} so that when written, a progress bar is shown to track the writing progress.
+     * For this function the progress bar can be fully customized by using a {@link ProgressBarBuilder}.
+     * @param os Output stream to be wrapped
+     * @param pbb An instance of a {@link ProgressBarBuilder}
+     */
+    public static OutputStream wrap(OutputStream os, ProgressBarBuilder pbb) {
+        return new ProgressBarWrappedOutputStream(os, pbb.build());
+    }
+
+    /**
      * Wraps a {@link Reader} so that when read, a progress bar is shown to track the reading progress.
      * @param reader Reader to be wrapped
      * @param task Name of the progress
@@ -298,6 +331,26 @@ public class ProgressBar implements AutoCloseable {
      */
     public static Reader wrap(Reader reader, ProgressBarBuilder pbb) {
         return new ProgressBarWrappedReader(reader, pbb.build());
+    }
+
+    /**
+     * Wraps a {@link Writer} so that when written, a progress bar is shown to track the writing progress.
+     * @param writer Writer to be wrapped
+     * @param task Name of the progress
+     */
+    public static Writer wrap(Writer writer, String task) {
+        ProgressBarBuilder pbb = new ProgressBarBuilder().setTaskName(task);
+        return wrap(writer, pbb);
+    }
+
+    /**
+     * Wraps a {@link Writer} so that when written, a progress bar is shown to track the writing progress.
+     * For this function the progress bar can be fully customized by using a {@link ProgressBarBuilder}.
+     * @param writer Writer to be wrapped
+     * @param pbb An instance of a {@link ProgressBarBuilder}
+     */
+    public static Writer wrap(Writer writer, ProgressBarBuilder pbb) {
+        return new ProgressBarWrappedWriter(writer, pbb.build());
     }
 
     /**

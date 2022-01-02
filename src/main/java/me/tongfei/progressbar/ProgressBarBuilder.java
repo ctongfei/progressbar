@@ -52,8 +52,8 @@ public class ProgressBarBuilder {
         return this;
     }
 
-    public ProgressBarBuilder continuousUpdate(boolean continuousUpdate) {
-        this.continuousUpdate = continuousUpdate;
+    public ProgressBarBuilder continuousUpdate() {
+        this.continuousUpdate = true;
         return this;
     }
 

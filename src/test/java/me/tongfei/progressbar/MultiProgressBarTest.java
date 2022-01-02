@@ -2,7 +2,9 @@ package me.tongfei.progressbar;
 
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(StreamSetupExtension.class)
 class MultiProgressBarTest {
 
     @Test

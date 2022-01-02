@@ -1,6 +1,7 @@
 package me.tongfei.progressbar;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -9,6 +10,7 @@ import java.util.Scanner;
 /**
  * @author Tongfei Chen
  */
+@ExtendWith(StreamSetupExtension.class)
 class Issue40Test {
 
     @Test

@@ -2,10 +2,12 @@ package me.tongfei.progressbar;
 
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
  * @author bwittwer
  */
+@ExtendWith(StreamSetupExtension.class)
 class Issue13Test {
 
 	private static final int NBR_ELEMENTS = 100;

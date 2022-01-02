@@ -1,6 +1,7 @@
 package me.tongfei.progressbar;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -10,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 /**
  * @author Andrei Nakrasov
  */
+@ExtendWith(StreamSetupExtension.class)
 class Issue84Test {
     private final static int iterNumber = 100;
     private final static int criticalExtraMsgLen = 38;

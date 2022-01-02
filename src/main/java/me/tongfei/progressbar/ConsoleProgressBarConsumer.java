@@ -35,9 +35,7 @@ public class ConsoleProgressBarConsumer implements ProgressBarConsumer {
 
     @Override
     public void accept(String str) {
-        int displayLength = StringDisplayUtils.getStringDisplayLength(str);
-        int acceptedLength = Math.min(displayLength, getMaxRenderedLength());
-        out.print(CARRIAGE_RETURN + StringDisplayUtils.trimDisplayLength(str, acceptedLength));
+        out.print(CARRIAGE_RETURN + StringDisplayUtils.trimDisplayLength(str, getMaxRenderedLength()));
     }
 
     @Override
