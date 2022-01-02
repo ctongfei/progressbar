@@ -23,7 +23,7 @@ class ProgressUpdateAction implements Runnable {
         this.first = true;
     }
 
-    private void refresh() {
+    void refresh() {
         if (progress.current > last) forceRefresh();
         // else do nothing: only print when actual progress is made (#91).
     }

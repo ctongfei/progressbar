@@ -4,8 +4,10 @@
         - Improved performance in rendered string building (PR #107). Thanks @heroesleo65 !
         - Improved performance in `ConsoleProgressBarConsumer::accept` (PR #106). Thanks @heroesleo65 !
      - Bugfixes:
+        - Displays a progress bar immediately after it starts, regardless of whether it has made any progress (#117). Thanks @azachar !
         - Closing a progress bar will now force the progress bar to refresh (PR #110). Thanks @kmtong !
-
+     - Dependency bump.
+ 
  * `0.9.2`:
      - New functionalities:
         - Supports for wrapping around `java.io.Reader`s.
