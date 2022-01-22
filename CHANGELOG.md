@@ -13,11 +13,6 @@
      - Dependency bump. Specifically:
         - Supports Apple M1 due to https://github.com/jline/jline3/issues/688 (PR #119). Thanks @snuyanzin !
 
- * `0.9.3`:
-     - New functionalities:
-        - Adding `continuousUpdate` boolean parameter to various constructors and the `ProgressUpdateAction` so that long-running processes don't take forever to print something.
-     - Bugfixes:
-        - Using a default `DecimalFormat` object if `isSpeedShown` is true as it will otherwise throw a `NullPointerException` during rendering.
  * `0.9.2`:
      - New functionalities:
         - Supports for wrapping around `java.io.Reader`s.
