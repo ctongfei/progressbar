@@ -1,11 +1,13 @@
 package me.tongfei.progressbar;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ExtendWith(StreamSetupExtension.class)
 public class EastAsianDisplayTest {
 
     @Test

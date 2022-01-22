@@ -14,6 +14,7 @@ public class ProgressBarBuilder {
     private String task = "";
     private long initialMax = -1;
     private int updateIntervalMillis = 1000;
+    private boolean continuousUpdate = false;
     private ProgressBarStyle style = ProgressBarStyle.COLORFUL_UNICODE_BLOCK;
     private ProgressBarConsumer consumer = null;
     private String unitName = "";
@@ -48,6 +49,11 @@ public class ProgressBarBuilder {
 
     public ProgressBarBuilder setUpdateIntervalMillis(int updateIntervalMillis) {
         this.updateIntervalMillis = updateIntervalMillis;
+        return this;
+    }
+
+    public ProgressBarBuilder continuousUpdate() {
+        this.continuousUpdate = true;
         return this;
     }
 
@@ -98,6 +104,7 @@ public class ProgressBarBuilder {
                 task,
                 initialMax,
                 updateIntervalMillis,
+                continuousUpdate,
                 processed,
                 elapsed,
                 new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat, speedUnit),

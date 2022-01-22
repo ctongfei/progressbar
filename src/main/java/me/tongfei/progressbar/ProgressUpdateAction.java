@@ -8,33 +8,48 @@ class ProgressUpdateAction implements Runnable {
     ProgressState progress;
     private ProgressBarRenderer renderer;
     private ProgressBarConsumer consumer;
-    private long last;
+    private boolean continuousUpdate;
+    volatile private long last;
+    volatile private boolean first;
 
     ProgressUpdateAction(
             ProgressState progress,
             ProgressBarRenderer renderer,
-            ProgressBarConsumer consumer
+            ProgressBarConsumer consumer,
+            boolean continuousUpdate
     ) {
         this.progress = progress;
         this.renderer = renderer;
         this.consumer = consumer;
+        this.continuousUpdate = continuousUpdate;
         this.last = progress.start;
+        this.first = true;
     }
 
-    private void refresh() {
-        if (progress.current > last) {
-            String rendered = renderer.render(progress, consumer.getMaxRenderedLength());
-            consumer.accept(rendered);
-            last = progress.current;
-        }
+    void refresh() {
+        if (continuousUpdate || (progress.current > last))
+            forceRefresh();
         // else do nothing: only print when actual progress is made (#91).
     }
 
+    public void forceRefresh() {
+        String rendered = renderer.render(progress, consumer.getMaxRenderedLength());
+        consumer.accept(rendered);
+        last = progress.current;
+    }
+
     public void run() {
-        if (!progress.paused) refresh();
-        if (!progress.alive) {
-            consumer.close();
-            TerminalUtils.closeTerminal();
+        if (first) {
+            forceRefresh();
+            first = false;
+        }
+        else {
+            if (!progress.paused) refresh();
+            if (!progress.alive) {
+                forceRefresh();
+                consumer.close();
+                TerminalUtils.closeTerminal();
+            }
         }
     }
 

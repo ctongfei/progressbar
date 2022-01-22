@@ -34,7 +34,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         this.unitName = unitName;
         this.unitSize = unitSize;
         this.isSpeedShown = isSpeedShown;
-        this.speedFormat = speedFormat;
+        this.speedFormat = isSpeedShown && speedFormat == null ? new DecimalFormat() : speedFormat;
         this.speedUnit = speedUnit;
     }
 
@@ -98,6 +98,9 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
     }
 
     public String render(ProgressState progress, int maxLength) {
+        if (maxLength <= 0) {
+            return "";
+        }
 
         Instant currTime = Instant.now();
         Duration elapsed = Duration.between(progress.startInstant, currTime);
@@ -126,7 +129,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
         int length = maxLength - prefixLength - suffixLength;
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(maxLength);
         sb.append(prefix);
 
         // case of indefinite progress bars

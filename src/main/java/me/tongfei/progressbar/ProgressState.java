@@ -97,6 +97,13 @@ class ProgressState {
         startInstant = Instant.now();
     }
 
+    synchronized void reset() {
+        start = 0;
+        current = 0;
+        startInstant = Instant.now();
+        elapsedBeforeStart = Duration.ZERO;
+    }
+
     synchronized void kill() {
         alive = false;
     }
