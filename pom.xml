@@ -110,40 +110,51 @@
             <id>heroesleo65</id>
             <name>Ilya Korobtsev</name>
         </developer>
+        <developer>
+            <id>kmtong</id>
+            <name>KM Tong</name>
+        </developer>
+        <developer>
+            <id>snuyanzin</id>
+            <name>Sergey Nuyanzin</name>
+        </developer>
+        <developer>
+            <id>gaoagong</id>
+        </developer>
     </developers>
 
     <dependencies>
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline</artifactId>
-            <version>3.20.0</version>
+            <version>3.21.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.2</version>
+            <version>5.8.2</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.7.2</version>
+            <version>5.8.2</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.31</version>
+            <version>1.7.32</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.31</version>
+            <version>1.7.32</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
