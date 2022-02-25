@@ -288,7 +288,7 @@ public class ProgressBar implements AutoCloseable {
      */
     public static InputStream wrap(InputStream is, ProgressBarBuilder pbb) {
         long size = Util.getInputStreamSize(is);
-        if (size != -1 && pbb.initialMaxIsSet())
+        if (size != -1 && !pbb.initialMaxIsSet())
             pbb.setInitialMax(size);
         return new ProgressBarWrappedInputStream(is, pbb.build());
     }
