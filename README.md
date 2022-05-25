@@ -33,6 +33,21 @@ Maven:
   </dependency>
 ```
 
+Gradle:
+
+  Groovy
+
+```groovy
+  implementation 'me.tongfei:progressbar:0.9.3'
+```
+
+  Kotlin
+
+```kotlin
+  implementation("me.tongfei:progressbar:0.9.3")
+```
+
+
 #### Usage
 Declarative usage (since `0.6.0`):
 ```java
