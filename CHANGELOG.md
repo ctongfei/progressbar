@@ -1,4 +1,15 @@
 # Changelog
+ * `0.9.4`:
+     - New functionalities:
+        - In `ProgressBarBuilder`s, one can now switch whether to show the remaining time, or to provide a custom
+          function to compute the remaining time (if the progress is not linear) (#131). Thanks @MagnusErikssonAB !
+        - In `ProgressBarBuilder`s, one can now set `.clearDisplayOnFinish()` to clear the display on terminals when 
+          a progress is complete (#135). Thanks @mattparkins !
+        - Added a method `ProgressBar::isIndefinite` to check if a progress bar's max is unknown (#140). Thanks @lt3stus3el !
+     - Bugfixes:
+        - Fixed the bug of not drawing after resetting or stepping back caused by #91 (#124). Thanks @Bricktheworld !
+        - Suppress exceptions thrown in `Spliterator.estimateSize` and continue as if indefinite (#141). Thanks @seanf !
+     - Dependency version bump.
  * `0.9.3`:
      - New functionalities:
         - Supports for wrapping around `java.io.OutputStream`s and `java.io.Writer`s (#114). Thanks @azachar !

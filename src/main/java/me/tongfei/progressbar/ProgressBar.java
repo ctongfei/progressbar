@@ -34,7 +34,12 @@ public class ProgressBar implements AutoCloseable {
      * @param initialMax Initial maximum value
      */
     public ProgressBar(String task, long initialMax) {
-        this(task, initialMax, 1000, false, System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK, "", 1, false, null, ChronoUnit.SECONDS, 0L, Duration.ZERO);
+        this(
+                task, initialMax, 1000, false, false,
+                System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK,
+                "", 1, false, null,
+                ChronoUnit.SECONDS, 0L, Duration.ZERO
+        );
     }
 
     /**
@@ -54,6 +59,7 @@ public class ProgressBar implements AutoCloseable {
             long initialMax,
             int updateIntervalMillis,
             boolean continuousUpdate,
+            boolean clearDisplayOnFinish,
             PrintStream os,
             ProgressBarStyle style,
             String unitName,
@@ -64,8 +70,12 @@ public class ProgressBar implements AutoCloseable {
             long processed,
             Duration elapsed
     ) {
-        this(task, initialMax, updateIntervalMillis, continuousUpdate, processed, elapsed,
-                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat, speedUnit),
+        this(task, initialMax, updateIntervalMillis, continuousUpdate, clearDisplayOnFinish, processed, elapsed,
+                new DefaultProgressBarRenderer(
+                        style, unitName, unitSize,
+                        showSpeed, speedFormat, speedUnit,
+                        true, Util::linearETA
+                ),
                 createConsoleConsumer(os)
         );
     }
@@ -88,13 +98,14 @@ public class ProgressBar implements AutoCloseable {
             long initialMax,
             int updateIntervalMillis,
             boolean continuousUpdate,
+            boolean clearDisplayOnFinish,
             long processed,
             Duration elapsed,
             ProgressBarRenderer renderer,
             ProgressBarConsumer consumer
     ) {
         this.progress = new ProgressState(task, initialMax, processed, elapsed);
-        this.action = new ProgressUpdateAction(progress, renderer, consumer, continuousUpdate);
+        this.action = new ProgressUpdateAction(progress, renderer, consumer, continuousUpdate, clearDisplayOnFinish);
         scheduledTask = Util.executor.scheduleAtFixedRate(
                 action, 0, updateIntervalMillis, TimeUnit.MILLISECONDS
         );
@@ -217,6 +228,11 @@ public class ProgressBar implements AutoCloseable {
         return progress.getExtraMessage();
     }
 
+    /** Checks if the progress bar is indefinite, i.e., its maximum value is unknown. */
+    public boolean IsIndefinite() {
+        return progress.indefinite;
+    }
+
     /**
      * Prompts the progress bar to refresh. Normally a user should not call this function.
      */
@@ -267,9 +283,8 @@ public class ProgressBar implements AutoCloseable {
      * @param pbb An instance of a {@link ProgressBarBuilder}
      */
     public static <T> Iterable<T> wrap(Iterable<T> ts, ProgressBarBuilder pbb) {
-        long size = ts.spliterator().estimateSize();
-        if (size != Long.MAX_VALUE)
-            pbb.setInitialMax(size);
+        if (!pbb.initialMaxIsSet())
+            pbb.setInitialMax(Util.getSpliteratorSize(ts.spliterator()));
         return new ProgressBarWrappedIterable<>(ts, pbb);
     }
 
@@ -290,9 +305,8 @@ public class ProgressBar implements AutoCloseable {
      * @param pbb An instance of a {@link ProgressBarBuilder}
      */
     public static InputStream wrap(InputStream is, ProgressBarBuilder pbb) {
-        long size = Util.getInputStreamSize(is);
-        if (size != -1 && pbb.initialMaxIsSet())
-            pbb.setInitialMax(size);
+        if (!pbb.initialMaxIsSet())
+            pbb.setInitialMax(Util.getInputStreamSize(is));
         return new ProgressBarWrappedInputStream(is, pbb.build());
     }
 
@@ -373,9 +387,8 @@ public class ProgressBar implements AutoCloseable {
      * @param pbb An instance of a {@link ProgressBarBuilder}
      */
     public static <T> Spliterator<T> wrap(Spliterator<T> sp, ProgressBarBuilder pbb) {
-        long size = sp.estimateSize();
-        if (size != Long.MAX_VALUE)
-            pbb.setInitialMax(size);
+        if (!pbb.initialMaxIsSet())
+            pbb.setInitialMax(Util.getSpliteratorSize(sp));
         return new ProgressBarWrappedSpliterator<>(sp, pbb.build());
     }
 
