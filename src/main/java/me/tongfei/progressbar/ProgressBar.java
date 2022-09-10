@@ -24,9 +24,9 @@ import java.util.stream.StreamSupport;
  */
 public class ProgressBar implements AutoCloseable {
 
-    private ProgressState progress;
-    private ProgressUpdateAction action;
-    private ScheduledFuture<?> scheduledTask;
+    private final ProgressState progress;
+    private final ProgressUpdateAction action;
+    private final ScheduledFuture<?> scheduledTask;
 
     /**
      * Creates a progress bar with the specific taskName name and initial maximum value.
@@ -114,7 +114,9 @@ public class ProgressBar implements AutoCloseable {
      * @param n New progress value
      */
     public ProgressBar stepTo(long n) {
+        boolean back = n < progress.current;
         progress.stepTo(n);
+        if (back) action.forceRefresh();  // fix #124
         return this;
     }
 
@@ -159,6 +161,7 @@ public class ProgressBar implements AutoCloseable {
     /** Resets the progress bar to its initial state (where progress equals to 0). */
     public ProgressBar reset() {
         progress.reset();
+        action.forceRefresh();  // force refresh, fixing #124
         return this;
     }
 
