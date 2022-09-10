@@ -12,14 +12,14 @@ Depending on your build tool, add the following setting.
     <dependency>
         <groupId>me.tongfei</groupId>
         <artifactId>progressbar</artifactId>
-        <version>0.9.3</version>
+        <version>0.9.4</version>
     </dependency>
     ```
 
 === "Gradle"
 
     ``` groovy
-    compile 'me.tongfei:progressbar:0.9.3'
+    compile 'me.tongfei:progressbar:0.9.4'
     ```
 
 #### Getting started
