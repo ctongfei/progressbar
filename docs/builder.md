@@ -14,7 +14,6 @@ ProgressBarBuilder pbb = new ProgressBarBuilder()
     .setMaxRenderedLength(<max rendered length in terminal>)
     .showSpeed();
   // or .showSpeed(new DecimalFormat("#.##")) to customize speed display
-
 for (T x : ProgressBar.wrap(collection, pbb)) {
     ...
 }

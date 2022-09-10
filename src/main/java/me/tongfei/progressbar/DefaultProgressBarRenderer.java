@@ -4,6 +4,8 @@ import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
+import java.util.function.BiFunction;
 
 import static me.tongfei.progressbar.StringDisplayUtils.*;
 
@@ -21,6 +23,8 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
     private boolean isSpeedShown;
     private DecimalFormat speedFormat;
     private ChronoUnit speedUnit;
+    private boolean isETAShown;
+    private BiFunction<ProgressState, Duration, Optional<Duration>> eta;
 
     protected DefaultProgressBarRenderer(
             ProgressBarStyle style,
@@ -28,7 +32,9 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
             long unitSize,
             boolean isSpeedShown,
             DecimalFormat speedFormat,
-            ChronoUnit speedUnit
+            ChronoUnit speedUnit,
+            boolean isETAShown,
+            BiFunction<ProgressState, Duration, Optional<Duration>> eta
     ) {
         this.style = style;
         this.unitName = unitName;
@@ -36,6 +42,8 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         this.isSpeedShown = isSpeedShown;
         this.speedFormat = isSpeedShown && speedFormat == null ? new DecimalFormat() : speedFormat;
         this.speedUnit = speedUnit;
+        this.isETAShown = isETAShown;
+        this.eta = eta;
     }
 
     // Number of full blocks
@@ -49,12 +57,14 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         return (int) Math.floor(fraction);
     }
 
-    protected String eta(ProgressState progress, Duration elapsed) {
-        if (progress.max <= 0 || progress.indefinite) return "?";
-        else if (progress.current - progress.start == 0) return "?";
-        else return Util.formatDuration(
-                    elapsed.dividedBy(progress.current - progress.start).multipliedBy(progress.max - progress.current)
-            );
+    protected String etaString(ProgressState progress, Duration elapsed) {
+        Optional<Duration> eta = this.eta.apply(progress, elapsed);
+        if (eta.isPresent()) {
+            return Util.formatDuration(eta.get());
+        }
+        else {
+            return "?";
+        }
     }
 
     protected String percentage(ProgressState progress) {
@@ -118,7 +128,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
         String speedString = isSpeedShown ? speed(progress, elapsed) : "";
         String suffix = style.rightBracket + " " + ratio(progress) + " ("
-                + Util.formatDuration(elapsed) + " / " + eta(progress, elapsed) + ") "
+                + Util.formatDuration(elapsed) + (isETAShown ? " / " + etaString(progress, elapsed) : "") + ") "
                 + speedString + progress.extraMessage;
         int suffixLength = getStringDisplayLength(suffix);
         // trim excessive suffix

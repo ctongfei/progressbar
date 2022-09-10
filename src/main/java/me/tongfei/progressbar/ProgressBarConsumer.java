@@ -21,6 +21,11 @@ public interface ProgressBarConsumer extends Consumer<String>, Appendable, AutoC
      */
     void accept(String rendered);
 
+    /** Clears the progress bar from the display. */
+    default void clear() {
+        accept("\r" + Util.repeat(' ', getMaxRenderedLength()) + "\r");
+    }
+
     default ProgressBarConsumer append(CharSequence csq) {
         accept(csq.toString());
         return this;

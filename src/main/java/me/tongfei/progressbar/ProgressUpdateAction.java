@@ -9,6 +9,7 @@ class ProgressUpdateAction implements Runnable {
     private ProgressBarRenderer renderer;
     private ProgressBarConsumer consumer;
     private boolean continuousUpdate;
+    private boolean clearDisplayOnFinish;
     volatile private long last;
     volatile private boolean first;
 
@@ -16,12 +17,14 @@ class ProgressUpdateAction implements Runnable {
             ProgressState progress,
             ProgressBarRenderer renderer,
             ProgressBarConsumer consumer,
-            boolean continuousUpdate
+            boolean continuousUpdate,
+            boolean clearDisplayOnFinish
     ) {
         this.progress = progress;
         this.renderer = renderer;
         this.consumer = consumer;
         this.continuousUpdate = continuousUpdate;
+        this.clearDisplayOnFinish = clearDisplayOnFinish;
         this.last = progress.start;
         this.first = true;
     }
@@ -47,6 +50,7 @@ class ProgressUpdateAction implements Runnable {
             if (!progress.paused) refresh();
             if (!progress.alive) {
                 forceRefresh();
+                if (clearDisplayOnFinish) consumer.clear();
                 consumer.close();
                 TerminalUtils.closeTerminal();
             }

@@ -3,6 +3,8 @@ package me.tongfei.progressbar;
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
+import java.util.function.BiFunction;
 
 /**
  * Builder class for {@link ProgressBar}s.
@@ -17,9 +19,12 @@ public class ProgressBarBuilder {
     private boolean continuousUpdate = false;
     private ProgressBarStyle style = ProgressBarStyle.COLORFUL_UNICODE_BLOCK;
     private ProgressBarConsumer consumer = null;
+    private boolean clearDisplayOnFinish = false;
     private String unitName = "";
     private long unitSize = 1;
     private boolean showSpeed = false;
+    private boolean hideETA = false;
+    private BiFunction<ProgressState, Duration, Optional<Duration>> eta = Util::linearETA;
     private DecimalFormat speedFormat;
     private ChronoUnit speedUnit = ChronoUnit.SECONDS;
     private long processed = 0;
@@ -62,6 +67,11 @@ public class ProgressBarBuilder {
         return this;
     }
 
+    public ProgressBarBuilder clearDisplayOnFinish() {
+        this.clearDisplayOnFinish = true;
+        return this;
+    }
+
     public ProgressBarBuilder setUnit(String unitName, long unitSize) {
         this.unitName = unitName;
         this.unitSize = unitSize;
@@ -80,6 +90,17 @@ public class ProgressBarBuilder {
     public ProgressBarBuilder showSpeed(DecimalFormat speedFormat) {
         this.showSpeed = true;
         this.speedFormat = speedFormat;
+        return this;
+    }
+
+    public ProgressBarBuilder hideETA() {
+        this.hideETA = true;
+        return this;
+    }
+
+    public ProgressBarBuilder setETAFunction(BiFunction<ProgressState, Duration, Optional<Duration>> eta) {
+        this.hideETA = false;
+        this.eta = eta;
         return this;
     }
 
@@ -105,9 +126,13 @@ public class ProgressBarBuilder {
                 initialMax,
                 updateIntervalMillis,
                 continuousUpdate,
+                clearDisplayOnFinish,
                 processed,
                 elapsed,
-                new DefaultProgressBarRenderer(style, unitName, unitSize, showSpeed, speedFormat, speedUnit),
+                new DefaultProgressBarRenderer(
+                        style, unitName, unitSize,
+                        showSpeed, speedFormat, speedUnit,
+                        !hideETA, eta),
                 consumer == null ? Util.createConsoleConsumer(maxRenderedLength) : consumer
         );
     }
