@@ -8,7 +8,7 @@ import java.time.Instant;
  * @author Tongfei Chen
  * @since 0.5.0
  */
-class ProgressState {
+public class ProgressState {
 
     String taskName;
     String extraMessage = "";
