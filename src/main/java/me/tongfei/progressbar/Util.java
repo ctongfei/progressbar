@@ -3,13 +3,9 @@ package me.tongfei.progressbar;
 import java.io.*;
 import java.time.Duration;
 import java.util.Optional;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Spliterator;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 class Util {
@@ -48,11 +44,13 @@ class Util {
         return String.format("%d:%02d:%02d", s / 3600, (s % 3600) / 60, s % 60);
     }
 
-    static Optional<Duration> linearETA(ProgressState progress, Duration elapsed) {
-        if (progress.max <= 0 || progress.indefinite) return Optional.empty();
-        else if (progress.current - progress.start == 0) return Optional.empty();
+    static Optional<Duration> linearEta(ProgressState progress) {
+        if (progress.getMax() <= 0 || progress.isIndefinite()) return Optional.empty();
+        else if (progress.getCurrent() - progress.getStart() == 0) return Optional.empty();
         else return Optional.of(
-                elapsed.dividedBy(progress.current - progress.start).multipliedBy(progress.max - progress.current)
+                progress.getElapsedAfterStart()
+                        .dividedBy(progress.getCurrent() - progress.getStart())
+                        .multipliedBy(progress.getMax() - progress.getCurrent())
             );
     }
 

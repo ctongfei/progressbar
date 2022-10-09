@@ -26,6 +26,7 @@ public class StreamSetupExtension implements BeforeAllCallback, ExtensionContext
         // autoFlush = true for stdout/stderr streams
         System.setOut(new PrintStream(System.out, true));
         System.setErr(new PrintStream(System.err, true));
+        System.out.println();
     }
 
     @Override

@@ -5,7 +5,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static me.tongfei.progressbar.StringDisplayUtils.*;
 
@@ -23,8 +23,8 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
     private boolean isSpeedShown;
     private DecimalFormat speedFormat;
     private ChronoUnit speedUnit;
-    private boolean isETAShown;
-    private BiFunction<ProgressState, Duration, Optional<Duration>> eta;
+    private boolean isEtaShown;
+    private Function<ProgressState, Optional<Duration>> eta;
 
     protected DefaultProgressBarRenderer(
             ProgressBarStyle style,
@@ -33,8 +33,8 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
             boolean isSpeedShown,
             DecimalFormat speedFormat,
             ChronoUnit speedUnit,
-            boolean isETAShown,
-            BiFunction<ProgressState, Duration, Optional<Duration>> eta
+            boolean isEtaShown,
+            Function<ProgressState, Optional<Duration>> eta
     ) {
         this.style = style;
         this.unitName = unitName;
@@ -42,7 +42,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         this.isSpeedShown = isSpeedShown;
         this.speedFormat = isSpeedShown && speedFormat == null ? new DecimalFormat() : speedFormat;
         this.speedUnit = speedUnit;
-        this.isETAShown = isETAShown;
+        this.isEtaShown = isEtaShown;
         this.eta = eta;
     }
 
@@ -57,8 +57,8 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         return (int) Math.floor(fraction);
     }
 
-    protected String etaString(ProgressState progress, Duration elapsed) {
-        Optional<Duration> eta = this.eta.apply(progress, elapsed);
+    protected String etaString(ProgressState progress) {
+        Optional<Duration> eta = this.eta.apply(progress);
         if (eta.isPresent()) {
             return Util.formatDuration(eta.get());
         }
@@ -80,9 +80,9 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         return Util.repeat(' ', m.length() - c.length()) + c + "/" + m + unitName;
     }
 
-    protected String speed(ProgressState progress, Duration elapsed) {
+    protected String speed(ProgressState progress) {
         String suffix = "/s";
-        double elapsedSeconds = elapsed.getSeconds();
+        double elapsedSeconds = progress.getElapsedAfterStart().getSeconds();
         double elapsedInUnit = elapsedSeconds;
         if (null != speedUnit)
             switch (speedUnit) {
@@ -112,10 +112,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
             return "";
         }
 
-        Instant currTime = Instant.now();
-        Duration elapsed = Duration.between(progress.startInstant, currTime);
-
-        String prefix = progress.taskName + " " + percentage(progress) + " " + style.leftBracket;
+        String prefix = progress.getTaskName() + " " + percentage(progress) + " " + style.leftBracket;
         int prefixLength = getStringDisplayLength(prefix);
 
         if (prefixLength > maxLength) {
@@ -126,9 +123,11 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         // length of progress should be at least 1
         int maxSuffixLength = Math.max(maxLength - prefixLength - 1, 0);
 
-        String speedString = isSpeedShown ? speed(progress, elapsed) : "";
+        String speedString = isSpeedShown ? speed(progress) : "";
         String suffix = style.rightBracket + " " + ratio(progress) + " ("
-                + Util.formatDuration(elapsed) + (isETAShown ? " / " + etaString(progress, elapsed) : "") + ") "
+                + Util.formatDuration(progress.getTotalElapsed())
+                + (isEtaShown ? " / " + etaString(progress) : "")
+                + ") "
                 + speedString + progress.extraMessage;
         int suffixLength = getStringDisplayLength(suffix);
         // trim excessive suffix

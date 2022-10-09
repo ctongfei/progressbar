@@ -121,6 +121,10 @@
         <developer>
             <id>gaoagong</id>
         </developer>
+        <developer>
+            <id>deejgregor</id>
+            <name>DJ Gregor</name>
+        </developer>
     </developers>
 
     <dependencies>

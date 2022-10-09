@@ -29,35 +29,68 @@ public class ProgressState {
 
     ProgressState(String taskName, long initialMax, long startFrom, Duration elapsedBeforeStart) {
         this.taskName = taskName;
-        this.max = initialMax;
         if (initialMax < 0) indefinite = true;
         this.start = startFrom;
         this.current = startFrom;
-        this.elapsedBeforeStart = elapsedBeforeStart;
+
         this.startInstant = Instant.now();
+        this.elapsedBeforeStart = elapsedBeforeStart;
     }
 
-    String getTaskName() {
+    public String getTaskName() {
         return taskName;
     }
 
-    synchronized String getExtraMessage() {
+    public synchronized String getExtraMessage() {
         return extraMessage;
     }
 
-    synchronized long getCurrent() {
+    public synchronized long getStart() {
+        return start;
+    }
+
+    public synchronized long getCurrent() {
         return current;
     }
 
-    synchronized long getMax() {
+    public synchronized long getMax() {
         return max;
     }
 
-    // The progress, normalized to range [0, 1].
-    synchronized double getNormalizedProgress() {
+    public synchronized double getNormalizedProgress() {
         if (max <= 0) return 0.0;
         else if (current > max) return 1.0;
         else return ((double)current) / max;
+    }
+
+    public synchronized Instant getStartInstant() {
+        return startInstant;
+    }
+
+    public synchronized Duration getElapsedBeforeStart() {
+        return elapsedBeforeStart;
+    }
+
+    public synchronized Duration getElapsedAfterStart() {
+        return (startInstant == null)
+                ? Duration.ZERO
+                : Duration.between(startInstant, Instant.now());
+    }
+
+    public synchronized Duration getTotalElapsed() {
+        return getElapsedBeforeStart().plus(getElapsedAfterStart());
+    }
+
+    public synchronized boolean isIndefinite() {
+        return indefinite;
+    }
+
+    public synchronized boolean isAlive() {
+        return alive;
+    }
+
+    public synchronized boolean isPaused() {
+        return paused;
     }
 
     synchronized void setAsDefinite() {

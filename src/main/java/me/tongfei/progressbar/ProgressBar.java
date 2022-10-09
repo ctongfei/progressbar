@@ -7,6 +7,7 @@ import static me.tongfei.progressbar.Util.createConsoleConsumer;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -74,7 +75,7 @@ public class ProgressBar implements AutoCloseable {
                 new DefaultProgressBarRenderer(
                         style, unitName, unitSize,
                         showSpeed, speedFormat, speedUnit,
-                        true, Util::linearETA
+                        true, Util::linearEta
                 ),
                 createConsoleConsumer(os)
         );
@@ -214,6 +215,49 @@ public class ProgressBar implements AutoCloseable {
         return progress.getMax();
     }
 
+    public long getStart() {
+        return progress.getStart();
+    }
+
+    /**
+     * Returns the progress normalized to the interval [0, 1].
+     */
+    public double getNormalizedProgress() {
+        return progress.getNormalizedProgress();
+    }
+
+    /**
+     * Returns the instant when the progress bar started.
+     * If a progress bar is resumed after a pause, it returns the instant when the progress was resumed.
+     */
+    public Instant getStartInstant() {
+        return progress.startInstant;
+    }
+
+    /**
+     * Returns the duration that this progress bar has been running before it was resumed.
+     * If a progress bar starts afresh, it should return zero.
+     */
+    public Duration getElapsedBeforeStart() {
+        return progress.getElapsedBeforeStart();
+    }
+
+    /**
+     * Returns the duration that this progress bar has been running after it was resumed.
+     * If a progress bar has not been paused before, it should return the total duration starting from creation.
+     */
+    public Duration getElapsedAfterStart() {
+        return progress.getElapsedAfterStart();
+    }
+
+    /**
+     * Returns the total duration that this progress bar has been running from start,
+     * excluding the period when it has been paused.
+     */
+    public Duration getTotalElapsed() {
+        return progress.getTotalElapsed();
+    }
+
     /**
      * Returns the name of this task.
      */
@@ -229,7 +273,7 @@ public class ProgressBar implements AutoCloseable {
     }
 
     /** Checks if the progress bar is indefinite, i.e., its maximum value is unknown. */
-    public boolean IsIndefinite() {
+    public boolean isIndefinite() {
         return progress.indefinite;
     }
 

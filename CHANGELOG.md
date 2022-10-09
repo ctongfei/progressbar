@@ -1,4 +1,7 @@
 # Changelog
+ * `0.9.5`:
+     - Bugfixes:
+        - Fixed the problem of `ProgressState` not being public, thus making `setEtaFunction` useless (#147, PR #146). Thanks @deejgregor, @natanfudge !  
  * `0.9.4`:
      - New functionalities:
         - In `ProgressBarBuilder`s, one can now switch whether to show the remaining time, or to provide a custom

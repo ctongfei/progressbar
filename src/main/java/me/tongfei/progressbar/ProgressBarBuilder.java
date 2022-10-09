@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * Builder class for {@link ProgressBar}s.
@@ -23,8 +23,8 @@ public class ProgressBarBuilder {
     private String unitName = "";
     private long unitSize = 1;
     private boolean showSpeed = false;
-    private boolean hideETA = false;
-    private BiFunction<ProgressState, Duration, Optional<Duration>> eta = Util::linearETA;
+    private boolean hideEta = false;
+    private Function<ProgressState, Optional<Duration>> eta = Util::linearEta;
     private DecimalFormat speedFormat;
     private ChronoUnit speedUnit = ChronoUnit.SECONDS;
     private long processed = 0;
@@ -93,13 +93,13 @@ public class ProgressBarBuilder {
         return this;
     }
 
-    public ProgressBarBuilder hideETA() {
-        this.hideETA = true;
+    public ProgressBarBuilder hideEta() {
+        this.hideEta = true;
         return this;
     }
 
-    public ProgressBarBuilder setETAFunction(BiFunction<ProgressState, Duration, Optional<Duration>> eta) {
-        this.hideETA = false;
+    public ProgressBarBuilder setEtaFunction(Function<ProgressState, Optional<Duration>> eta) {
+        this.hideEta = false;
         this.eta = eta;
         return this;
     }
@@ -132,7 +132,7 @@ public class ProgressBarBuilder {
                 new DefaultProgressBarRenderer(
                         style, unitName, unitSize,
                         showSpeed, speedFormat, speedUnit,
-                        !hideETA, eta),
+                        !hideEta, eta),
                 consumer == null ? Util.createConsoleConsumer(maxRenderedLength) : consumer
         );
     }
