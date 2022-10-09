@@ -19,7 +19,7 @@ class ProgressBarTest {
     void test() {
         try (ProgressBar pb = new ProgressBarBuilder()
              .setTaskName("Test").setInitialMax(5).setUpdateIntervalMillis(50)
-             .setStyle(ProgressBarStyle.UNICODE_BLOCK).setUnit("K", 1024).build()) {
+             .setStyle(ProgressBarStyle.COLORFUL_UNICODE_BAR).setUnit("K", 1024).build()) {
 
             double x = 1.0;
             double y = x * x;

@@ -15,6 +15,9 @@ ProgressBarBuilder pbb = new ProgressBarBuilder()
     .showSpeed();
   // or .showSpeed(new DecimalFormat("#.##")) to customize speed display
     .setEtaFunction(state -> ...)
+  // This function is of type `ProgressState -> Optional<Duration>` 
+  // that should output the estimated ETA of the progress.
+  // Returning `Optional.empty()` means that ETA is not available.
 for (T x : ProgressBar.wrap(collection, pbb)) {
     ...
 }

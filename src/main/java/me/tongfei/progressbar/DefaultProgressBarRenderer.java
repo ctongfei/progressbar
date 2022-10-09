@@ -152,7 +152,15 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         else {
             sb.append(Util.repeat(style.block, progressIntegralPart(progress, length)));
             if (progress.current < progress.max) {
-                sb.append(style.fractionSymbols.charAt(progressFractionalPart(progress, length)));
+                int fraction = progressFractionalPart(progress, length);
+                if (fraction != 0) {
+                    sb.append(style.fractionSymbols.charAt(fraction));
+                    sb.append(style.delimitingSequence);
+                }
+                else {
+                    sb.append(style.delimitingSequence);
+                    sb.append(style.rightSideFractionSymbol);
+                }
                 sb.append(Util.repeat(style.space, length - progressIntegralPart(progress, length) - 1));
             }
         }
