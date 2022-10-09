@@ -24,7 +24,10 @@ class StringDisplayUtils {
     static int getStringDisplayLength(String s) {
         int displayWidth = 0;
         for (int i = 0; i < s.length(); i++)
-            displayWidth += getCharDisplayLength(s.charAt(i));
+            if (s.charAt(i) == '\033') {  // skip ANSI escape sequences
+                while (i < s.length() && s.charAt(i) != 'm') i++;
+            }
+            else displayWidth += getCharDisplayLength(s.charAt(i));
         return displayWidth;
     }
 
@@ -35,6 +38,10 @@ class StringDisplayUtils {
 
         int totalLength = 0;
         for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '\033') {  // skip ANSI escape sequences
+                while (i < s.length() && s.charAt(i) != 'm') i++;
+                i++;  // skip the 'm' character
+            }
             totalLength += getCharDisplayLength(s.charAt(i));
             if (totalLength > maxDisplayLength) {
                 return s.substring(0, i);

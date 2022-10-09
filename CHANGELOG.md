@@ -2,6 +2,7 @@
  * `0.9.5`:
      - Bugfixes:
         - Fixed the problem of `ProgressState` not being public, thus making `setEtaFunction` useless (#147, PR #146). Thanks @deejgregor, @natanfudge !
+        - Correct handling of ANSI control characters in calculating the display length.
      - New functionalities:
         - Added a new `UNICODE_COLORFUL_BAR` style.
  * `0.9.4`:

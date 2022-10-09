@@ -21,15 +21,17 @@ public class ProgressState {
     long current;
     long max;
 
-    Instant startInstant = null;
-    Duration elapsedBeforeStart = Duration.ZERO;
+    Instant startInstant;
+    Duration elapsedBeforeStart;
 
     volatile boolean alive = true;
     volatile boolean paused = false;
 
     ProgressState(String taskName, long initialMax, long startFrom, Duration elapsedBeforeStart) {
         this.taskName = taskName;
-        if (initialMax < 0) indefinite = true;
+        if (initialMax < 0)
+            indefinite = true;
+        else this.max = initialMax;
         this.start = startFrom;
         this.current = startFrom;
 
