@@ -17,7 +17,7 @@
     
     
       
-        <title>Builder pattern - Progressbar 0.9.4</title>
+        <title>Builder pattern - Progressbar</title>
       
     
     
@@ -82,7 +82,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Progressbar 0.9.4" class="md-header__button md-logo" aria-label="Progressbar 0.9.4" data-md-component="logo">
+    <a href=".." title="Progressbar" class="md-header__button md-logo" aria-label="Progressbar" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.5 2.54l2.62 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95M12 19a7 7 0 0 1-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95a10 10 0 0 0 10 10c3.3 0 6.23-1.61 8.05-4.09l-2.6-1.53A6.89 6.89 0 0 1 12 19Z"/></svg>
@@ -95,7 +95,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Progressbar 0.9.4
+            Progressbar
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -180,13 +180,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Progressbar 0.9.4" class="md-nav__button md-logo" aria-label="Progressbar 0.9.4" data-md-component="logo">
+    <a href=".." title="Progressbar" class="md-nav__button md-logo" aria-label="Progressbar" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.5 2.54l2.62 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95M12 19a7 7 0 0 1-7-7c0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95a10 10 0 0 0 10 10c3.3 0 6.23-1.61 8.05-4.09l-2.6-1.53A6.89 6.89 0 0 1 12 19Z"/></svg>
 
     </a>
-    Progressbar 0.9.4
+    Progressbar
   </label>
   
     <div class="md-nav__source">
@@ -382,6 +382,10 @@
 <span class="w">    </span><span class="p">.</span><span class="na">setMaxRenderedLength</span><span class="p">(</span><span class="o">&lt;</span><span class="n">max</span><span class="w"> </span><span class="n">rendered</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">terminal</span><span class="o">&gt;</span><span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="p">.</span><span class="na">showSpeed</span><span class="p">();</span><span class="w"></span>
 <span class="w">  </span><span class="c1">// or .showSpeed(new DecimalFormat(&quot;#.##&quot;)) to customize speed display</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="na">setEtaFunction</span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">...)</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// This function is of type `ProgressState -&gt; Optional&lt;Duration&gt;` </span><span class="w"></span>
+<span class="w">  </span><span class="c1">// that should output the estimated ETA of the progress.</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Returning `Optional.empty()` means that ETA is not available.</span><span class="w"></span>
 <span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ProgressBar</span><span class="p">.</span><span class="na">wrap</span><span class="p">(</span><span class="n">collection</span><span class="p">,</span><span class="w"> </span><span class="n">pbb</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="p">...</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
