@@ -22,3 +22,20 @@ for (T x : ProgressBar.wrap(collection, pbb)) {
     ...
 }
 ```
+
+Since `0.9.6` you can customize the progress bar style:
+
+``` java
+ProgressBarBuilder pbb = new ProgressBarBuilder()
+    // ...
+    .setStyle(DrawStyle.builder()
+                      // the color index from 0 to 255 (Ansi color table)
+                      .colorCode(33)
+                      .leftBracket("{")
+                      .rightBracket("}")
+                      .block('-')
+                      .rightSideFractionSymbol('+')
+                      .build()
+   )
+   // ...
+```

@@ -50,6 +50,44 @@ public class ProgressBar implements AutoCloseable {
      * @param initialMax Initial maximum value
      * @param updateIntervalMillis Update interval (default value 1000 ms)
      * @param continuousUpdate Rerender every time the update interval happens regardless of progress count.
+     * @param style Draw style
+     * @param showSpeed Should the calculated speed be displayed
+     * @param speedFormat Speed number format
+     * @deprecated Use {@link ProgressBarBuilder} instead.
+     */
+    public ProgressBar(
+            String task,
+            long initialMax,
+            int updateIntervalMillis,
+            boolean continuousUpdate,
+            boolean clearDisplayOnFinish,
+            PrintStream os,
+            DrawStyle style,
+            String unitName,
+            long unitSize,
+            boolean showSpeed,
+            DecimalFormat speedFormat,
+            ChronoUnit speedUnit,
+            long processed,
+            Duration elapsed
+    ) {
+        this(task, initialMax, updateIntervalMillis, continuousUpdate, clearDisplayOnFinish, processed, elapsed,
+                new DefaultProgressBarRenderer(
+                        style, unitName, unitSize,
+                        showSpeed, speedFormat, speedUnit,
+                        true, Util::linearEta
+                ),
+                createConsoleConsumer(os)
+        );
+    }
+
+    /**
+     * Creates a progress bar with the specific taskName name, initial maximum value,
+     * customized update interval (default 1000 ms), the PrintStream to be used, and output style.
+     * @param task Task name
+     * @param initialMax Initial maximum value
+     * @param updateIntervalMillis Update interval (default value 1000 ms)
+     * @param continuousUpdate Rerender every time the update interval happens regardless of progress count.
      * @param style Output style (default value ProgressBarStyle.UNICODE_BLOCK)
      * @param showSpeed Should the calculated speed be displayed
      * @param speedFormat Speed number format
@@ -71,14 +109,8 @@ public class ProgressBar implements AutoCloseable {
             long processed,
             Duration elapsed
     ) {
-        this(task, initialMax, updateIntervalMillis, continuousUpdate, clearDisplayOnFinish, processed, elapsed,
-                new DefaultProgressBarRenderer(
-                        style, unitName, unitSize,
-                        showSpeed, speedFormat, speedUnit,
-                        true, Util::linearEta
-                ),
-                createConsoleConsumer(os)
-        );
+        this(task, initialMax, updateIntervalMillis, continuousUpdate, clearDisplayOnFinish, os,
+        DrawStyle.from(style), unitName, unitSize, showSpeed, speedFormat, speedUnit, processed, elapsed);
     }
 
     /**

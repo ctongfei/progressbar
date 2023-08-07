@@ -17,7 +17,7 @@ import static me.tongfei.progressbar.StringDisplayUtils.*;
  */
 public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
-    private ProgressBarStyle style;
+    private DrawStyle style;
     private String unitName;
     private long unitSize;
     private boolean isSpeedShown;
@@ -27,7 +27,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
     private Function<ProgressState, Optional<Duration>> eta;
 
     protected DefaultProgressBarRenderer(
-            ProgressBarStyle style,
+            DrawStyle style,
             String unitName,
             long unitSize,
             boolean isSpeedShown,
@@ -53,7 +53,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
     protected int progressFractionalPart(ProgressState progress, int length) {
         double p = progress.getNormalizedProgress() * length;
-        double fraction = (p - Math.floor(p)) * style.fractionSymbols.length();
+        double fraction = (p - Math.floor(p)) * style.fractionSymbols().length();
         return (int) Math.floor(fraction);
     }
 
@@ -112,7 +112,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
             return "";
         }
 
-        String prefix = progress.getTaskName() + " " + percentage(progress) + " " + style.leftBracket;
+        String prefix = progress.getTaskName() + " " + percentage(progress) + " " + style.leftBracket();
         int prefixLength = getStringDisplayLength(prefix);
 
         if (prefixLength > maxLength) {
@@ -124,7 +124,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         int maxSuffixLength = Math.max(maxLength - prefixLength - 1, 0);
 
         String speedString = isSpeedShown ? speed(progress) : "";
-        String suffix = style.rightBracket + " " + ratio(progress) + " ("
+        String suffix = style.rightBracket() + " " + ratio(progress) + " ("
                 + Util.formatDuration(progress.getTotalElapsed())
                 + (isEtaShown ? " / " + etaString(progress) : "")
                 + ") "
@@ -144,24 +144,24 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         // case of indefinite progress bars
         if (progress.indefinite) {
             int pos = (int)(progress.current % length);
-            sb.append(Util.repeat(style.space, pos));
-            sb.append(style.block);
-            sb.append(Util.repeat(style.space, length - pos - 1));
+            sb.append(Util.repeat(style.space(), pos));
+            sb.append(style.block());
+            sb.append(Util.repeat(style.space(), length - pos - 1));
         }
         // case of definite progress bars
         else {
-            sb.append(Util.repeat(style.block, progressIntegralPart(progress, length)));
+            sb.append(Util.repeat(style.block(), progressIntegralPart(progress, length)));
             if (progress.current < progress.max) {
                 int fraction = progressFractionalPart(progress, length);
                 if (fraction != 0) {
-                    sb.append(style.fractionSymbols.charAt(fraction));
-                    sb.append(style.delimitingSequence);
+                    sb.append(style.fractionSymbols().charAt(fraction));
+                    sb.append(style.delimitingSequence());
                 }
                 else {
-                    sb.append(style.delimitingSequence);
-                    sb.append(style.rightSideFractionSymbol);
+                    sb.append(style.delimitingSequence());
+                    sb.append(style.rightSideFractionSymbol());
                 }
-                sb.append(Util.repeat(style.space, length - progressIntegralPart(progress, length) - 1));
+                sb.append(Util.repeat(style.space(), length - progressIntegralPart(progress, length) - 1));
             }
         }
 
