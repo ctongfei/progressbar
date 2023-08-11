@@ -38,7 +38,7 @@ public class ProgressBar implements AutoCloseable {
         this(
                 task, initialMax, 1000, false, false,
                 System.err, ProgressBarStyle.COLORFUL_UNICODE_BLOCK,
-                "", 1, false, null,
+                "", 1L, false, null,
                 ChronoUnit.SECONDS, 0L, Duration.ZERO
         );
     }
@@ -50,7 +50,7 @@ public class ProgressBar implements AutoCloseable {
      * @param initialMax Initial maximum value
      * @param updateIntervalMillis Update interval (default value 1000 ms)
      * @param continuousUpdate Rerender every time the update interval happens regardless of progress count.
-     * @param style Output style (default value ProgressBarStyle.UNICODE_BLOCK)
+     * @param style Draw style
      * @param showSpeed Should the calculated speed be displayed
      * @param speedFormat Speed number format
      * @deprecated Use {@link ProgressBarBuilder} instead.
@@ -478,6 +478,11 @@ public class ProgressBar implements AutoCloseable {
     public static <T> Stream<T> wrap(T[] array, ProgressBarBuilder pbb) {
         pbb.setInitialMax(array.length);
         return wrap(Arrays.stream(array), pbb);
+    }
+
+    /** Creates a new builder to customize a progress bar. */
+    public static ProgressBarBuilder builder() {
+        return new ProgressBarBuilder();
     }
 
 }

@@ -5,7 +5,7 @@ Since `0.7.0`, apart from standard constructors, you can also use the so-called 
 All `setXXX()` (also `showSpeed`) clauses below are optional. 
 
 ``` java
-ProgressBarBuilder pbb = new ProgressBarBuilder()
+ProgressBarBuilder pbb = ProgressBar.builder()
     .setInitialMax(<initial max>)
     .setStyle(ProgressBarStyle.<style>)
     .setTaskName(<taskName name>)

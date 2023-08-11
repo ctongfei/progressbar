@@ -14,3 +14,19 @@ ProgressBarBuilder pbb = new ProgressBarBuilder()
     .setStyle(ProgressBarStyle.<STYLE>);
 ```
 
+
+Since `0.10.0` you can customize the progress bar style also with a builder:
+
+``` java
+ProgressBarBuilder pbb = ProgressBar.builder()
+    // ...
+    .setStyle(ProgressBarStyle.builder()
+                      .colorCode((byte) 33)  // the ANSI color code
+                      .leftBracket("{")
+                      .rightBracket("}")
+                      .block('-')
+                      .rightSideFractionSymbol('+')
+                      .build()
+   )
+   // ...
+```
