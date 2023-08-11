@@ -9,7 +9,7 @@ package me.tongfei.progressbar;
 public class ProgressBarStyleBuilder {
     private static final String ESC_CODE = "\u001b[";
 
-    private ProgressBarStyle style = ProgressBarStyle.ASCII;
+    private ProgressBarStyle style = new ProgressBarStyle("\r", "[", "", "]", '=', ' ', ">", ' ');
     private byte colorCode = 0;
 
     /** Set refresh prompt. Default "\r". */
@@ -48,19 +48,19 @@ public class ProgressBarStyleBuilder {
         return this;
     }
 
-    /** Set fraction symbols. Default ">" */
+    /** Set fraction symbols. */
     public ProgressBarStyleBuilder fractionSymbols(String fractionSymbols) {
         style.fractionSymbols = fractionSymbols;
         return this;
     }
 
-    /** Set right side fraction symbol. Default ">" */
+    /** Set right side fraction symbol. */
     public ProgressBarStyleBuilder rightSideFractionSymbol(char rightSideFractionSymbol) {
         style.rightSideFractionSymbol = rightSideFractionSymbol;
         return this;
     }
 
-    /** Set ANSI color code. Default 0 (no color).  Must be in [0, 255]. */
+    /** Set ANSI color code. Default 0 (no color).  Must be in {0, ..., 255}. */
     public ProgressBarStyleBuilder colorCode(byte code) {
         this.colorCode = code;
         return this;
