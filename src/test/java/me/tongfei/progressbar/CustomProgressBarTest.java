@@ -40,7 +40,7 @@ public class CustomProgressBarTest {
     @Test
     void customPredefinedProgressBarStyle() throws InterruptedException {
         // Given ASCII progress bar style that is taken from ProgressBarStyle enum
-        builder.setStyle(ProgressBarStyle.UNICODE_BLOCK);
+        builder.setStyle(ProgressBarStyle.ASCII);
         try (ProgressBar bar = builder.build()) {
             // Expect display custom progress bar style:
             // 50% [=================>                 ] 5/10k (0:00:06 / 0:00:12)
@@ -52,8 +52,8 @@ public class CustomProgressBarTest {
     void customUserDefinedProgressBarStyleWithColor() throws InterruptedException {
         // Given custom progress bar style
         builder.setStyle(
-                DrawStyle.builder()
-                        .colorCode(36)
+                ProgressBarStyle.builder()
+                        .colorCode((byte) 36)
                         .leftBracket("{")
                         .rightBracket("}")
                         .block('-')
@@ -62,7 +62,7 @@ public class CustomProgressBarTest {
         );
         try (ProgressBar bar = builder.build()) {
             // Expect display custom progress bar style:
-            // 50% {------------------->               } 5/10k (0:00:06 / 0:00:12)
+            // 50% {-------------------+               } 5/10k (0:00:06 / 0:00:12)
             simulateProgress(bar);
         }
     }
@@ -70,28 +70,12 @@ public class CustomProgressBarTest {
     @Test
     void customColorCannotBeUsedWithEscapeSymbol() {
         // Given draw style with both color code and escape symbols
-        DrawStyleBuilder drawStyleBuilder = DrawStyle.builder()
-                .colorCode(33) // yellow
-                .leftBracket("\u001b[36m{");// but this overrides color code
+        ProgressBarStyleBuilder drawStyleBuilder = ProgressBarStyle.builder()
+                .colorCode((byte) 33) // yellow
+                .leftBracket("\u001b[36m{");  // but this overrides color code
 
         // Expect
         assertThrows(IllegalArgumentException.class, drawStyleBuilder::build);
     }
 
-    @Test
-    void customColorLessThen0() {
-        // Expect color code cannot be less than 0
-        assertThrows(IllegalArgumentException.class, () -> DrawStyle.builder().colorCode(-1));
-
-        // But color code can be 0
-        assertDoesNotThrow(DrawStyle.builder().colorCode(0)::build);
-    }
-
-    @Test
-    void customColorMoreThen255() {
-        // Expect color code cannot be more than 255
-        assertThrows(IllegalArgumentException.class, () -> DrawStyle.builder().colorCode(256));
-        // But color code can be 255
-        assertDoesNotThrow(DrawStyle.builder().colorCode(255)::build);
-    }
 }

@@ -17,7 +17,7 @@ public class ProgressBarBuilder {
     private long initialMax = -1;
     private int updateIntervalMillis = 1000;
     private boolean continuousUpdate = false;
-    private DrawStyle style = DrawStyle.from(ProgressBarStyle.COLORFUL_UNICODE_BLOCK);
+    private ProgressBarStyle style = ProgressBarStyle.COLORFUL_UNICODE_BLOCK;
     private ProgressBarConsumer consumer = null;
     private boolean clearDisplayOnFinish = false;
     private String unitName = "";
@@ -48,11 +48,6 @@ public class ProgressBarBuilder {
     }
 
     public ProgressBarBuilder setStyle(ProgressBarStyle style) {
-        this.style = DrawStyle.from(style);
-        return this;
-    }
-
-    public ProgressBarBuilder setStyle(DrawStyle style) {
         this.style = style;
         return this;
     }

@@ -1,4 +1,9 @@
 # Changelog
+ * `0.10.0`:
+     - New functionalities:
+        - Make `me.tongfei.progressbar` a Java 9 module (#149, #153, #154). Thanks @clo-vis, @Kamillaova, @bowbahdoe !
+        - Enables the builder pattern for `ProgressBarStyle` (PR #152). Thanks @PakhomovAlexander !
+     - Dependency version bump. 
  * `0.9.5`:
      - Bugfixes:
         - Fixed the problem of `ProgressState` not being public, thus making `setEtaFunction` useless (#147, PR #146). Thanks @deejgregor, @natanfudge !

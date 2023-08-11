@@ -5,17 +5,7 @@ package me.tongfei.progressbar;
  * @author Tongfei Chen
  * @since 0.5.1
  */
-public enum ProgressBarStyle {
-
-    COLORFUL_UNICODE_BLOCK("\r", "\u001b[33m│", "", "│\u001b[0m", '█', ' ', " ▏▎▍▌▋▊▉", ' '),
-
-    COLORFUL_UNICODE_BAR("\r", "\u001b[33m", "\u001b[90m", "\u001b[0m", '━', '━', " ╸", '╺'),
-
-    /** Use Unicode block characters to draw the progress bar. */
-    UNICODE_BLOCK("\r", "|", "", "|", '█', ' ', " ▏▎▍▌▋▊▉", ' '),
-
-    /** Use only ASCII characters to draw the progress bar. */
-    ASCII("\r", "[", "", "]", '=', ' ', ">", ' ');
+public class ProgressBarStyle {
 
     String refreshPrompt;
     String leftBracket;
@@ -37,4 +27,22 @@ public enum ProgressBarStyle {
         this.rightSideFractionSymbol = rightSideFractionSymbol;
     }
 
+    public static ProgressBarStyle COLORFUL_UNICODE_BLOCK =
+            new ProgressBarStyle("\r", "\u001b[33m│", "", "│\u001b[0m", '█', ' ', " ▏▎▍▌▋▊▉", ' ');
+
+    public static ProgressBarStyle COLORFUL_UNICODE_BAR =
+            new ProgressBarStyle("\r", "\u001b[33m", "\u001b[90m", "\u001b[0m", '━', '━', " ╸", '╺');
+
+    /** Use Unicode block characters to draw the progress bar. */
+    public static ProgressBarStyle UNICODE_BLOCK =
+            new ProgressBarStyle("\r", "|", "", "|", '█', ' ', " ▏▎▍▌▋▊▉", ' ');
+
+    /** Use only ASCII characters to draw the progress bar. */
+    public static ProgressBarStyle ASCII =
+            new ProgressBarStyle("\r", "[", "", "]", '=', ' ', ">", ' ');
+
+    /** Creates a builder to build a custom progress bar style. */
+    public static ProgressBarStyleBuilder builder() {
+        return new ProgressBarStyleBuilder();
+    }
 }

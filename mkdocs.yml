@@ -1,7 +1,7 @@
 site_name: 'Progressbar'
 site_description: 'A terminal progress bar for Java/JVM'
 site_author: 'Tongfei Chen'
-copyright: 'Copyright &copy; 2015-2022 Tongfei Chen and contributors'
+copyright: 'Copyright &copy; 2015-2023 Tongfei Chen and contributors'
 
 theme:
   name: 'material'
