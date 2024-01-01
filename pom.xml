@@ -134,8 +134,8 @@
     <dependencies>
         <dependency>
             <groupId>org.jline</groupId>
-            <artifactId>jline</artifactId>
-            <version>3.23.0</version>
+            <artifactId>jline-terminal</artifactId>
+            <version>3.24.1</version>
         </dependency>
 
         <dependency>
