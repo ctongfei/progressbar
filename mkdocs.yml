@@ -19,7 +19,9 @@ markdown_extensions:
       permalink: true
   - pymdownx.superfences
   - pymdownx.highlight
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
 
 repo_name: 'ctongfei/progressbar'
 repo_url: 'https://github.com/ctongfei/progressbar'

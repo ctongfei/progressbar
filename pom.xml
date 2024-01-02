@@ -129,6 +129,10 @@
             <id>PakhomovAlexander</id>
             <name>Aleksandr Pakhomov</name>
         </developer>
+        <developer>
+            <id>brett-smith</id>
+            <name>Brett Smith</name>
+        </developer>
     </developers>
 
     <dependencies>
