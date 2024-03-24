@@ -1,0 +1,1989 @@
+<!DOCTYPE HTML>
+<!-- NewPage -->
+<html lang="en"><head>
+    <title>ProgressBar </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="dc.created" content="2020-03-25">
+    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
+    <link rel="stylesheet" type="text/css" href="../../../dokka-javadoc-stylesheet.css" title="Style">
+    <link rel="stylesheet" type="text/css" href="../../../jquery/jquery-ui.css" title="Style">
+    <script type="text/javascript" src="../../../jquery/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../../jquery/jquery-migrate-3.4.0.min.js"></script>
+    <script type="text/javascript" src="../../../jquery/jquery-ui.js"></script>
+
+    <script type="text/javascript" src="../../../search.js"></script>
+    <script async type="text/javascript" src="../../../module-search-index.js"></script>
+    <script async type="text/javascript" src="../../../package-search-index.js"></script>
+    <script async type="text/javascript" src="../../../type-search-index.js"></script>
+    <script async type="text/javascript" src="../../../member-search-index.js"></script>
+    <script async type="text/javascript" src="../../../tag-search-index.js"></script>
+</head><body>
+<script type="text/javascript">
+var pathtoroot = "../../../";
+</script>
+<noscript>
+    <div>JavaScript is disabled on your browser.</div>
+</noscript><header role="banner">
+    <nav role="navigation">
+        <div class="fixedNav">
+            <!-- ========= START OF TOP NAVBAR ======= -->
+            <div class="topNav"><a id="navbar.top">
+                <!--   -->
+            </a>
+                <div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a>
+                </div>
+                <a id="navbar.top.firstrow">
+                    <!--   -->
+                </a>
+                <ul class="navList" title="Navigation">
+    <li><a href="../../../index.html">Overview</a></li>
+    
+    <li><a href="package-summary.html">Package</a></li>
+    
+    <li class="navBarCell1Rev">Class</li>
+    
+    <li><a href="package-tree.html">Tree</a></li>
+    
+    <li><a href="../../../deprecated.html">Deprecated</a></li>
+    <li><a href="../../../index-files/index-1.html">Index</a></li>
+    <li>Help</li>
+</ul></div>
+            <div class="subNav">
+<ul class="navList" id="allclasses_navbar_top" style="display: block;">
+    <li><a href="../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+
+<ul class="navListSearch">
+<li><label for="search">SEARCH:</label>
+<input type="text" id="search" value="search" class="ui-autocomplete-input" autocomplete="off" placeholder="Search">
+<input type="reset" id="reset" value="reset">
+</li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+</div>
+<a id="skip.navbar.top">
+<!--   -->
+</a></div><!-- ========= END OF TOP NAVBAR ========= -->
+        </div>
+        <div class="navPadding">&nbsp;</div>
+        <script type="text/javascript"><!--
+        $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
+        //-->
+        </script>
+    </nav>
+</header>
+
+<main role="main">
+    <div class="header">
+        <div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">me.tongfei.progressbar</a></div>
+        <h2 title="Class ProgressBar" class="title">Class ProgressBar</h2>
+    </div>
+    <div class="contentContainer">
+        <!-- <ul class="inheritance">
+            <li>java.lang.Object</li>
+            <li>
+                <ul class="inheritance">
+                    <li>adaptation.Adaptation</li>
+                </ul>
+            </li>
+        </ul> TODO inheritance tree -->
+        <div class="description">
+            <ul class="blockList">
+                <li class="blockList">
+                    
+                    <dl>
+                        <dt>All Implemented Interfaces:</dt>
+                        <dd>
+                            
+                            <code>java.lang.AutoCloseable</code>
+                            
+                            
+                        </dd>
+                    </dl>
+                    
+                    <hr>
+                    <pre class="wrap-overflow">
+
+public class <span class="typeNameLabel"><a href=ProgressBar.html>ProgressBar</a></span>
+ implements <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html>AutoCloseable</a>
+                    </pre>
+                    <div class="block"><p>A console-based progress bar with minimal runtime overhead.</p></div>
+
+                    <dl>
+
+                    
+
+                    
+                        <dt><span class="authorLabel">Author:</span></dt>
+                        
+                            <dd><p>Tongfei Chen</p></dd>
+                        
+                    
+
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <div class="summary">
+            <ul class="blockList">
+                <li class="blockList">
+                <!-- ======== NESTED CLASS SUMMARY ======== -->
+                    
+                    <section role="region">
+                        <ul class="blockList">
+                            <li class="blockList"><a id="nested.class.summary">
+                                <!--   -->
+                            </a>
+                                <h3>Nested Class Summary</h3>
+                                <div class="memberSummary">
+                                    <table>
+                                        <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+                                        <tr>
+                                            <th class="colFirst" scope="col">Modifier and Type</th>
+                                            <th class="colSecond" scope="col">Class</th>
+                                            <th class="colLast" scope="col">Description</th>
+                                        </tr>
+                                        
+                                    </table>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+                    
+                    <!-- =========== FIELD SUMMARY =========== -->
+                    
+                    <section role="region">
+                        <ul class="blockList">
+                            <li class="blockList"><a id="field.summary">
+                                <!--   -->
+                            </a>
+                                <h3>Field Summary</h3>
+                                <div class="memberSummary">
+                                    <table>
+                                        <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+                                        <tr>
+                                            <th class="colFirst" scope="col">Modifier and Type</th>
+                                            <th class="colSecond" scope="col">Field</th>
+                                            <th class="colLast" scope="col">Description</th>
+                                        </tr>
+                                        
+                                    </table>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+                    
+                    <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+                    
+                    <section role="region">
+                        <ul class="blockList">
+                            <li class="blockList"><a id="constructor.summary">
+                                <!--   -->
+                            </a>
+                                <h3>Constructor Summary</h3>
+                                <div class="memberSummary">
+                                    <table>
+                                        <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+                                        <tbody>
+                                        <tr>
+                                            <th class="colFirst" scope="col">Constructor</th>
+                                            <th class="colLast" scope="col">Description</th>
+                                        </tr>
+
+                                        
+                                            <tr class="altColor">
+                                                <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a
+                                                        href="#ProgressBar(java.lang.String,long)">ProgressBar</a></span>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task, long initialMax)</code></th>
+                                                <td class="colLast">Creates a progress bar with the specific taskName name and initial maximum value.</td>
+                                            </tr>
+                                        
+                                            <tr class="rowColor">
+                                                <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a
+                                                        href="#ProgressBar(java.lang.String,long,int,boolean,boolean,java.io.PrintStream,me.tongfei.progressbar.ProgressBarStyle,java.lang.String,long,boolean,java.text.DecimalFormat,java.time.temporal.ChronoUnit,long,java.time.Duration)">ProgressBar</a></span>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task, long initialMax, int updateIntervalMillis, boolean continuousUpdate, boolean clearDisplayOnFinish, <a href=https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html>PrintStream</a> os, <a href=ProgressBarStyle.html>ProgressBarStyle</a> style, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> unitName, long unitSize, boolean showSpeed, <a href=https://docs.oracle.com/javase/8/docs/api/java/text/DecimalFormat.html>DecimalFormat</a> speedFormat, <a href=https://docs.oracle.com/javase/8/docs/api/java/time/temporal/ChronoUnit.html>ChronoUnit</a> speedUnit, long processed, <a href=https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html>Duration</a> elapsed)</code></th>
+                                                <td class="colLast">Creates a progress bar with the specific taskName name, initial maximum value, customized update interval (default 1000 ms), the PrintStream to be used, and output style.</td>
+                                            </tr>
+                                        
+                                            <tr class="altColor">
+                                                <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a
+                                                        href="#ProgressBar(java.lang.String,long,int,boolean,boolean,long,java.time.Duration,me.tongfei.progressbar.ProgressBarRenderer,me.tongfei.progressbar.ProgressBarConsumer)">ProgressBar</a></span>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task, long initialMax, int updateIntervalMillis, boolean continuousUpdate, boolean clearDisplayOnFinish, long processed, <a href=https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html>Duration</a> elapsed, <a href=ProgressBarRenderer.html>ProgressBarRenderer</a> renderer, <a href=ProgressBarConsumer.html>ProgressBarConsumer</a> consumer)</code></th>
+                                                <td class="colLast">Creates a progress bar with the specific name, initial maximum value, customized update interval (default 1s), and the provided progress bar renderer (<a href=ProgressBarRenderer.html>ProgressBarRenderer</a>) and consumer (<a href=ProgressBarConsumer.html>ProgressBarConsumer</a>).</td>
+                                            </tr>
+                                        
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+                    
+                    <!-- =========== ENUM CONSTANT SUMMARY =========== -->
+                    
+                    <section role="region">
+                        <ul class="blockList">
+                            <li class="blockList"><a id="enum.constant.summary">
+                                <!--   -->
+                            </a>
+                                <h3>Enum Constant Summary</h3>
+                                <table class="memberSummary">
+                                    <caption><span>Enum Constants</span><span class="tabEnd">&nbsp;</span></caption>
+                                    <tr>
+                                        <th class="colFirst" scope="col">Enum Constant</th>
+                                        <th class="colLast" scope="col">Description</th>
+                                    </tr>
+                                    
+                                </table>
+                            </li>
+                        </ul>
+                    </section>
+                    
+                    <!-- ========== METHOD SUMMARY =========== -->
+                    
+                    <section role="region">
+                        <ul class="blockList">
+                            <li class="blockList"><a id="method.summary">
+                                <!--   -->
+                            </a>
+                                <h3>Method Summary</h3>
+                                <div class="memberSummary">
+                                    <div role="tablist" aria-orientation="horizontal">
+                                        <button role="tab" aria-selected="true" aria-controls="memberSummary_tabpanel" tabindex="0" onkeydown="switchTab(event)" id="t0" class="activeTableTab">All Methods</button>
+                                        <!-- TODO: Instance and Concrete Methods #1118 -->
+                                    </div>
+                                    <div id="memberSummary_tabpanel" role="tabpanel">
+                                    <table aria-labelledby="t0">
+                                        <tr>
+                                            <th class="colFirst" scope="col">Modifier and Type</th>
+                                            <th class="colSecond" scope="col">Method</th>
+                                            <th class="colLast" scope="col">Description</th>
+                                        </tr>
+                                        
+                                        <tr id="i0" class="altColor">
+                                            <td class="colFirst"><code><a href=ProgressBar.html>ProgressBar</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#stepBy(long)>stepBy</a>(long n) </code>
+                                            </th>
+                                            <td class="colLast">Advances this progress bar by a specific amount.</td>
+                                        </tr>
+                                        
+                                        <tr id="i1" class="rowColor">
+                                            <td class="colFirst"><code><a href=ProgressBar.html>ProgressBar</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#stepTo(long)>stepTo</a>(long n) </code>
+                                            </th>
+                                            <td class="colLast">Advances this progress bar to the specific progress value.</td>
+                                        </tr>
+                                        
+                                        <tr id="i2" class="altColor">
+                                            <td class="colFirst"><code><a href=ProgressBar.html>ProgressBar</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#step()>step</a>() </code>
+                                            </th>
+                                            <td class="colLast">Advances this progress bar by one step.</td>
+                                        </tr>
+                                        
+                                        <tr id="i3" class="rowColor">
+                                            <td class="colFirst"><code><a href=ProgressBar.html>ProgressBar</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#maxHint(long)>maxHint</a>(long n) </code>
+                                            </th>
+                                            <td class="colLast">Gives a hint to the maximum value of the progress bar.</td>
+                                        </tr>
+                                        
+                                        <tr id="i4" class="altColor">
+                                            <td class="colFirst"><code><a href=ProgressBar.html>ProgressBar</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#pause()>pause</a>() </code>
+                                            </th>
+                                            <td class="colLast">Pauses this current progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i5" class="rowColor">
+                                            <td class="colFirst"><code><a href=ProgressBar.html>ProgressBar</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#resume()>resume</a>() </code>
+                                            </th>
+                                            <td class="colLast">Resumes this current progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i6" class="altColor">
+                                            <td class="colFirst"><code><a href=ProgressBar.html>ProgressBar</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#reset()>reset</a>() </code>
+                                            </th>
+                                            <td class="colLast">Resets the progress bar to its initial state (where progress equals to 0).</td>
+                                        </tr>
+                                        
+                                        <tr id="i7" class="rowColor">
+                                            <td class="colFirst"><code>void</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#close()>close</a>() </code>
+                                            </th>
+                                            <td class="colLast">Stops this progress bar, effectively stops tracking the underlying process.</td>
+                                        </tr>
+                                        
+                                        <tr id="i8" class="altColor">
+                                            <td class="colFirst"><code><a href=ProgressBar.html>ProgressBar</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#setExtraMessage(java.lang.String)>setExtraMessage</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> msg) </code>
+                                            </th>
+                                            <td class="colLast">Sets the extra message at the end of the progress bar.</td>
+                                        </tr>
+                                        
+                                        <tr id="i9" class="rowColor">
+                                            <td class="colFirst"><code>long</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#getCurrent()>getCurrent</a>() </code>
+                                            </th>
+                                            <td class="colLast">Returns the current progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i10" class="altColor">
+                                            <td class="colFirst"><code>long</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#getMax()>getMax</a>() </code>
+                                            </th>
+                                            <td class="colLast">Returns the maximum value of this progress bar.</td>
+                                        </tr>
+                                        
+                                        <tr id="i11" class="rowColor">
+                                            <td class="colFirst"><code>long</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#getStart()>getStart</a>() </code>
+                                            </th>
+                                            <td class="colLast"></td>
+                                        </tr>
+                                        
+                                        <tr id="i12" class="altColor">
+                                            <td class="colFirst"><code>double</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#getNormalizedProgress()>getNormalizedProgress</a>() </code>
+                                            </th>
+                                            <td class="colLast">Returns the progress normalized to the interval [0, 1].</td>
+                                        </tr>
+                                        
+                                        <tr id="i13" class="rowColor">
+                                            <td class="colFirst"><code><a href=https://docs.oracle.com/javase/8/docs/api/java/time/Instant.html>Instant</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#getStartInstant()>getStartInstant</a>() </code>
+                                            </th>
+                                            <td class="colLast">Returns the instant when the progress bar started.</td>
+                                        </tr>
+                                        
+                                        <tr id="i14" class="altColor">
+                                            <td class="colFirst"><code><a href=https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html>Duration</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#getElapsedBeforeStart()>getElapsedBeforeStart</a>() </code>
+                                            </th>
+                                            <td class="colLast">Returns the duration that this progress bar has been running before it was resumed.</td>
+                                        </tr>
+                                        
+                                        <tr id="i15" class="rowColor">
+                                            <td class="colFirst"><code><a href=https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html>Duration</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#getElapsedAfterStart()>getElapsedAfterStart</a>() </code>
+                                            </th>
+                                            <td class="colLast">Returns the duration that this progress bar has been running after it was resumed.</td>
+                                        </tr>
+                                        
+                                        <tr id="i16" class="altColor">
+                                            <td class="colFirst"><code><a href=https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html>Duration</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#getTotalElapsed()>getTotalElapsed</a>() </code>
+                                            </th>
+                                            <td class="colLast">Returns the total duration that this progress bar has been running from start, excluding the period when it has been paused.</td>
+                                        </tr>
+                                        
+                                        <tr id="i17" class="rowColor">
+                                            <td class="colFirst"><code><a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#getTaskName()>getTaskName</a>() </code>
+                                            </th>
+                                            <td class="colLast">Returns the name of this task.</td>
+                                        </tr>
+                                        
+                                        <tr id="i18" class="altColor">
+                                            <td class="colFirst"><code><a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#getExtraMessage()>getExtraMessage</a>() </code>
+                                            </th>
+                                            <td class="colLast">Returns the extra message at the end of the progress bar.</td>
+                                        </tr>
+                                        
+                                        <tr id="i19" class="rowColor">
+                                            <td class="colFirst"><code>boolean</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#isIndefinite()>isIndefinite</a>() </code>
+                                            </th>
+                                            <td class="colLast">Checks if the progress bar is indefinite, i.e., its maximum value is unknown.</td>
+                                        </tr>
+                                        
+                                        <tr id="i20" class="altColor">
+                                            <td class="colFirst"><code>void</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#refresh()>refresh</a>() </code>
+                                            </th>
+                                            <td class="colLast">Prompts the progress bar to refresh.</td>
+                                        </tr>
+                                        
+                                        <tr id="i21" class="rowColor">
+                                            <td class="colFirst"><code>static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html>Iterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Iterator,java.lang.String)>T</a>&gt;</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.util.Iterator,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html>Iterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Iterator,java.lang.String)>T</a>&gt; it, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task) </code>
+                                            </th>
+                                            <td class="colLast">Wraps an iterator so that when iterated, a progress bar is shown to track the traversal progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i22" class="altColor">
+                                            <td class="colFirst"><code>static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html>Iterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Iterator,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt;</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.util.Iterator,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html>Iterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Iterator,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt; it, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb) </code>
+                                            </th>
+                                            <td class="colLast">Wraps an iterator so that when iterated, a progress bar is shown to track the traversal progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i23" class="rowColor">
+                                            <td class="colFirst"><code>static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html>Iterable</a>&lt;<a href=ProgressBar.html#wrap(java.lang.Iterable,java.lang.String)>T</a>&gt;</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.lang.Iterable,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html>Iterable</a>&lt;<a href=ProgressBar.html#wrap(java.lang.Iterable,java.lang.String)>T</a>&gt; ts, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task) </code>
+                                            </th>
+                                            <td class="colLast">Wraps an <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html>Iterable</a> so that when iterated, a progress bar is shown to track the traversal progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i24" class="altColor">
+                                            <td class="colFirst"><code>static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html>Iterable</a>&lt;<a href=ProgressBar.html#wrap(java.lang.Iterable,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt;</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.lang.Iterable,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html>Iterable</a>&lt;<a href=ProgressBar.html#wrap(java.lang.Iterable,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt; ts, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb) </code>
+                                            </th>
+                                            <td class="colLast">Wraps an <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html>Iterable</a> so that when iterated, a progress bar is shown to track the traversal progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i25" class="rowColor">
+                                            <td class="colFirst"><code>static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.io.InputStream,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> is, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task) </code>
+                                            </th>
+                                            <td class="colLast">Wraps an <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> so that when read, a progress bar is shown to track the reading progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i26" class="altColor">
+                                            <td class="colFirst"><code>static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.io.InputStream,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> is, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb) </code>
+                                            </th>
+                                            <td class="colLast">Wraps an <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> so that when read, a progress bar is shown to track the reading progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i27" class="rowColor">
+                                            <td class="colFirst"><code>static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.io.OutputStream,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a> os, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task) </code>
+                                            </th>
+                                            <td class="colLast">Wraps an <a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a> so that when written, a progress bar is shown to track the writing progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i28" class="altColor">
+                                            <td class="colFirst"><code>static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.io.OutputStream,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a> os, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb) </code>
+                                            </th>
+                                            <td class="colLast">Wraps an <a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a> so that when written, a progress bar is shown to track the writing progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i29" class="rowColor">
+                                            <td class="colFirst"><code>static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.io.Reader,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> reader, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task) </code>
+                                            </th>
+                                            <td class="colLast">Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> so that when read, a progress bar is shown to track the reading progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i30" class="altColor">
+                                            <td class="colFirst"><code>static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.io.Reader,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> reader, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb) </code>
+                                            </th>
+                                            <td class="colLast">Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> so that when read, a progress bar is shown to track the reading progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i31" class="rowColor">
+                                            <td class="colFirst"><code>static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html>Writer</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.io.Writer,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html>Writer</a> writer, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task) </code>
+                                            </th>
+                                            <td class="colLast">Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html>Writer</a> so that when written, a progress bar is shown to track the writing progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i32" class="altColor">
+                                            <td class="colFirst"><code>static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html>Writer</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.io.Writer,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html>Writer</a> writer, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb) </code>
+                                            </th>
+                                            <td class="colLast">Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html>Writer</a> so that when written, a progress bar is shown to track the writing progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i33" class="rowColor">
+                                            <td class="colFirst"><code>static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html>Spliterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Spliterator,java.lang.String)>T</a>&gt;</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.util.Spliterator,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html>Spliterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Spliterator,java.lang.String)>T</a>&gt; sp, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task) </code>
+                                            </th>
+                                            <td class="colLast">Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html>Spliterator</a> so that when iterated, a progress bar is shown to track the traversal progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i34" class="altColor">
+                                            <td class="colFirst"><code>static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html>Spliterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Spliterator,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt;</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(java.util.Spliterator,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html>Spliterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Spliterator,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt; sp, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb) </code>
+                                            </th>
+                                            <td class="colLast">Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html>Spliterator</a> so that when iterated, a progress bar is shown to track the traversal progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i35" class="rowColor">
+                                            <td class="colFirst"><code>static &lt;T, S extends <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/BaseStream.html>BaseStream</a>&lt;<a href=ProgressBar.html#wrap(S,java.lang.String)>T</a>, <a href=ProgressBar.html#wrap(S,java.lang.String)>S</a>&gt;&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a>&lt;<a href=ProgressBar.html#wrap(S,java.lang.String)>T</a>&gt;</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(S,java.lang.String)>wrap</a>(<a href=ProgressBar.html#wrap(S,java.lang.String)>S</a> stream, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task) </code>
+                                            </th>
+                                            <td class="colLast">Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a> so that when iterated, a progress bar is shown to track the traversal progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i36" class="altColor">
+                                            <td class="colFirst"><code>static &lt;T, S extends <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/BaseStream.html>BaseStream</a>&lt;<a href=ProgressBar.html#wrap(S,me.tongfei.progressbar.ProgressBarBuilder)>T</a>, <a href=ProgressBar.html#wrap(S,me.tongfei.progressbar.ProgressBarBuilder)>S</a>&gt;&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a>&lt;<a href=ProgressBar.html#wrap(S,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt;</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(S,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=ProgressBar.html#wrap(S,me.tongfei.progressbar.ProgressBarBuilder)>S</a> stream, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb) </code>
+                                            </th>
+                                            <td class="colLast">Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a> so that when iterated, a progress bar is shown to track the traversal progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i37" class="rowColor">
+                                            <td class="colFirst"><code>static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a>&lt;<a href=ProgressBar.html#wrap(kotlin.Array,java.lang.String)>T</a>&gt;</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(kotlin.Array,java.lang.String)>wrap</a>(<a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html>Array</a>&lt;<a href=ProgressBar.html#wrap(kotlin.Array,java.lang.String)>T</a>&gt; array, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task) </code>
+                                            </th>
+                                            <td class="colLast">Wraps an array so that when iterated, a progress bar is shown to track the traversal progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i38" class="altColor">
+                                            <td class="colFirst"><code>static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a>&lt;<a href=ProgressBar.html#wrap(kotlin.Array,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt;</code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#wrap(kotlin.Array,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html>Array</a>&lt;<a href=ProgressBar.html#wrap(kotlin.Array,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt; array, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb) </code>
+                                            </th>
+                                            <td class="colLast">Wraps an array so that when iterated, a progress bar is shown to track the traversal progress.</td>
+                                        </tr>
+                                        
+                                        <tr id="i39" class="rowColor">
+                                            <td class="colFirst"><code>static <a href=ProgressBarBuilder.html>ProgressBarBuilder</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=ProgressBar.html#builder()>builder</a>() </code>
+                                            </th>
+                                            <td class="colLast">Creates a new builder to customize a progress bar.</td>
+                                        </tr>
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <ul class="blockList">
+                                
+                                    <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
+                                        <!--   -->
+                                    </a>
+                                        <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+                                        <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString,
+                                            wait, wait, wait</code></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                    
+                </li>
+            </ul>
+        </div>
+        <div class="details">
+            <ul class="blockList">
+                <li class="blockList">
+                    <!-- ========= CONSTRUCTOR DETAIL ======== -->
+                    
+                    <section role="region">
+                        <ul class="blockList">
+                            <li class="blockList"><a id="constructor.detail">
+                                <!--   -->
+                            </a>
+                                <h3>Constructor Detail</h3>
+                                
+                                <a name="ProgressBar(java.lang.String,long)"></a>
+                                <ul class="blockList">
+                                    <li class="blockList">
+                                        <h4>ProgressBar</h4>
+                                        <pre>ProgressBar(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task, long initialMax)</pre>
+                                        <div class="block">Creates a progress bar with the specific taskName name and initial maximum value.</div>
+                                        
+                                        <dl>
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>task</code> - Task name</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>initialMax</code> - Initial maximum value</dd>
+                                            
+                                            
+                                        </dl>
+                                        
+                                    </li>
+                                </ul>
+                                
+                                <a name="ProgressBar(java.lang.String,long,int,boolean,boolean,java.io.PrintStream,me.tongfei.progressbar.ProgressBarStyle,java.lang.String,long,boolean,java.text.DecimalFormat,java.time.temporal.ChronoUnit,long,java.time.Duration)"></a>
+                                <ul class="blockList">
+                                    <li class="blockList">
+                                        <h4>ProgressBar</h4>
+                                        <pre>ProgressBar(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task, long initialMax, int updateIntervalMillis, boolean continuousUpdate, boolean clearDisplayOnFinish, <a href=https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html>PrintStream</a> os, <a href=ProgressBarStyle.html>ProgressBarStyle</a> style, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> unitName, long unitSize, boolean showSpeed, <a href=https://docs.oracle.com/javase/8/docs/api/java/text/DecimalFormat.html>DecimalFormat</a> speedFormat, <a href=https://docs.oracle.com/javase/8/docs/api/java/time/temporal/ChronoUnit.html>ChronoUnit</a> speedUnit, long processed, <a href=https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html>Duration</a> elapsed)</pre>
+                                        <div class="block">Creates a progress bar with the specific taskName name, initial maximum value, customized update interval (default 1000 ms), the PrintStream to be used, and output style.</div>
+                                        
+                                        <dl>
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>task</code> - Task name</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>initialMax</code> - Initial maximum value</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>updateIntervalMillis</code> - Update interval (default value 1000 ms)</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>continuousUpdate</code> - Rerender every time the update interval happens regardless of progress count.</dd>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <dd><code>style</code> - Draw style</dd>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <dd><code>showSpeed</code> - Should the calculated speed be displayed</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>speedFormat</code> - Speed number format</dd>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        </dl>
+                                        
+                                    </li>
+                                </ul>
+                                
+                                <a name="ProgressBar(java.lang.String,long,int,boolean,boolean,long,java.time.Duration,me.tongfei.progressbar.ProgressBarRenderer,me.tongfei.progressbar.ProgressBarConsumer)"></a>
+                                <ul class="blockList">
+                                    <li class="blockList">
+                                        <h4>ProgressBar</h4>
+                                        <pre>ProgressBar(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task, long initialMax, int updateIntervalMillis, boolean continuousUpdate, boolean clearDisplayOnFinish, long processed, <a href=https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html>Duration</a> elapsed, <a href=ProgressBarRenderer.html>ProgressBarRenderer</a> renderer, <a href=ProgressBarConsumer.html>ProgressBarConsumer</a> consumer)</pre>
+                                        <div class="block">Creates a progress bar with the specific name, initial maximum value, customized update interval (default 1s), and the provided progress bar renderer (<a href=ProgressBarRenderer.html>ProgressBarRenderer</a>) and consumer (<a href=ProgressBarConsumer.html>ProgressBarConsumer</a>).</div>
+                                        
+                                        <dl>
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>task</code> - Task name</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>initialMax</code> - Initial maximum value</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>updateIntervalMillis</code> - Update time interval (default value 1000ms)</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>continuousUpdate</code> - Rerender every time the update interval happens regardless of progress count.</dd>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <dd><code>processed</code> - Initial completed process value</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>elapsed</code> - Initial elapsedBeforeStart second before</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>renderer</code> - Progress bar renderer</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>consumer</code> - Progress bar consumer</dd>
+                                            
+                                            
+                                        </dl>
+                                        
+                                    </li>
+                                </ul>
+                                
+                            </li>
+                        </ul>
+                    </section>
+                    
+                    <!-- ============ METHOD DETAIL ========== -->
+                    
+                    <section role="region">
+                        <ul class="blockList">
+                            <li class="blockList"><a id="method.detail">
+                                <!--   -->
+                            </a>
+                                <h3>Method Detail</h3>
+                                
+                                <a id="stepBy(long)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>stepBy</h4>
+                                        <pre class="methodSignature"> <a href=ProgressBar.html>ProgressBar</a> <a href=ProgressBar.html#stepBy(long)>stepBy</a>(long n)</pre>
+                                        <div class="block"><p>Advances this progress bar by a specific amount.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>n</code> - Step size</dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="stepTo(long)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>stepTo</h4>
+                                        <pre class="methodSignature"> <a href=ProgressBar.html>ProgressBar</a> <a href=ProgressBar.html#stepTo(long)>stepTo</a>(long n)</pre>
+                                        <div class="block"><p>Advances this progress bar to the specific progress value.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>n</code> - New progress value</dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="step()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>step</h4>
+                                        <pre class="methodSignature"> <a href=ProgressBar.html>ProgressBar</a> <a href=ProgressBar.html#step()>step</a>()</pre>
+                                        <div class="block"><p>Advances this progress bar by one step.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="maxHint(long)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>maxHint</h4>
+                                        <pre class="methodSignature"> <a href=ProgressBar.html>ProgressBar</a> <a href=ProgressBar.html#maxHint(long)>maxHint</a>(long n)</pre>
+                                        <div class="block"><p>Gives a hint to the maximum value of the progress bar.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>n</code> - Hint of the maximum value.</dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="pause()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>pause</h4>
+                                        <pre class="methodSignature"> <a href=ProgressBar.html>ProgressBar</a> <a href=ProgressBar.html#pause()>pause</a>()</pre>
+                                        <div class="block"><p>Pauses this current progress.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="resume()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>resume</h4>
+                                        <pre class="methodSignature"> <a href=ProgressBar.html>ProgressBar</a> <a href=ProgressBar.html#resume()>resume</a>()</pre>
+                                        <div class="block"><p>Resumes this current progress.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="reset()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>reset</h4>
+                                        <pre class="methodSignature"> <a href=ProgressBar.html>ProgressBar</a> <a href=ProgressBar.html#reset()>reset</a>()</pre>
+                                        <div class="block"><p>Resets the progress bar to its initial state (where progress equals to 0).</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="close()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>close</h4>
+                                        <pre class="methodSignature"> void <a href=ProgressBar.html#close()>close</a>()</pre>
+                                        <div class="block"><p>Stops this progress bar, effectively stops tracking the underlying process.</p><p>Implements the <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html>AutoCloseable</a> interface which enables the try-with-resource pattern with progress bars.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+                                            <dt><span class="sinceLabel">Since:</span></dt>
+                                            
+                                                <dd><p>0.7.0</p></dd>
+                                            
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="setExtraMessage(java.lang.String)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>setExtraMessage</h4>
+                                        <pre class="methodSignature"> <a href=ProgressBar.html>ProgressBar</a> <a href=ProgressBar.html#setExtraMessage(java.lang.String)>setExtraMessage</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> msg)</pre>
+                                        <div class="block"><p>Sets the extra message at the end of the progress bar.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>msg</code> - New message</dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="getCurrent()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>getCurrent</h4>
+                                        <pre class="methodSignature"> long <a href=ProgressBar.html#getCurrent()>getCurrent</a>()</pre>
+                                        <div class="block"><p>Returns the current progress.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="getMax()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>getMax</h4>
+                                        <pre class="methodSignature"> long <a href=ProgressBar.html#getMax()>getMax</a>()</pre>
+                                        <div class="block"><p>Returns the maximum value of this progress bar.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="getStart()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>getStart</h4>
+                                        <pre class="methodSignature"> long <a href=ProgressBar.html#getStart()>getStart</a>()</pre>
+                                        <div class="block"></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="getNormalizedProgress()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>getNormalizedProgress</h4>
+                                        <pre class="methodSignature"> double <a href=ProgressBar.html#getNormalizedProgress()>getNormalizedProgress</a>()</pre>
+                                        <div class="block"><p>Returns the progress normalized to the interval [0, 1].</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="getStartInstant()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>getStartInstant</h4>
+                                        <pre class="methodSignature"> <a href=https://docs.oracle.com/javase/8/docs/api/java/time/Instant.html>Instant</a> <a href=ProgressBar.html#getStartInstant()>getStartInstant</a>()</pre>
+                                        <div class="block"><p>Returns the instant when the progress bar started. If a progress bar is resumed after a pause, it returns the instant when the progress was resumed.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="getElapsedBeforeStart()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>getElapsedBeforeStart</h4>
+                                        <pre class="methodSignature"> <a href=https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html>Duration</a> <a href=ProgressBar.html#getElapsedBeforeStart()>getElapsedBeforeStart</a>()</pre>
+                                        <div class="block"><p>Returns the duration that this progress bar has been running before it was resumed. If a progress bar starts afresh, it should return zero.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="getElapsedAfterStart()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>getElapsedAfterStart</h4>
+                                        <pre class="methodSignature"> <a href=https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html>Duration</a> <a href=ProgressBar.html#getElapsedAfterStart()>getElapsedAfterStart</a>()</pre>
+                                        <div class="block"><p>Returns the duration that this progress bar has been running after it was resumed. If a progress bar has not been paused before, it should return the total duration starting from creation.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="getTotalElapsed()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>getTotalElapsed</h4>
+                                        <pre class="methodSignature"> <a href=https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html>Duration</a> <a href=ProgressBar.html#getTotalElapsed()>getTotalElapsed</a>()</pre>
+                                        <div class="block"><p>Returns the total duration that this progress bar has been running from start, excluding the period when it has been paused.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="getTaskName()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>getTaskName</h4>
+                                        <pre class="methodSignature"> <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> <a href=ProgressBar.html#getTaskName()>getTaskName</a>()</pre>
+                                        <div class="block"><p>Returns the name of this task.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="getExtraMessage()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>getExtraMessage</h4>
+                                        <pre class="methodSignature"> <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> <a href=ProgressBar.html#getExtraMessage()>getExtraMessage</a>()</pre>
+                                        <div class="block"><p>Returns the extra message at the end of the progress bar.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="isIndefinite()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>isIndefinite</h4>
+                                        <pre class="methodSignature"> boolean <a href=ProgressBar.html#isIndefinite()>isIndefinite</a>()</pre>
+                                        <div class="block"><p>Checks if the progress bar is indefinite, i.e., its maximum value is unknown.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="refresh()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>refresh</h4>
+                                        <pre class="methodSignature"> void <a href=ProgressBar.html#refresh()>refresh</a>()</pre>
+                                        <div class="block"><p>Prompts the progress bar to refresh. Normally a user should not call this function.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.util.Iterator,java.lang.String)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html>Iterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Iterator,java.lang.String)>T</a>&gt; <a href=ProgressBar.html#wrap(java.util.Iterator,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html>Iterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Iterator,java.lang.String)>T</a>&gt; it, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task)</pre>
+                                        <div class="block"><p>Wraps an iterator so that when iterated, a progress bar is shown to track the traversal progress.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>it</code> - Underlying iterator</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>task</code> - Task name</dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.util.Iterator,me.tongfei.progressbar.ProgressBarBuilder)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html>Iterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Iterator,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt; <a href=ProgressBar.html#wrap(java.util.Iterator,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html>Iterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Iterator,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt; it, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb)</pre>
+                                        <div class="block"><p>Wraps an iterator so that when iterated, a progress bar is shown to track the traversal progress.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>it</code> - Underlying iterator</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>pbb</code> - Progress bar builder</dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.lang.Iterable,java.lang.String)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html>Iterable</a>&lt;<a href=ProgressBar.html#wrap(java.lang.Iterable,java.lang.String)>T</a>&gt; <a href=ProgressBar.html#wrap(java.lang.Iterable,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html>Iterable</a>&lt;<a href=ProgressBar.html#wrap(java.lang.Iterable,java.lang.String)>T</a>&gt; ts, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task)</pre>
+                                        <div class="block"><p>Wraps an <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html>Iterable</a> so that when iterated, a progress bar is shown to track the traversal progress. </p><p> Sample usage: <code>
+  for (T x : ProgressBar.wrap(collection, &quot;Traversal&quot;)) { ... }
+</code></p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>ts</code> - Underlying iterable</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>task</code> - Task name</dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.lang.Iterable,me.tongfei.progressbar.ProgressBarBuilder)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html>Iterable</a>&lt;<a href=ProgressBar.html#wrap(java.lang.Iterable,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt; <a href=ProgressBar.html#wrap(java.lang.Iterable,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html>Iterable</a>&lt;<a href=ProgressBar.html#wrap(java.lang.Iterable,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt; ts, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb)</pre>
+                                        <div class="block"><p>Wraps an <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html>Iterable</a> so that when iterated, a progress bar is shown to track the traversal progress. For this function the progress bar can be fully customized by using a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a>.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>ts</code> - Underlying iterable</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>pbb</code> - An instance of a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a></dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.io.InputStream,java.lang.String)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> <a href=ProgressBar.html#wrap(java.io.InputStream,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> is, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task)</pre>
+                                        <div class="block"><p>Wraps an <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> so that when read, a progress bar is shown to track the reading progress.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>is</code> - Input stream to be wrapped</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>task</code> - Name of the progress</dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.io.InputStream,me.tongfei.progressbar.ProgressBarBuilder)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> <a href=ProgressBar.html#wrap(java.io.InputStream,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> is, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb)</pre>
+                                        <div class="block"><p>Wraps an <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> so that when read, a progress bar is shown to track the reading progress. For this function the progress bar can be fully customized by using a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a>.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>is</code> - Input stream to be wrapped</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>pbb</code> - An instance of a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a></dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.io.OutputStream,java.lang.String)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a> <a href=ProgressBar.html#wrap(java.io.OutputStream,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a> os, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task)</pre>
+                                        <div class="block"><p>Wraps an <a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a> so that when written, a progress bar is shown to track the writing progress.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>os</code> - Output stream to be wrapped</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>task</code> - Name of the progress</dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.io.OutputStream,me.tongfei.progressbar.ProgressBarBuilder)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a> <a href=ProgressBar.html#wrap(java.io.OutputStream,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a> os, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb)</pre>
+                                        <div class="block"><p>Wraps an <a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a> so that when written, a progress bar is shown to track the writing progress. For this function the progress bar can be fully customized by using a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a>.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>os</code> - Output stream to be wrapped</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>pbb</code> - An instance of a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a></dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.io.Reader,java.lang.String)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> <a href=ProgressBar.html#wrap(java.io.Reader,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> reader, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task)</pre>
+                                        <div class="block"><p>Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> so that when read, a progress bar is shown to track the reading progress.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>reader</code> - Reader to be wrapped</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>task</code> - Name of the progress</dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.io.Reader,me.tongfei.progressbar.ProgressBarBuilder)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> <a href=ProgressBar.html#wrap(java.io.Reader,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> reader, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb)</pre>
+                                        <div class="block"><p>Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> so that when read, a progress bar is shown to track the reading progress. For this function the progress bar can be fully customized by using a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a>.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>reader</code> - Reader to be wrapped</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>pbb</code> - An instance of a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a></dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.io.Writer,java.lang.String)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html>Writer</a> <a href=ProgressBar.html#wrap(java.io.Writer,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html>Writer</a> writer, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task)</pre>
+                                        <div class="block"><p>Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html>Writer</a> so that when written, a progress bar is shown to track the writing progress.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>writer</code> - Writer to be wrapped</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>task</code> - Name of the progress</dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.io.Writer,me.tongfei.progressbar.ProgressBarBuilder)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html>Writer</a> <a href=ProgressBar.html#wrap(java.io.Writer,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html>Writer</a> writer, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb)</pre>
+                                        <div class="block"><p>Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Writer.html>Writer</a> so that when written, a progress bar is shown to track the writing progress. For this function the progress bar can be fully customized by using a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a>.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>writer</code> - Writer to be wrapped</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>pbb</code> - An instance of a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a></dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.util.Spliterator,java.lang.String)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html>Spliterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Spliterator,java.lang.String)>T</a>&gt; <a href=ProgressBar.html#wrap(java.util.Spliterator,java.lang.String)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html>Spliterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Spliterator,java.lang.String)>T</a>&gt; sp, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task)</pre>
+                                        <div class="block"><p>Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html>Spliterator</a> so that when iterated, a progress bar is shown to track the traversal progress.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>sp</code> - Underlying spliterator</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>task</code> - Task name</dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(java.util.Spliterator,me.tongfei.progressbar.ProgressBarBuilder)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html>Spliterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Spliterator,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt; <a href=ProgressBar.html#wrap(java.util.Spliterator,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html>Spliterator</a>&lt;<a href=ProgressBar.html#wrap(java.util.Spliterator,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt; sp, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb)</pre>
+                                        <div class="block"><p>Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html>Spliterator</a> so that when iterated, a progress bar is shown to track the traversal progress. For this function the progress bar can be fully customized by using a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a>.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>sp</code> - Underlying spliterator</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>pbb</code> - An instance of a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a></dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(S,java.lang.String)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static &lt;T, S extends <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/BaseStream.html>BaseStream</a>&lt;<a href=ProgressBar.html#wrap(S,java.lang.String)>T</a>, <a href=ProgressBar.html#wrap(S,java.lang.String)>S</a>&gt;&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a>&lt;<a href=ProgressBar.html#wrap(S,java.lang.String)>T</a>&gt; <a href=ProgressBar.html#wrap(S,java.lang.String)>wrap</a>(<a href=ProgressBar.html#wrap(S,java.lang.String)>S</a> stream, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task)</pre>
+                                        <div class="block"><p>Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a> so that when iterated, a progress bar is shown to track the traversal progress.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>stream</code> - Underlying stream (can be sequential or parallel)</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>task</code> - Task name</dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(S,me.tongfei.progressbar.ProgressBarBuilder)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static &lt;T, S extends <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/BaseStream.html>BaseStream</a>&lt;<a href=ProgressBar.html#wrap(S,me.tongfei.progressbar.ProgressBarBuilder)>T</a>, <a href=ProgressBar.html#wrap(S,me.tongfei.progressbar.ProgressBarBuilder)>S</a>&gt;&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a>&lt;<a href=ProgressBar.html#wrap(S,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt; <a href=ProgressBar.html#wrap(S,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=ProgressBar.html#wrap(S,me.tongfei.progressbar.ProgressBarBuilder)>S</a> stream, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb)</pre>
+                                        <div class="block"><p>Wraps a <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a> so that when iterated, a progress bar is shown to track the traversal progress. For this function the progress bar can be fully customized by using a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a>.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>stream</code> - Underlying stream (can be sequential or parallel)</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>pbb</code> - An instance of a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a></dd>
+                                            
+                                            
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(kotlin.Array,java.lang.String)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a>&lt;<a href=ProgressBar.html#wrap(kotlin.Array,java.lang.String)>T</a>&gt; <a href=ProgressBar.html#wrap(kotlin.Array,java.lang.String)>wrap</a>(<a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html>Array</a>&lt;<a href=ProgressBar.html#wrap(kotlin.Array,java.lang.String)>T</a>&gt; array, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> task)</pre>
+                                        <div class="block"><p>Wraps an array so that when iterated, a progress bar is shown to track the traversal progress.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>array</code> - Array to be wrapped</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>task</code> - Task name</dd>
+                                            
+                                            
+                                        
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>Wrapped array, of type <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a>.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="wrap(kotlin.Array,me.tongfei.progressbar.ProgressBarBuilder)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>wrap</h4>
+                                        <pre class="methodSignature"> static &lt;T&gt; <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a>&lt;<a href=ProgressBar.html#wrap(kotlin.Array,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt; <a href=ProgressBar.html#wrap(kotlin.Array,me.tongfei.progressbar.ProgressBarBuilder)>wrap</a>(<a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html>Array</a>&lt;<a href=ProgressBar.html#wrap(kotlin.Array,me.tongfei.progressbar.ProgressBarBuilder)>T</a>&gt; array, <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> pbb)</pre>
+                                        <div class="block"><p>Wraps an array so that when iterated, a progress bar is shown to track the traversal progress. For this function the progress bar can be fully customized by using a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a>.</p></div>
+
+                                        <dl>
+
+                                        
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>array</code> - Array to be wrapped</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>pbb</code> - An instance of a <a href=ProgressBarBuilder.html>ProgressBarBuilder</a></dd>
+                                            
+                                            
+                                        
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>Wrapped array, of type <a href=https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html>Stream</a>.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="builder()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockListLast"
+                                          >
+                                    <li class="blockList">
+                                        <h4>builder</h4>
+                                        <pre class="methodSignature"> static <a href=ProgressBarBuilder.html>ProgressBarBuilder</a> <a href=ProgressBar.html#builder()>builder</a>()</pre>
+                                        <div class="block"><p>Creates a new builder to customize a progress bar.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                            </li>
+                        </ul>
+                    </section>
+                    
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
+<footer role="contentinfo">
+    <nav role="navigation">
+        <!-- ======= START OF BOTTOM NAVBAR ====== -->
+        <div class="bottomNav"><a id="navbar.bottom">
+            <!--   -->
+        </a>
+            <div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a>
+            </div>
+            <a id="navbar.bottom.firstrow">
+                <!--   -->
+            </a>
+            <ul class="navList" title="Navigation">
+    <li><a href="../../../index.html">Overview</a></li>
+    
+    <li><a href="package-summary.html">Package</a></li>
+    
+    <li class="navBarCell1Rev">Class</li>
+    
+    <li><a href="package-tree.html">Tree</a></li>
+    
+    <li><a href="../../../deprecated.html">Deprecated</a></li>
+    <li><a href="../../../index-files/index-1.html">Index</a></li>
+    <li>Help</li>
+</ul></div>
+        <a id="skip.navbar.bottom">
+            <!--   -->
+        </a>
+        <div class="subNav">
+<ul class="navList" id="allclasses_navbar_top" style="display: block;">
+    <li><a href="../../../allclasses.html">All&nbsp;Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+</div>
+<a id="skip.navbar.top">
+<!--   -->
+</a></div><!-- ======== END OF BOTTOM NAVBAR ======= -->
+    </nav>
+</footer><ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0"
+    style="display: none;"></ul>
+<span role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></span>
+</body>
+</html>
