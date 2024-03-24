@@ -136,11 +136,17 @@ public class ProgressBarBuilder {
                 clearDisplayOnFinish,
                 processed,
                 elapsed,
-                renderer == null ? new DefaultProgressBarRenderer(
-                        style, unitName, unitSize,
+                (renderer == null
+                        ? new DefaultProgressBarRenderer(
+                                style, unitName, unitSize,
                         showSpeed, speedFormat, speedUnit,
-                        !hideEta, eta),
-                consumer == null ? Util.createConsoleConsumer(maxRenderedLength) : consumer
+                        !hideEta, eta)
+                        : renderer
+                ),
+                (consumer == null
+                        ? Util.createConsoleConsumer(maxRenderedLength)
+                        : consumer
+                )
         );
     }
 }
