@@ -1,7 +1,7 @@
 site_name: 'Progressbar'
 site_description: 'A terminal progress bar for Java/JVM'
 site_author: 'Tongfei Chen'
-copyright: 'Copyright &copy; 2015-2023 Tongfei Chen and contributors'
+copyright: 'Copyright &copy; 2015-2024 Tongfei Chen and contributors'
 
 theme:
   name: 'material'
@@ -37,3 +37,5 @@ nav:
   - 'Kotlin extensions': 'kotlin.md'
   - 'Integrating with loggers': 'loggers.md'
   - 'Changelog': 'changelog.md'
+  - 'API Docs':
+       - 'index': 'dokka-javadoc/index.html'

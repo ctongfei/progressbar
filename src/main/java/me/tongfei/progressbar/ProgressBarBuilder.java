@@ -31,6 +31,8 @@ public class ProgressBarBuilder {
     private Duration elapsed = Duration.ZERO;
     private int maxRenderedLength = -1;
 
+    private ProgressBarRenderer renderer = null;
+
     public ProgressBarBuilder() { }
 
     public ProgressBarBuilder setTaskName(String task) {
@@ -83,6 +85,11 @@ public class ProgressBarBuilder {
         return this;
     }
 
+    public ProgressBarBuilder setRenderer(ProgressBarRenderer renderer) {
+        this.renderer = renderer;
+        return this;
+    }
+
     public ProgressBarBuilder showSpeed() {
         return showSpeed(new DecimalFormat("#.0"));
     }
@@ -129,7 +136,7 @@ public class ProgressBarBuilder {
                 clearDisplayOnFinish,
                 processed,
                 elapsed,
-                new DefaultProgressBarRenderer(
+                renderer == null ? new DefaultProgressBarRenderer(
                         style, unitName, unitSize,
                         showSpeed, speedFormat, speedUnit,
                         !hideEta, eta),
