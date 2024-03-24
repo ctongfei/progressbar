@@ -6,7 +6,7 @@
 
     <groupId>me.tongfei</groupId>
     <artifactId>progressbar</artifactId>
-    <version>0.10.0</version>
+    <version>0.10.1</version>
     <name>progressbar</name>
     <description>A terminal-based progress bar for JVM</description>
     <url>http://github.com/ctongfei/progressbar</url>
@@ -129,13 +129,17 @@
             <id>PakhomovAlexander</id>
             <name>Aleksandr Pakhomov</name>
         </developer>
+        <developer>
+            <id>brett-smith</id>
+            <name>Brett Smith</name>
+        </developer>
     </developers>
 
     <dependencies>
         <dependency>
             <groupId>org.jline</groupId>
-            <artifactId>jline</artifactId>
-            <version>3.23.0</version>
+            <artifactId>jline-terminal</artifactId>
+            <version>3.24.1</version>
         </dependency>
 
         <dependency>
@@ -260,6 +264,28 @@
                 <version>3.0.0</version>
                 <configuration>
                     <useModulePath>false</useModulePath>  <!-- tests use classpath -->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jetbrains.dokka</groupId>
+                <artifactId>dokka-maven-plugin</artifactId>
+                <version>1.9.10</version>
+                <executions>
+                    <execution>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>dokka</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <dokkaPlugins>
+                        <plugin>
+                            <groupId>org.jetbrains.dokka</groupId>
+                            <artifactId>javadoc-plugin</artifactId>
+                            <version>1.9.10</version>
+                        </plugin>
+                    </dokkaPlugins>
                 </configuration>
             </plugin>
 

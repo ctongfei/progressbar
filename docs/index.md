@@ -12,15 +12,17 @@ Depending on your build tool, add the following setting.
     <dependency>
         <groupId>me.tongfei</groupId>
         <artifactId>progressbar</artifactId>
-        <version>0.9.4</version>
+        <version>$VERSION</version>
     </dependency>
     ```
 
 === "Gradle"
 
     ``` groovy
-    compile 'me.tongfei:progressbar:0.9.4'
+    compile 'me.tongfei:progressbar:$VERSION'
     ```
+
+The newest `$VERSION` is [![Maven Central](https://img.shields.io/maven-central/v/me.tongfei/progressbar.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/me.tongfei/progressbar).
 
 #### Getting started
 

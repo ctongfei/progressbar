@@ -1,4 +1,8 @@
 # Changelog
+ * `0.10.1`:
+     - Improvements:
+        - Changed the JPMS module dependency `org.jline` to a more fine-grained module `org.jline.terminal` (#158, PR #159). Thanks @brett-smith !
+        - Added a new builder method `setRenderer` to allow custom renderers (#157). Thanks @drothmaler !
  * `0.10.0`:
      - New functionalities:
         - Make `me.tongfei.progressbar` a Java 9 module (#149, #153, #154). Thanks @clo-vis, @Kamillaova, @bowbahdoe !
