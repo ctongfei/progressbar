@@ -1,4 +1,7 @@
 # Changelog
+ * `0.10.2`:
+    - Bugfixes:
+      - Fixed a `NullPointerException` (https://github.com/jline/jline3/issues/930) by updating a `jline` dependency. (PR #164). Thanks @koppor !
  * `0.10.1`:
      - Improvements:
         - Changed the JPMS module dependency `org.jline` to a more fine-grained module `org.jline.terminal` (#158, PR #159). Thanks @brett-smith !

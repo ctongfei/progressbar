@@ -133,6 +133,10 @@
             <id>brett-smith</id>
             <name>Brett Smith</name>
         </developer>
+        <developer>
+            <id>koppor</id>
+            <name>Oliver Kopp</name>
+        </developer>
     </developers>
 
     <dependencies>

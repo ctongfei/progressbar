@@ -37,5 +37,3 @@ nav:
   - 'Kotlin extensions': 'kotlin.md'
   - 'Integrating with loggers': 'loggers.md'
   - 'Changelog': 'changelog.md'
-  - 'API Docs':
-       - 'index': 'dokka-javadoc/index.html'
