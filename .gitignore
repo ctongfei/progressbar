@@ -77,3 +77,7 @@ buildNumber.properties
 
 # MkDocs
 site/
+
+# Gradle
+build/
+.gradle/
