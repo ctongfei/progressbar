@@ -154,7 +154,7 @@
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline-terminal</artifactId>
-            <version>3.30.3</version>
+            <version>3.30.4</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
