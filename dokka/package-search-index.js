@@ -1,1 +1,0 @@
-var packageSearchIndex = [{"l":"me.tongfei.progressbar","url":"me/tongfei/progressbar/package-summary.html"}, {"l":"me.tongfei.progressbar.wrapped","url":"me/tongfei/progressbar/wrapped/package-summary.html"}, {"l":"All packages","url":"index.html"}]

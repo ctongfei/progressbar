@@ -1,6 +1,0 @@
-$dokka.format:javadoc-v1
-$dokka.linkExtension:html
-
-me.tongfei.progressbar
-me.tongfei.progressbar.wrapped
-
