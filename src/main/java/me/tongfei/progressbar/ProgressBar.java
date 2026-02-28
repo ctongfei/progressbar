@@ -71,11 +71,11 @@ public class ProgressBar implements AutoCloseable {
             long processed,
             Duration elapsed
     ) {
-        this(task, initialMax, updateIntervalMillis, continuousUpdate, clearDisplayOnFinish, processed, elapsed,
+        this(task, null, initialMax, updateIntervalMillis, continuousUpdate, clearDisplayOnFinish, processed, elapsed,
                 new DefaultProgressBarRenderer(
                         style, unitName, unitSize,
                         showSpeed, speedFormat, speedUnit,
-                        true, Util::linearEta
+                        true, Util::linearEta, TimeFormat.DEFAULT
                 ),
                 createConsoleConsumer(os)
         );
@@ -85,6 +85,7 @@ public class ProgressBar implements AutoCloseable {
      * Creates a progress bar with the specific name, initial maximum value, customized update interval (default 1s),
      * and the provided progress bar renderer ({@link ProgressBarRenderer}) and consumer ({@link ProgressBarConsumer}).
      * @param task Task name
+     * @param taskFixedLength Fixed length of task name (null equals no fixed length)
      * @param initialMax Initial maximum value
      * @param updateIntervalMillis Update time interval (default value 1000ms)
      * @param continuousUpdate Rerender every time the update interval happens regardless of progress count.
@@ -96,6 +97,7 @@ public class ProgressBar implements AutoCloseable {
      */
     public ProgressBar(
             String task,
+            Integer taskFixedLength,
             long initialMax,
             int updateIntervalMillis,
             boolean continuousUpdate,
@@ -105,7 +107,7 @@ public class ProgressBar implements AutoCloseable {
             ProgressBarRenderer renderer,
             ProgressBarConsumer consumer
     ) {
-        this.progress = new ProgressState(task, initialMax, processed, elapsed);
+        this.progress = new ProgressState(task, taskFixedLength, initialMax, processed, elapsed);
         this.action = new ProgressUpdateAction(progress, renderer, consumer, continuousUpdate, clearDisplayOnFinish);
         scheduledTask = Util.executor.scheduleAtFixedRate(
                 action, 0, updateIntervalMillis, TimeUnit.MILLISECONDS

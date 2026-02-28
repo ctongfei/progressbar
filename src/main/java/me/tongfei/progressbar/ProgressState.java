@@ -11,12 +11,13 @@ import java.time.Instant;
 public class ProgressState {
 
     String taskName;
+
+    private final Integer taskFixedLength;
+
     String extraMessage = "";
 
     boolean indefinite = false;
 
-    //  0             start     current        max
-    //  [===============|=========>             ]
     long start;
     long current;
     long max;
@@ -27,8 +28,9 @@ public class ProgressState {
     volatile boolean alive = true;
     volatile boolean paused = false;
 
-    ProgressState(String taskName, long initialMax, long startFrom, Duration elapsedBeforeStart) {
+    ProgressState(String taskName, Integer taskFixedLength, long initialMax, long startFrom, Duration elapsedBeforeStart) {
         this.taskName = taskName;
+        this.taskFixedLength = taskFixedLength;
         if (initialMax < 0)
             indefinite = true;
         else this.max = initialMax;
@@ -40,7 +42,16 @@ public class ProgressState {
     }
 
     public String getTaskName() {
+        if (taskFixedLength != null) {
+            return getPaddedTaskName(taskName, taskFixedLength);
+        }
         return taskName;
+    }
+
+    private String getPaddedTaskName(String task, int length) {
+        final String str = task.length() < length ? task : task.substring(0, length);
+        final String format = "%-" + length + "s";
+        return String.format(format, str);
     }
 
     public synchronized String getExtraMessage() {

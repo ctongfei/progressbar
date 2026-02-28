@@ -14,6 +14,7 @@ import java.util.function.Function;
 public class ProgressBarBuilder {
 
     private String task = "";
+    private Integer taskFixedLength = null;
     private long initialMax = -1;
     private int updateIntervalMillis = 1000;
     private boolean continuousUpdate = false;
@@ -22,6 +23,7 @@ public class ProgressBarBuilder {
     private boolean clearDisplayOnFinish = false;
     private String unitName = "";
     private long unitSize = 1;
+    private TimeFormat timeFormat = TimeFormat.DEFAULT;
     private boolean showSpeed = false;
     private boolean hideEta = false;
     private Function<ProgressState, Optional<Duration>> eta = Util::linearEta;
@@ -37,6 +39,11 @@ public class ProgressBarBuilder {
 
     public ProgressBarBuilder setTaskName(String task) {
         this.task = task;
+        return this;
+    }
+
+    public ProgressBarBuilder setTaskFixedLength(Integer fixedLength) {
+        this.taskFixedLength = fixedLength;
         return this;
     }
 
@@ -90,6 +97,11 @@ public class ProgressBarBuilder {
         return this;
     }
 
+    public ProgressBarBuilder setTimeFormat(TimeFormat timeFormat) {
+        this.timeFormat = timeFormat;
+        return this;
+    }
+
     public ProgressBarBuilder showSpeed() {
         return showSpeed(new DecimalFormat("#.0"));
     }
@@ -130,6 +142,7 @@ public class ProgressBarBuilder {
     public ProgressBar build() {
         return new ProgressBar(
                 task,
+                taskFixedLength,
                 initialMax,
                 updateIntervalMillis,
                 continuousUpdate,
@@ -138,9 +151,9 @@ public class ProgressBarBuilder {
                 elapsed,
                 (renderer == null
                         ? new DefaultProgressBarRenderer(
-                                style, unitName, unitSize,
+                        style, unitName, unitSize,
                         showSpeed, speedFormat, speedUnit,
-                        !hideEta, eta)
+                        !hideEta, eta, timeFormat)
                         : renderer
                 ),
                 (consumer == null

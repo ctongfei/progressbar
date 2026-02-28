@@ -2,29 +2,39 @@ package me.tongfei.progressbar;
 
 import java.text.DecimalFormat;
 import java.time.Duration;
-import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static me.tongfei.progressbar.StringDisplayUtils.*;
+import static me.tongfei.progressbar.StringDisplayUtils.getStringDisplayLength;
+import static me.tongfei.progressbar.StringDisplayUtils.trimDisplayLength;
 
 /**
  * Default progress bar renderer (see {@link ProgressBarRenderer}).
+ *
  * @author Tongfei Chen
  * @author Muhammet Sakarya
  * @since 0.8.0
  */
 public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
-    private ProgressBarStyle style;
-    private String unitName;
-    private long unitSize;
-    private boolean isSpeedShown;
-    private DecimalFormat speedFormat;
-    private ChronoUnit speedUnit;
-    private boolean isEtaShown;
-    private Function<ProgressState, Optional<Duration>> eta;
+    private final ProgressBarStyle style;
+
+    private final String unitName;
+
+    private final long unitSize;
+
+    private final boolean isSpeedShown;
+
+    private final TimeFormat timeFormat;
+
+    private final DecimalFormat speedFormat;
+
+    private final ChronoUnit speedUnit;
+
+    private final boolean isEtaShown;
+
+    private final Function<ProgressState, Optional<Duration>> eta;
 
     protected DefaultProgressBarRenderer(
             ProgressBarStyle style,
@@ -34,12 +44,14 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
             DecimalFormat speedFormat,
             ChronoUnit speedUnit,
             boolean isEtaShown,
-            Function<ProgressState, Optional<Duration>> eta
+            Function<ProgressState, Optional<Duration>> eta,
+            TimeFormat timeFormat
     ) {
         this.style = style;
         this.unitName = unitName;
         this.unitSize = unitSize;
         this.isSpeedShown = isSpeedShown;
+        this.timeFormat = timeFormat;
         this.speedFormat = isSpeedShown && speedFormat == null ? new DecimalFormat() : speedFormat;
         this.speedUnit = speedUnit;
         this.isEtaShown = isEtaShown;
@@ -48,7 +60,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
     // Number of full blocks
     protected int progressIntegralPart(ProgressState progress, int length) {
-        return (int)(progress.getNormalizedProgress() * length);
+        return (int) (progress.getNormalizedProgress() * length);
     }
 
     protected int progressFractionalPart(ProgressState progress, int length) {
@@ -58,19 +70,21 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
     }
 
     protected String etaString(ProgressState progress) {
-        Optional<Duration> eta = this.eta.apply(progress);
-        if (eta.isPresent()) {
-            return Util.formatDuration(eta.get());
-        }
-        else {
+        final Optional<Duration> optEta = this.eta.apply(progress);
+        if (optEta.isPresent()) {
+            return DurationFormatter.formatDuration(optEta.get(), timeFormat);
+        } else {
             return "?";
         }
     }
 
     protected String percentage(ProgressState progress) {
         String res;
-        if (progress.max <= 0 || progress.indefinite) res = "? %";
-        else res = String.valueOf((int) Math.floor(100.0 * progress.current / progress.max)) + "%";
+        if (progress.max <= 0 || progress.indefinite) {
+            res = "? %";
+        } else {
+            res = String.valueOf((int) Math.floor(100.0 * progress.current / progress.max)) + "%";
+        }
         return Util.repeat(' ', 4 - res.length()) + res;
     }
 
@@ -84,7 +98,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         String suffix = "/s";
         double elapsedSeconds = progress.getElapsedAfterStart().getSeconds();
         double elapsedInUnit = elapsedSeconds;
-        if (null != speedUnit)
+        if (null != speedUnit) {
             switch (speedUnit) {
                 case MINUTES:
                     suffix = "/min";
@@ -99,9 +113,11 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
                     elapsedInUnit /= (60 * 60 * 24);
                     break;
             }
+        }
 
-        if (elapsedSeconds == 0)
+        if (elapsedSeconds == 0) {
             return "?" + unitName + suffix;
+        }
         double speed = (double) (progress.current - progress.start) / elapsedInUnit;
         double speedWithUnit = speed / unitSize;
         return speedFormat.format(speedWithUnit) + unitName + suffix;
@@ -125,7 +141,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
         String speedString = isSpeedShown ? speed(progress) : "";
         String suffix = style.rightBracket + " " + ratio(progress) + " ("
-                + Util.formatDuration(progress.getTotalElapsed())
+                + DurationFormatter.formatDuration(progress.getTotalElapsed(), timeFormat)
                 + (isEtaShown ? " / " + etaString(progress) : "")
                 + ") "
                 + speedString + progress.extraMessage;
@@ -143,7 +159,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
         // case of indefinite progress bars
         if (progress.indefinite) {
-            int pos = (int)(progress.current % length);
+            int pos = (int) (progress.current % length);
             sb.append(Util.repeat(style.space, pos));
             sb.append(style.block);
             sb.append(Util.repeat(style.space, length - pos - 1));
@@ -156,8 +172,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
                 if (fraction != 0) {
                     sb.append(style.fractionSymbols.charAt(fraction));
                     sb.append(style.delimitingSequence);
-                }
-                else {
+                } else {
                     sb.append(style.delimitingSequence);
                     sb.append(style.rightSideFractionSymbol);
                 }

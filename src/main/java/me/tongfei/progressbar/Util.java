@@ -39,11 +39,6 @@ class Util {
         return new String(s);
     }
 
-    static String formatDuration(Duration d) {
-        long s = d.getSeconds();
-        return String.format("%d:%02d:%02d", s / 3600, (s % 3600) / 60, s % 60);
-    }
-
     static Optional<Duration> linearEta(ProgressState progress) {
         if (progress.getMax() <= 0 || progress.isIndefinite()) return Optional.empty();
         else if (progress.getCurrent() - progress.getStart() == 0) return Optional.empty();
