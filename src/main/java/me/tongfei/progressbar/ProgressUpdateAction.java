@@ -25,12 +25,12 @@ class ProgressUpdateAction implements Runnable {
         this.consumer = consumer;
         this.continuousUpdate = continuousUpdate;
         this.clearDisplayOnFinish = clearDisplayOnFinish;
-        this.last = progress.start;
+        this.last = progress.getStart();
         this.first = true;
     }
 
     void refresh() {
-        if (continuousUpdate || (progress.current > last))
+        if (continuousUpdate || (progress.getCurrent() > last))
             forceRefresh();
         // else do nothing: only print when actual progress is made (#91).
     }
@@ -38,7 +38,7 @@ class ProgressUpdateAction implements Runnable {
     public void forceRefresh() {
         String rendered = renderer.render(progress, consumer.getMaxRenderedLength());
         consumer.accept(rendered);
-        last = progress.current;
+        last = progress.getCurrent();
     }
 
     public void run() {
@@ -47,8 +47,8 @@ class ProgressUpdateAction implements Runnable {
             first = false;
         }
         else {
-            if (!progress.paused) refresh();
-            if (!progress.alive) {
+            if (!progress.isPaused()) refresh();
+            if (!progress.isAlive()) {
                 forceRefresh();
                 if (clearDisplayOnFinish) consumer.clear();
                 consumer.close();
