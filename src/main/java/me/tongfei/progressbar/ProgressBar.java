@@ -189,7 +189,12 @@ public class ProgressBar implements AutoCloseable {
         progress.kill();
         try {
             Util.executor.schedule(action, 0, TimeUnit.NANOSECONDS).get();
-        } catch (InterruptedException | ExecutionException e) { /* NOOP */ }
+        } catch (InterruptedException e) {
+            // Restores the interrupt flag so callers are aware the thread was interrupted.
+            Thread.currentThread().interrupt();
+        } catch (ExecutionException e) {
+            // Final render failed — non-critical, progress bar is already closing.
+        }
     }
 
     /**
