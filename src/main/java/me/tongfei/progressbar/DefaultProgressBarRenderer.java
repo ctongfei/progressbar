@@ -69,14 +69,14 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
     protected String percentage(ProgressState progress) {
         String res;
-        if (progress.max <= 0 || progress.indefinite) res = "? %";
-        else res = String.valueOf((int) Math.floor(100.0 * progress.current / progress.max)) + "%";
+        if (progress.getMax() <= 0 || progress.isIndefinite()) res = "? %";
+        else res = String.valueOf((int) Math.floor(100.0 * progress.getCurrent() / progress.getMax())) + "%";
         return Util.repeat(' ', 4 - res.length()) + res;
     }
 
     protected String ratio(ProgressState progress) {
-        String m = progress.indefinite ? "?" : String.valueOf(progress.max / unitSize);
-        String c = String.valueOf(progress.current / unitSize);
+        String m = progress.isIndefinite() ? "?" : String.valueOf(progress.getMax() / unitSize);
+        String c = String.valueOf(progress.getCurrent() / unitSize);
         return Util.repeat(' ', m.length() - c.length()) + c + "/" + m + unitName;
     }
 
@@ -102,7 +102,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
 
         if (elapsedSeconds == 0)
             return "?" + unitName + suffix;
-        double speed = (double) (progress.current - progress.start) / elapsedInUnit;
+        double speed = (double) (progress.getCurrent() - progress.getStart()) / elapsedInUnit;
         double speedWithUnit = speed / unitSize;
         return speedFormat.format(speedWithUnit) + unitName + suffix;
     }
@@ -128,7 +128,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
                 + Util.formatDuration(progress.getTotalElapsed())
                 + (isEtaShown ? " / " + etaString(progress) : "")
                 + ") "
-                + speedString + progress.extraMessage;
+                + speedString + progress.getExtraMessage();
         int suffixLength = getStringDisplayLength(suffix);
         // trim excessive suffix
         if (suffixLength > maxSuffixLength) {
@@ -142,8 +142,8 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         sb.append(prefix);
 
         // case of indefinite progress bars
-        if (progress.indefinite) {
-            int pos = (int)(progress.current % length);
+        if (progress.isIndefinite()) {
+            int pos = (int)(progress.getCurrent() % length);
             sb.append(Util.repeat(style.space, pos));
             sb.append(style.block);
             sb.append(Util.repeat(style.space, length - pos - 1));
@@ -151,7 +151,7 @@ public class DefaultProgressBarRenderer implements ProgressBarRenderer {
         // case of definite progress bars
         else {
             sb.append(Util.repeat(style.block, progressIntegralPart(progress, length)));
-            if (progress.current < progress.max) {
+            if (progress.getCurrent() < progress.getMax()) {
                 int fraction = progressFractionalPart(progress, length);
                 if (fraction != 0) {
                     sb.append(style.fractionSymbols.charAt(fraction));
