@@ -454,7 +454,7 @@ public class ProgressBar implements AutoCloseable {
      */
     public static <T, S extends BaseStream<T, S>> Stream<T> wrap(S stream, ProgressBarBuilder pbb) {
         Spliterator<T> sp = wrap(stream.spliterator(), pbb);
-        return StreamSupport.stream(sp, stream.isParallel());
+        return StreamSupport.stream(sp, stream.isParallel()).onClose(stream::close);
     }
 
     /**
