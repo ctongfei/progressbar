@@ -12,9 +12,9 @@ ProgressBarBuilder pbb = ProgressBar.builder()
     .setUnit(<unit name>, <unit size>)
     .setUpdateIntervalMillis(<update interval>)
     .setMaxRenderedLength(<max rendered length in terminal>)
-    .showSpeed();
+    .showSpeed()
   // or .showSpeed(new DecimalFormat("#.##")) to customize speed display
-    .setEtaFunction(state -> ...)
+    .setEtaFunction(state -> ...);
   // This function is of type `ProgressState -> Optional<Duration>` 
   // that should output the estimated ETA of the progress.
   // Returning `Optional.empty()` means that ETA is not available.

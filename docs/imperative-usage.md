@@ -4,7 +4,7 @@ To use progress bars imperatively to support mutation to the progress bar in the
 
 ``` java
 try (ProgressBar pb = new ProgressBar("Test", 100)) { // name, initial max
- // Use ProgressBar("Test", 100, ProgressBarStyle.ASCII) if you want ASCII output style
+ // For ASCII output, create the bar with a ProgressBarBuilder and setStyle(ProgressBarStyle.ASCII).
   for (T x : collection) {
     ...
     pb.step(); // step by 1
