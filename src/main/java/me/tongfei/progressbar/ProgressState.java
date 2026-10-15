@@ -74,7 +74,7 @@ public class ProgressState {
     }
 
     public synchronized Duration getElapsedAfterStart() {
-        return (startInstant == null)
+        return paused
                 ? Duration.ZERO
                 : Duration.between(startInstant, Instant.now());
     }
