@@ -52,8 +52,11 @@ public class ProgressBarWrappedWriter extends FilterWriter {
 
     @Override
     public void close() throws IOException {
-        out.close();
-        pb.close();
+        try {
+            out.close();
+        } finally {
+            pb.close();
+        }
     }
 
 }

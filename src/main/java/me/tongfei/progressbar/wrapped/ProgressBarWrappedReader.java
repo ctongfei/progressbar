@@ -68,7 +68,10 @@ public class ProgressBarWrappedReader extends FilterReader {
 
     @Override
     public void close() throws IOException {
-        in.close();
-        pb.close();
+        try {
+            in.close();
+        } finally {
+            pb.close();
+        }
     }
 }

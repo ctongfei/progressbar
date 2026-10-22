@@ -67,8 +67,11 @@ public class ProgressBarWrappedInputStream extends FilterInputStream {
 
     @Override
     public void close() throws IOException {
-        in.close();
-        pb.close();
+        try {
+            in.close();
+        } finally {
+            pb.close();
+        }
     }
 
 }
